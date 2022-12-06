@@ -14,7 +14,7 @@ class LoggedInWidget extends StatelessWidget {
 
     return Scaffold(
         appBar: AppBar(
-          title: Text('Loged in'),
+          title: Text('Logged in'),
           centerTitle: true,
           backgroundColor: Colors.grey[800],
           actions: [
