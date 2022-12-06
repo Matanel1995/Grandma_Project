@@ -8,7 +8,7 @@ import 'models/activity.dart';
 import 'screens/activity_detail_screen.dart';
 import 'screens/category_activities_screen.dart';
 import 'screens/ideas_screen.dart';
-import 'screens/pictures_screen.dart';
+import 'screens/gallery_screen.dart';
 import 'screens/table_score.dart';
 import 'screens/welcome_screen.dart';
 import 'widgets/upload_photo.dart';
@@ -66,7 +66,7 @@ class _MyAppState extends State<MyApp> {
           TableScore.routeName: (ctx) => TableScore(),
           UploadPhoto.routeName: (ctx) => UploadPhoto(),
           IdeasScreen.routeName: (ctx) => IdeasScreen(),
-          PicturesScreen.routeName: (ctx) => PicturesScreen(),
+          GalleryScreen.routeName: (ctx) => GalleryScreen(),
         },
       ),
     );

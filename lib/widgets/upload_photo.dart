@@ -98,7 +98,7 @@ class _UploadPhotoState extends State<UploadPhoto> {
                   //     .pushReplacementNamed(PicturesScreen.routeName);
                 },
                 child: Container(
-                  height: 125,
+                  height: 120,
                   width: double.infinity,
                   padding: const EdgeInsets.all(20),
                   alignment: Alignment.center,
@@ -123,7 +123,7 @@ class _UploadPhotoState extends State<UploadPhoto> {
                   //     .pushReplacementNamed(PicturesScreen.routeName);
                 },
                 child: Container(
-                  height: 125,
+                  height: 120,
                   width: double.infinity,
                   padding: const EdgeInsets.all(20),
                   alignment: Alignment.center,
@@ -141,8 +141,9 @@ class _UploadPhotoState extends State<UploadPhoto> {
             // const Divider(
             //   height: 50,
             // ),
+
             Container(
-              height: double.infinity,
+              height: 417,
               width: double.infinity,
               child: Image.network(
                 'https://hips.hearstapps.com/hbz.h-cdn.co/assets/16/26/2048x2381/hbz-queen-elizabeth-national-photo-day-1982-gettyimages-52103217.jpg?resize=980:*',
