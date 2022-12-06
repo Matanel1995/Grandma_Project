@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:google_signin/google_sign_in.dart';
+import 'package:google_signin/models/google_sign_in.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatelessWidget {
@@ -77,7 +77,7 @@ class LoginPage extends StatelessWidget {
                         width: 15,
                       ),
                       Text(
-                        'Sing in with google',
+                        'Sign in with google',
                         style: TextStyle(
                           fontSize: 18,
                           fontFamily: 'Kanit',
