@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_signin/screens/pictures_screen.dart';
+import 'package:google_signin/screens/gallery_screen.dart';
 
 import '../widgets/main_drawer.dart';
 
@@ -34,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: InkWell(
                 onTap: () {
                   Navigator.of(context)
-                      .pushReplacementNamed(PicturesScreen.routeName);
+                      .pushReplacementNamed(GalleryScreen.routeName);
                 },
                 child: Container(
                   height: 300,
