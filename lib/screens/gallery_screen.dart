@@ -18,7 +18,7 @@ class _PicturesScreenState extends State<GalleryScreen> {
       appBar: AppBar(
         title: const Text('The Gallery'),
       ),
-      drawer: const MainDrawer(),
+      // drawer: const MainDrawer(),
       body: Center(
         child: Text(
           'The gallery will be here.',

@@ -33,8 +33,16 @@ class _HomeScreenState extends State<HomeScreen> {
             Center(
               child: InkWell(
                 onTap: () {
-                  Navigator.of(context)
-                      .pushReplacementNamed(GalleryScreen.routeName);
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) {
+                        return GalleryScreen();
+                      },
+                    ),
+                  );
+
+                  // Navigator.of(context)
+                  //     .pushReplacementNamed(GalleryScreen.routeName);
                 },
                 child: Container(
                   height: 300,
