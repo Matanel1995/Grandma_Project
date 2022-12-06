@@ -88,9 +88,9 @@ class _UploadPhotoState extends State<UploadPhoto> {
         drawer: const MainDrawer(),
         body: Column(
           children: [
-            const Divider(
-              height: 50,
-            ),
+            // const Divider(
+            //   height: 30,
+            // ),
             Center(
               child: InkWell(
                 onTap: () {
@@ -98,8 +98,8 @@ class _UploadPhotoState extends State<UploadPhoto> {
                   //     .pushReplacementNamed(PicturesScreen.routeName);
                 },
                 child: Container(
-                  height: 300,
-                  width: 300,
+                  height: 125,
+                  width: double.infinity,
                   padding: const EdgeInsets.all(20),
                   alignment: Alignment.center,
                   color: Colors.lightBlue,
@@ -113,9 +113,9 @@ class _UploadPhotoState extends State<UploadPhoto> {
                 ),
               ),
             ),
-            const Divider(
-              height: 50,
-            ),
+            // const Divider(
+            //   height: 50,
+            // ),
             Center(
               child: InkWell(
                 onTap: () {
@@ -123,8 +123,8 @@ class _UploadPhotoState extends State<UploadPhoto> {
                   //     .pushReplacementNamed(PicturesScreen.routeName);
                 },
                 child: Container(
-                  height: 200,
-                  width: 300,
+                  height: 125,
+                  width: double.infinity,
                   padding: const EdgeInsets.all(20),
                   alignment: Alignment.center,
                   color: Colors.purple,
@@ -138,8 +138,16 @@ class _UploadPhotoState extends State<UploadPhoto> {
                 ),
               ),
             ),
-            const Divider(
-              height: 50,
+            // const Divider(
+            //   height: 50,
+            // ),
+            Container(
+              height: double.infinity,
+              width: double.infinity,
+              child: Image.network(
+                'https://hips.hearstapps.com/hbz.h-cdn.co/assets/16/26/2048x2381/hbz-queen-elizabeth-national-photo-day-1982-gettyimages-52103217.jpg?resize=980:*',
+                fit: BoxFit.cover,
+              ),
             ),
           ],
         ));

@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 
 import '../widgets/main_drawer.dart';
 
-class PicturesScreen extends StatefulWidget {
+class GalleryScreen extends StatefulWidget {
   static const routeName = './pictures-screen';
 
-  const PicturesScreen({super.key});
+  const GalleryScreen({super.key});
 
   @override
-  State<PicturesScreen> createState() => _PicturesScreenState();
+  State<GalleryScreen> createState() => _PicturesScreenState();
 }
 
-class _PicturesScreenState extends State<PicturesScreen> {
+class _PicturesScreenState extends State<GalleryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
