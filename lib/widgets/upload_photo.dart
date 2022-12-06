@@ -85,7 +85,7 @@ class _UploadPhotoState extends State<UploadPhoto> {
             style: Theme.of(context).textTheme.titleMedium,
           ),
         ),
-        drawer: const MainDrawer(),
+        // drawer: const MainDrawer(),
         body: Column(
           children: [
             // const Divider(

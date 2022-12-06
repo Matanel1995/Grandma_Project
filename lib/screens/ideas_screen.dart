@@ -37,7 +37,7 @@ class IdeasScreen extends StatelessWidget {
           style: Theme.of(context).textTheme.titleMedium,
         ),
       ),
-      drawer: const MainDrawer(),
+      // drawer: const MainDrawer(),
       body: GridView(
         padding: const EdgeInsets.all(25),
         gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
