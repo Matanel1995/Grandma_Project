@@ -210,11 +210,18 @@ class UploadPhoto extends StatefulWidget {
 
 class _HomeScreenState extends State<UploadPhoto> {
   String selectedImagePath = '';
+  XFile? _singleImage;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.yellow.shade800,
+      appBar: AppBar(
+        title: Text(
+          'Upload Photos',
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
+      ),
+      backgroundColor: Colors.blueGrey,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -237,20 +244,57 @@ class _HomeScreenState extends State<UploadPhoto> {
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
             ),
             const SizedBox(
-              height: 20.0,
+              height: 40.0,
             ),
-            ElevatedButton(
-                style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.green),
-                    padding:
-                        MaterialStateProperty.all(const EdgeInsets.all(20)),
-                    textStyle: MaterialStateProperty.all(
-                        const TextStyle(fontSize: 14, color: Colors.white))),
-                onPressed: () async {
-                  selectImage();
-                  setState(() {});
-                },
-                child: const Text('Select')),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                TextButton.icon(
+                    style: ButtonStyle(
+                        // backgroundColor:
+                        //     MaterialStateProperty.all(Colors.green),
+                        padding:
+                            MaterialStateProperty.all(const EdgeInsets.all(20)),
+                        textStyle: MaterialStateProperty.all(const TextStyle(
+                            fontSize: 14, color: Colors.white))),
+                    onPressed: () async {
+                      selectImage();
+                      setState(() {});
+                    },
+                    icon: const Icon(
+                      Icons.image,
+                      color: Colors.white,
+                    ),
+                    label: const Text(
+                      'Add Image',
+                      style: TextStyle(color: Colors.white),
+                    )),
+                const SizedBox(
+                  width: 40,
+                ),
+                TextButton.icon(
+                    style: ButtonStyle(
+                        // backgroundColor:
+                        //     MaterialStateProperty.all(Colors.green),
+                        padding:
+                            MaterialStateProperty.all(const EdgeInsets.all(20)),
+                        textStyle: MaterialStateProperty.all(const TextStyle(
+                            fontSize: 14, color: Colors.white))),
+                    onPressed: () async {
+                      selectImage();
+                      setState(() {});
+                    },
+                    icon: const Icon(
+                      Icons.send,
+                      color: Colors.white,
+                    ),
+                    label: const Text(
+                      'Upload',
+                      style: TextStyle(color: Colors.white),
+                    )),
+              ],
+            ),
             const SizedBox(height: 10),
           ],
         ),
@@ -356,6 +400,7 @@ class _HomeScreenState extends State<UploadPhoto> {
     XFile? file = await ImagePicker()
         .pickImage(source: ImageSource.gallery, imageQuality: 10);
     if (file != null) {
+      _singleImage = file;
       return file.path;
     } else {
       return '';
@@ -367,6 +412,7 @@ class _HomeScreenState extends State<UploadPhoto> {
     XFile? file = await ImagePicker()
         .pickImage(source: ImageSource.camera, imageQuality: 10);
     if (file != null) {
+      _singleImage = file;
       return file.path;
     } else {
       return '';
