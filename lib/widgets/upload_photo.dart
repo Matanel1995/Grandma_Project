@@ -63,94 +63,313 @@
 //   }
 // }
 
-import 'package:flutter/material.dart';
+// import 'dart:html';
+// import 'dart:async';
+// import 'dart:io';
+// import 'package:flutter/material.dart';
+// import 'package:flutter/services.dart';
+// import 'package:image_picker/image_picker.dart';
 
-import '../widgets/main_drawer.dart';
+// class UploadPhoto extends StatefulWidget {
+//   static const routeName = './upload_photo';
+//   const UploadPhoto({super.key});
+
+//   @override
+//   State<UploadPhoto> createState() => _UploadPhotoState();
+// }
+
+// class _UploadPhotoState extends State<UploadPhoto> {
+//   XFile? image;
+
+//   Future _pickImage() async {
+//     try {
+//       final XFile? image =
+//           await ImagePicker().pickImage(source: ImageSource.gallery);
+
+//       if (image == null) return;
+
+//       final XFile imageTemp = XFile(image.path);
+
+//       setState(() => this.image = imageTemp);
+//     } on PlatformException catch (e) {
+//       print("failed to pick image: $e");
+//     }
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//         appBar: AppBar(
+//           title: Text(
+//             'Upload Photo',
+//             style: Theme.of(context).textTheme.titleMedium,
+//           ),
+//         ),
+//         // drawer: const MainDrawer(),
+//         body: Column(
+//           children: [
+//             // const Divider(
+//             //   height: 30,
+//             // ),
+//             Center(
+//               child: InkWell(
+//                 onTap: () {
+//                   // Navigator.of(context)
+//                   //     .pushReplacementNamed(PicturesScreen.routeName);
+//                 },
+//                 child: Container(
+//                   height: 120,
+//                   width: double.infinity,
+//                   padding: const EdgeInsets.all(20),
+//                   alignment: Alignment.center,
+//                   color: Colors.lightBlue,
+//                   child: const Text(
+//                     'Camera',
+//                     style: TextStyle(
+//                         fontWeight: FontWeight.w900,
+//                         fontSize: 30,
+//                         color: Colors.black),
+//                   ),
+//                 ),
+//               ),
+//             ),
+//             // const Divider(
+//             //   height: 50,
+//             // ),
+//             Center(
+//               child: InkWell(
+//                 onTap: () {
+//                   // Navigator.of(context)
+//                   //     .pushReplacementNamed(PicturesScreen.routeName);
+//                 },
+//                 child: Container(
+//                   height: 120,
+//                   width: double.infinity,
+//                   padding: const EdgeInsets.all(20),
+//                   alignment: Alignment.center,
+//                   color: Colors.purple,
+//                   child: const Text(
+//                     'Photo Library',
+//                     style: TextStyle(
+//                         fontWeight: FontWeight.w900,
+//                         fontSize: 30,
+//                         color: Colors.black),
+//                   ),
+//                 ),
+//               ),
+//             ),
+//             // const Divider(
+//             //   height: 50,
+//             // ),
+
+//             // Container(
+//             //   height: 417,
+//             //   width: double.infinity,
+//             //   child: Image.network(
+//             //     'https://hips.hearstapps.com/hbz.h-cdn.co/assets/16/26/2048x2381/hbz-queen-elizabeth-national-photo-day-1982-gettyimages-52103217.jpg?resize=980:*',
+//             //     fit: BoxFit.cover,
+//             //   ),
+//             // ),
+//             MaterialButton(
+//               color: Colors.amber,
+//               child: const Text(
+//                 "Choose from gallery",
+//                 style: TextStyle(
+//                     color: Colors.white70, fontWeight: FontWeight.bold),
+//               ),
+//               onPressed: () {
+//                 _pickImage();
+//               },
+//             ),
+//             MaterialButton(
+//               color: Colors.amber,
+//               child: const Text(
+//                 "Camera",
+//                 style: TextStyle(
+//                     color: Colors.white70, fontWeight: FontWeight.bold),
+//               ),
+//               onPressed: () {},
+//             ),
+//           ],
+//         ));
+//   }
+// }
+
+import 'dart:io';
+import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:async';
 
 class UploadPhoto extends StatefulWidget {
   static const routeName = './upload_photo';
-  const UploadPhoto({super.key});
+  const UploadPhoto({Key? key}) : super(key: key);
 
   @override
-  State<UploadPhoto> createState() => _UploadPhotoState();
+  State<UploadPhoto> createState() => _HomeScreenState();
 }
 
-class _UploadPhotoState extends State<UploadPhoto> {
+class _HomeScreenState extends State<UploadPhoto> {
+  String selectedImagePath = '';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(
-            'Upload Photo',
-            style: Theme.of(context).textTheme.titleMedium,
-          ),
-        ),
-        // drawer: const MainDrawer(),
-        body: Column(
+      backgroundColor: Colors.yellow.shade800,
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // const Divider(
-            //   height: 30,
-            // ),
-            Center(
-              child: InkWell(
-                onTap: () {
-                  // Navigator.of(context)
-                  //     .pushReplacementNamed(PicturesScreen.routeName);
-                },
-                child: Container(
-                  height: 120,
-                  width: double.infinity,
-                  padding: const EdgeInsets.all(20),
-                  alignment: Alignment.center,
-                  color: Colors.lightBlue,
-                  child: const Text(
-                    'Camera',
-                    style: TextStyle(
-                        fontWeight: FontWeight.w900,
-                        fontSize: 30,
-                        color: Colors.black),
+            selectedImagePath == ''
+                ? Image.asset(
+                    './assets/pictures/image_placeholder.png',
+                    height: 200,
+                    width: 200,
+                    fit: BoxFit.fill,
+                  )
+                : Image.file(
+                    File(selectedImagePath),
+                    height: 200,
+                    width: 200,
+                    fit: BoxFit.fill,
                   ),
-                ),
-              ),
+            const Text(
+              'Select Image',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
             ),
-            // const Divider(
-            //   height: 50,
-            // ),
-            Center(
-              child: InkWell(
-                onTap: () {
-                  // Navigator.of(context)
-                  //     .pushReplacementNamed(PicturesScreen.routeName);
+            const SizedBox(
+              height: 20.0,
+            ),
+            ElevatedButton(
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.green),
+                    padding:
+                        MaterialStateProperty.all(const EdgeInsets.all(20)),
+                    textStyle: MaterialStateProperty.all(
+                        const TextStyle(fontSize: 14, color: Colors.white))),
+                onPressed: () async {
+                  selectImage();
+                  setState(() {});
                 },
-                child: Container(
-                  height: 120,
-                  width: double.infinity,
-                  padding: const EdgeInsets.all(20),
-                  alignment: Alignment.center,
-                  color: Colors.purple,
-                  child: const Text(
-                    'Photo Library',
-                    style: TextStyle(
-                        fontWeight: FontWeight.w900,
-                        fontSize: 30,
-                        color: Colors.black),
-                  ),
-                ),
-              ),
-            ),
-            // const Divider(
-            //   height: 50,
-            // ),
-
-            Container(
-              height: 417,
-              width: double.infinity,
-              child: Image.network(
-                'https://hips.hearstapps.com/hbz.h-cdn.co/assets/16/26/2048x2381/hbz-queen-elizabeth-national-photo-day-1982-gettyimages-52103217.jpg?resize=980:*',
-                fit: BoxFit.cover,
-              ),
-            ),
+                child: const Text('Select')),
+            const SizedBox(height: 10),
           ],
-        ));
+        ),
+      ),
+    );
+  }
+
+  Future selectImage() {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Dialog(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0)), //this right here
+            child: Container(
+              height: 150,
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Column(
+                  children: [
+                    const Text(
+                      'Select Image From !',
+                      style: TextStyle(
+                          fontSize: 18.0, fontWeight: FontWeight.bold),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        GestureDetector(
+                          onTap: () async {
+                            selectedImagePath = await selectImageFromGallery();
+                            print('Image_Path:-');
+                            print(selectedImagePath);
+                            if (selectedImagePath != '') {
+                              Navigator.pop(context);
+                              setState(() {});
+                            } else {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(const SnackBar(
+                                content: Text("No Image Selected !"),
+                              ));
+                            }
+                          },
+                          child: Card(
+                              elevation: 5,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  children: [
+                                    Image.asset(
+                                      './assets/pictures/gallery.png',
+                                      height: 60,
+                                      width: 60,
+                                    ),
+                                    const Text('Gallery'),
+                                  ],
+                                ),
+                              )),
+                        ),
+                        GestureDetector(
+                          onTap: () async {
+                            selectedImagePath = await selectImageFromCamera();
+                            print('Image_Path:-');
+                            print(selectedImagePath);
+
+                            if (selectedImagePath != '') {
+                              Navigator.pop(context);
+                              setState(() {});
+                            } else {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(const SnackBar(
+                                content: Text("No Image Captured !"),
+                              ));
+                            }
+                          },
+                          child: Card(
+                              elevation: 5,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  children: [
+                                    Image.asset(
+                                      './assets/pictures/camera.png',
+                                      height: 60,
+                                      width: 60,
+                                    ),
+                                    const Text('Camera'),
+                                  ],
+                                ),
+                              )),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            ),
+          );
+        });
+  }
+
+  selectImageFromGallery() async {
+    XFile? file = await ImagePicker()
+        .pickImage(source: ImageSource.gallery, imageQuality: 10);
+    if (file != null) {
+      return file.path;
+    } else {
+      return '';
+    }
+  }
+
+  //
+  selectImageFromCamera() async {
+    XFile? file = await ImagePicker()
+        .pickImage(source: ImageSource.camera, imageQuality: 10);
+    if (file != null) {
+      return file.path;
+    } else {
+      return '';
+    }
   }
 }
