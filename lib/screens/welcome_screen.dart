@@ -7,6 +7,8 @@ import 'package:google_signin/screens/home_screen.dart';
 import 'Login_screen.dart';
 
 class WelcomeScreen extends StatelessWidget {
+  const WelcomeScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,16 +20,12 @@ class WelcomeScreen extends StatelessWidget {
               child: CircularProgressIndicator(),
             );
           } else if (snapshot.hasData) {
-            print('i have the data!');
-            // going in to the app.
             return HomeScreen();
           } else if (snapshot.hasError) {
             return Center(
               child: Text('Somthing went wrong'),
             );
           } else {
-            print("do i get here?");
-            // here is the queen
             return LoginPage();
           }
         },

@@ -10,22 +10,25 @@ class LoginPage extends StatelessWidget {
   final elizabethImage = 'assets/pictures/queen-elizabeth-removebg.png';
   final fireWorksImage = 'assets/pictures/fireWorks.png';
 
+  const LoginPage({super.key});
+
   // }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(
-            'G r a n d m a    P r o j e c t',
-            style: TextStyle(
-              fontFamily: 'Kanit',
-              fontSize: 28,
-            ),
+      appBar: AppBar(
+        title: Text(
+          'G r a n d m a    P r o j e c t',
+          style: TextStyle(
+            fontFamily: 'Kanit',
+            fontSize: 28,
           ),
-          centerTitle: true,
-          backgroundColor: Colors.teal[400],
         ),
-        body: Padding(
+        centerTitle: true,
+        backgroundColor: Colors.teal[400],
+      ),
+      body: Center(
+        child: Padding(
           padding: EdgeInsets.symmetric(vertical: 16),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -77,6 +80,8 @@ class LoginPage extends StatelessWidget {
             ],
           ),
         ),
-        backgroundColor: Color.fromARGB(90, 188, 212, 230));
+      ),
+      backgroundColor: Color.fromARGB(90, 188, 212, 230),
+    );
   }
 }
