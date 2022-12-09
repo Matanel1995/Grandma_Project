@@ -27,54 +27,56 @@ class LoginPage extends StatelessWidget {
         ),
         body: Padding(
           padding: EdgeInsets.symmetric(vertical: 16),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: 30,
-              ),
-              Image.asset(
-                elizabethImage,
-                width: 300,
-                height: 200,
-              ),
-              SizedBox(
-                height: 30,
-              ),
-              Container(
-                width: 300,
-                height: 300,
-                padding: EdgeInsets.fromLTRB(0, 60, 0, 30),
-                child: Text(
-                  "Hi Family!\nAs you know grandma loves to see your activities. Share with her your day to day and make her happy!!",
-                  style: GoogleFonts.gabriela(
-                    fontSize: 20,
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 30,
+                ),
+                Image.asset(
+                  elizabethImage,
+                  width: 300,
+                  height: 200,
+                ),
+                SizedBox(
+                  height: 30,
+                ),
+                Container(
+                  width: 300,
+                  height: 300,
+                  padding: EdgeInsets.fromLTRB(0, 60, 0, 0),
+                  child: Text(
+                    "Hi Family!\nAs you know grandma loves to see your activities. Share with her your day to day and make her happy!!",
+                    style: GoogleFonts.gabriela(
+                      fontSize: 20,
+                    ),
                   ),
                 ),
-              ),
-              SizedBox(
-                height: 30,
-              ),
-              Text(
-                'Please sign in to use the app!',
-                style: GoogleFonts.roboto(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w700,
+                SizedBox(
+                  height: 10,
                 ),
-              ),
-              SizedBox(
-                height: 50,
-              ),
-              SignInButton(
-                Buttons.Google,
-                elevation: 4,
-                onPressed: () {
-                  final provider =
-                      Provider.of<GoogleSingInPovider>(context, listen: false);
-                  provider.googleLogin();
-                },
-              ),
-            ],
+                Text(
+                  'Please sign in to use the app!',
+                  style: GoogleFonts.roboto(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                // SizedBox(
+                //   height: 50,
+                // ),
+                SignInButton(
+                  Buttons.Google,
+                  elevation: 4,
+                  onPressed: () {
+                    final provider = Provider.of<GoogleSingInPovider>(context,
+                        listen: false);
+                    provider.googleLogin();
+                  },
+                ),
+              ],
+            ),
           ),
         ),
         backgroundColor: Color.fromARGB(90, 188, 212, 230));
