@@ -1,12 +1,9 @@
 import 'dart:ffi';
 import 'dart:io';
-
+import 'dart:math';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:flutter/material.dart';
 import 'package:google_signin/storage_service.dart';
-import 'package:google_signin/widgets/upload_photo.dart';
-import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
-import '../widgets/main_drawer.dart';
 
 class GalleryScreen extends StatefulWidget {
   static const routeName = './pictures-screen';
