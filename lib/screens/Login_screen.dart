@@ -14,6 +14,7 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+<<<<<<< HEAD
         appBar: AppBar(
           title: Text(
             'G r a n d m a    P r o j e c t',
@@ -24,7 +25,23 @@ class LoginPage extends StatelessWidget {
           ),
           centerTitle: true,
           backgroundColor: Colors.teal[400],
+||||||| 609f1ea
+      appBar: AppBar(
+        title: Text(
+          'G r a n d m a    P r o j e c t',
+          style: TextStyle(
+            fontFamily: 'Kanit',
+            fontSize: 28,
+          ),
+=======
+      backgroundColor: Color.fromRGBO(244, 243, 243, 1),
+      appBar: AppBar(
+        title: Text(
+          'G r a n d m a    P r o j e c t',
+          style: Theme.of(context).textTheme.titleMedium,
+>>>>>>> c85ca573baf1e552d43b9d59ab02cca1beff78ff
         ),
+<<<<<<< HEAD
         body: Padding(
           padding: EdgeInsets.symmetric(vertical: 16),
           child: Column(
@@ -68,6 +85,88 @@ class LoginPage extends StatelessWidget {
               SignInButton(
                 Buttons.Google,
                 elevation: 4,
+||||||| 609f1ea
+        centerTitle: true,
+        backgroundColor: Colors.teal[400],
+      ),
+      body: Padding(
+        padding: EdgeInsets.symmetric(vertical: 16),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: 100,
+            ),
+            Image.asset(
+              elizabethImage,
+              width: 300,
+              height: 200,
+            ),
+            SizedBox(
+              height: 150,
+            ),
+            Text(
+              'Please sign in to use the app!',
+              style: TextStyle(
+                  fontSize: 24,
+                  fontFamily: 'OpenSans',
+                  fontWeight: FontWeight.w500),
+            ),
+            SizedBox(
+              height: 50,
+            ),
+            Center(
+              child: ElevatedButton(
+=======
+        backgroundColor: Colors.blueGrey,
+        // theme: ThemeData(
+        //     primarySwatch: Colors.blueGrey,
+        //     accentColor: Color.fromARGB(255, 6, 0, 10),
+        //     canvasColor: const Color.fromRGBO(255, 254, 229, 1),
+        //     fontFamily: 'Raleway',
+        //     textTheme: ThemeData.light().textTheme.copyWith(
+        //         bodyText1: const TextStyle(
+        //           color: Color.fromRGBO(20, 51, 51, 1),
+        //         ),
+        //         bodyText2: const TextStyle(
+        //           color: Color.fromRGBO(20, 51, 51, 1),
+        //         ),
+        //         subtitle1: const TextStyle(
+        //           fontSize: 20,
+        //           fontFamily: 'RobotoCondensed',
+        //           fontWeight: FontWeight.bold,
+        //         ))),
+        centerTitle: true,
+      ),
+      body: Padding(
+        padding: EdgeInsets.symmetric(vertical: 16),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: 100,
+            ),
+            Image.asset(
+              elizabethImage,
+              width: 300,
+              height: 200,
+            ),
+            SizedBox(
+              height: 150,
+            ),
+            Text(
+              'Please sign in to use the app!',
+              style: TextStyle(
+                  fontSize: 24,
+                  fontFamily: 'OpenSans',
+                  fontWeight: FontWeight.w500),
+            ),
+            SizedBox(
+              height: 50,
+            ),
+            Center(
+              child: ElevatedButton(
+>>>>>>> c85ca573baf1e552d43b9d59ab02cca1beff78ff
                 onPressed: () {
                   final provider =
                       Provider.of<GoogleSingInPovider>(context, listen: false);
@@ -77,6 +176,15 @@ class LoginPage extends StatelessWidget {
             ],
           ),
         ),
+<<<<<<< HEAD
         backgroundColor: Color.fromARGB(90, 188, 212, 230));
+||||||| 609f1ea
+      ),
+      backgroundColor: Colors.white,
+    );
+=======
+      ),
+    );
+>>>>>>> c85ca573baf1e552d43b9d59ab02cca1beff78ff
   }
 }

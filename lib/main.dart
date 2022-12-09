@@ -37,9 +37,9 @@ class _MyAppState extends State<MyApp> {
         title: 'Grandma Project',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-            primarySwatch: Colors.pink,
-            accentColor: Colors.amber,
-            canvasColor: const Color.fromRGBO(255, 254, 229, 1),
+            primarySwatch: Colors.blueGrey,
+            accentColor: Color.fromARGB(255, 226, 137, 19),
+            canvasColor: const Color.fromRGBO(244, 243, 243, 1),
             fontFamily: 'Raleway',
             textTheme: ThemeData.light().textTheme.copyWith(
                 bodyText1: const TextStyle(
