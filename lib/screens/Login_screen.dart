@@ -11,16 +11,31 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color.fromRGBO(244, 243, 243, 1),
       appBar: AppBar(
         title: Text(
           'G r a n d m a    P r o j e c t',
-          style: TextStyle(
-            fontFamily: 'Kanit',
-            fontSize: 28,
-          ),
+          style: Theme.of(context).textTheme.titleMedium,
         ),
+        backgroundColor: Colors.blueGrey,
+        // theme: ThemeData(
+        //     primarySwatch: Colors.blueGrey,
+        //     accentColor: Color.fromARGB(255, 6, 0, 10),
+        //     canvasColor: const Color.fromRGBO(255, 254, 229, 1),
+        //     fontFamily: 'Raleway',
+        //     textTheme: ThemeData.light().textTheme.copyWith(
+        //         bodyText1: const TextStyle(
+        //           color: Color.fromRGBO(20, 51, 51, 1),
+        //         ),
+        //         bodyText2: const TextStyle(
+        //           color: Color.fromRGBO(20, 51, 51, 1),
+        //         ),
+        //         subtitle1: const TextStyle(
+        //           fontSize: 20,
+        //           fontFamily: 'RobotoCondensed',
+        //           fontWeight: FontWeight.bold,
+        //         ))),
         centerTitle: true,
-        backgroundColor: Colors.teal[400],
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(vertical: 16),
@@ -92,7 +107,6 @@ class LoginPage extends StatelessWidget {
           ],
         ),
       ),
-      backgroundColor: Colors.white,
     );
   }
 }

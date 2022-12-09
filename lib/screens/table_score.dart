@@ -15,7 +15,10 @@ class _FiltersScreenState extends State<TableScore> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('The Score Table'),
+        title: Text(
+          'The Table Score',
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
       ),
       // drawer: const MainDrawer(),
       body: Center(

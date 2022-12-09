@@ -38,13 +38,11 @@ class MainDrawer extends StatelessWidget {
           width: double.infinity,
           padding: const EdgeInsets.all(20),
           alignment: Alignment.centerLeft,
-          color: Theme.of(context).accentColor,
+          color: Colors.blueGrey,
           child: Text(
             'Menu',
             style: TextStyle(
-                fontWeight: FontWeight.w900,
-                fontSize: 30,
-                color: Theme.of(context).primaryColor),
+                fontWeight: FontWeight.w900, fontSize: 30, color: Colors.black),
           ),
         ),
         const SizedBox(

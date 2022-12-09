@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../dummy_data.dart';
 
 class ActivityDetailScreen extends StatelessWidget {
@@ -65,7 +64,9 @@ class ActivityDetailScreen extends StatelessWidget {
                   child: Padding(
                       padding: const EdgeInsets.symmetric(
                           vertical: 5, horizontal: 10),
-                      child: Text(selectedActivity.requierd[index])),
+                      child: Text(
+                        selectedActivity.requierd[index],
+                      )),
                 ),
                 itemCount: selectedActivity.requierd.length,
               ),
@@ -88,7 +89,7 @@ class ActivityDetailScreen extends StatelessWidget {
                 ),
                 itemCount: selectedActivity.importance.length,
               ),
-            )
+            ),
           ],
         ),
       ),
