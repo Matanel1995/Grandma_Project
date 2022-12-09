@@ -200,6 +200,8 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:async';
 
+import '../storage_service.dart';
+
 class UploadPhoto extends StatefulWidget {
   static const routeName = './upload_photo';
   const UploadPhoto({Key? key}) : super(key: key);
@@ -209,6 +211,7 @@ class UploadPhoto extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<UploadPhoto> {
+  final Storage storage = Storage();
   String selectedImagePath = '';
   XFile? _singleImage;
 
@@ -282,7 +285,9 @@ class _HomeScreenState extends State<UploadPhoto> {
                         textStyle: MaterialStateProperty.all(const TextStyle(
                             fontSize: 14, color: Colors.white))),
                     onPressed: () async {
-                      selectImage();
+                      storage
+                          .uploadFile(_singleImage!.path, _singleImage!.name)
+                          .then((value) => print('Done'));
                       setState(() {});
                     },
                     icon: const Icon(
@@ -407,7 +412,6 @@ class _HomeScreenState extends State<UploadPhoto> {
     }
   }
 
-  //
   selectImageFromCamera() async {
     XFile? file = await ImagePicker()
         .pickImage(source: ImageSource.camera, imageQuality: 10);
@@ -418,4 +422,6 @@ class _HomeScreenState extends State<UploadPhoto> {
       return '';
     }
   }
+
+  // need to make function to select more than one image at a time and videos.
 }
