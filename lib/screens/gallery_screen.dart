@@ -40,7 +40,8 @@ class _PicturesScreenState extends State<GalleryScreen> {
         child: Column(
           children: [
             FutureBuilder(
-              future: storage.downloadURL(image_name[1]),
+              future: storage
+                  .downloadURL('scaled_image_picker1555005536174115340.jpg'),
               builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
                 if (snapshot.connectionState == ConnectionState.done &&
                     snapshot.hasData) {
