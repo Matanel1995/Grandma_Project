@@ -32,7 +32,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => GoogleSingInPovider(),
+      create: (context) => GoogleSingInPovider(context),
       child: MaterialApp(
         title: 'Grandma Project',
         debugShowCheckedModeBanner: false,

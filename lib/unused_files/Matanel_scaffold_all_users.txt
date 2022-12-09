@@ -1,0 +1,52 @@
+// my code for making scaffold with all users details as text
+//
+ return Scaffold(
+      appBar: AppBar(
+        title: const Text('The Gallery'),
+      ),
+      body: Center(
+        child: StreamBuilder(
+          stream: FirebaseFirestore.instance.collection('User').snapshots(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return CircularProgressIndicator();
+            } else if (snapshot.connectionState == ConnectionState.active ||
+                snapshot.connectionState == ConnectionState.done) {
+              if (snapshot.hasError) {
+                return const Text('Error occuerrd');
+              } else if (snapshot.hasData) {
+                return ListView.builder(
+                  itemCount: snapshot.data!.docs.length,
+                  itemBuilder: (context, index) {
+                    //creating a map to store user details
+                    Map<String, dynamic> userDetails =
+                        snapshot.data!.docs[index].data();
+                    return Center(
+                      child: UserWidget(
+                        email: userDetails['email'],
+                        photoUrl: userDetails['photoUrl'],
+                        userId: userDetails['userId'],
+                        userName: userDetails['userName'],
+                      ),
+                    );
+                  },
+                );
+              } else {
+                return const Text('Empty data');
+              }
+            } else {
+              return Text('state: ${snapshot.connectionState}');
+            }
+          },
+        ),
+      ),
+    );
+
+
+// my code to create instance of User from DB
+ 
+void function_name(){
+	DocumentSnapshot<Map<String, dynamic>> doc;
+	doc = await userRef.doc(<the_user_id>).get();
+	currentUser = myUser.fromFirestore(doc);
+
