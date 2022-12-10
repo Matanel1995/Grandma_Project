@@ -17,7 +17,7 @@ class MyUser {
   });
 
   factory MyUser.fromFirestore(
-    DocumentSnapshot<Map<String, dynamic>> snapshot,
+    Map<String, dynamic> snapshot,
   ) {
     return MyUser(
         id: snapshot['userId'],

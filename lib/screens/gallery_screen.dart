@@ -26,6 +26,7 @@ class _PicturesScreenState extends State<GalleryScreen> {
         .listAll();
     for (var i = 0; i < result.items.length; i++) {
       image_name.add(result.items[i].name);
+      print(result.items[i].name);
     }
   }
 
@@ -56,6 +57,10 @@ class _PicturesScreenState extends State<GalleryScreen> {
                 }
                 return Container();
               },
+            ),
+            TextButton(
+              onPressed: getImages,
+              child: Text("Ya Homo"),
             ),
           ],
         ),
