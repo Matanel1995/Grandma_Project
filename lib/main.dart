@@ -66,7 +66,7 @@ class _MyAppState extends State<MyApp> {
           TableScore.routeName: (ctx) => TableScore(),
           UploadPhoto.routeName: (ctx) => UploadPhoto(),
           IdeasScreen.routeName: (ctx) => IdeasScreen(),
-          GalleryScreen.routeName: (ctx) => GalleryScreen(),
+          // GalleryScreen.routeName: (ctx) => GalleryScreen(),
         },
       ),
     );

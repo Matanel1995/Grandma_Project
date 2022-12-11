@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_signin/models/usersList.dart';
 import 'package:google_signin/screens/gallery_screen.dart';
-
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import '../widgets/main_drawer.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -26,6 +26,8 @@ class _HomeScreenState extends State<HomeScreen> {
     'Grandma thank you very much for the chicken. it was very tasty!',
     'Tomorrow movie time!',
   ];
+
+  List<String> imageList = <String>[];
 
   Widget buildSectionTitle(BuildContext context, String text) {
     return Container(
@@ -52,6 +54,18 @@ class _HomeScreenState extends State<HomeScreen> {
       width: 300,
       child: child,
     );
+  }
+
+  void getImages() async {
+    final firebase_storage.ListResult result = await firebase_storage
+        .FirebaseStorage.instance
+        .ref()
+        .child("test")
+        .listAll();
+    for (var i = 0; i < result.items.length; i++) {
+      imageList.add(result.items[i].name);
+    }
+    print(imageList);
   }
 
   Widget build(BuildContext context) {
@@ -110,11 +124,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 onTap: () {
-                  //add norton loop for imagets into list
+                  getImages();
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (_) {
-                        return GalleryScreen();
+                        return GalleryScreen(imageList);
                       },
                     ),
                   );
