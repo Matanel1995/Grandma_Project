@@ -7,18 +7,18 @@ import 'package:flutter/material.dart';
 import 'package:google_signin/storage_service.dart';
 
 class GalleryScreen extends StatefulWidget {
-  static const routeName = './pictures-screen';
+  static const routeName = './gallery-screen';
   List<String> imageTest = <String>[];
   GalleryScreen(this.imageTest);
 
   @override
-  State<GalleryScreen> createState() => _PicturesScreenState(imageTest);
+  State<GalleryScreen> createState() => _GalleryScreenState(imageTest);
 }
 
-class _PicturesScreenState extends State<GalleryScreen> {
+class _GalleryScreenState extends State<GalleryScreen> {
   final Storage storage = Storage();
   List<String> imageTest1 = <String>[];
-  _PicturesScreenState(this.imageTest1);
+  _GalleryScreenState(this.imageTest1);
 
   // List<String> image_name = <String>[];
   // _PicturesScreenState(this.image_name);
