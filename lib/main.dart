@@ -63,9 +63,9 @@ class _MyAppState extends State<MyApp> {
               CategoryActivitiessScreen(_availableActivities),
           ActivityDetailScreen.routeName: (ctx) => ActivityDetailScreen(),
 
-          TableScore.routeName: (ctx) => TableScore(),
-          UploadPhoto.routeName: (ctx) => UploadPhoto(),
-          IdeasScreen.routeName: (ctx) => IdeasScreen(),
+          // TableScore.routeName: (ctx) => TableScore(),
+          // UploadPhoto.routeName: (ctx) => UploadPhoto(),
+          // IdeasScreen.routeName: (ctx) => IdeasScreen(),
           // GalleryScreen.routeName: (ctx) => GalleryScreen(),
         },
       ),

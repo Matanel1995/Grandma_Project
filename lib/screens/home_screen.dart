@@ -50,7 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       margin: const EdgeInsets.all(10),
       padding: const EdgeInsets.all(20),
-      height: 200,
+      height: 150,
       width: 300,
       child: child,
     );
@@ -132,13 +132,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       },
                     ),
                   );
-                  Navigator.of(context)
-                      .pushReplacementNamed(GalleryScreen.routeName);
+                  // Navigator.of(context)
+                  //     .pushReplacementNamed(GalleryScreen.routeName);
                 },
               ),
-              const SizedBox(
-                height: 20,
-              ),
+              // const SizedBox(
+              //   height: 20,
+              // ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: Column(
@@ -152,9 +152,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       height: 200,
                       child: UsersList(),
                     ),
-                    const SizedBox(
-                      height: 20,
-                    ),
+                    // const SizedBox(
+                    //   height: 20,
+                    // ),
                     buildSectionTitle(context, 'Messages'),
                     buildContainer(
                       ListView.builder(
