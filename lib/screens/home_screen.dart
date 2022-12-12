@@ -94,55 +94,59 @@ class _HomeScreenState extends State<HomeScreen> {
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               const SizedBox(
                 height: 10,
               ),
-              InkWell(
-                child: Container(
-                  height: 150,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    image: DecorationImage(
-                        fit: BoxFit.cover, image: AssetImage(galleryImage)),
-                  ),
+              Container(
+                padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                child: InkWell(
                   child: Container(
+                    height: 200,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
-                      gradient: LinearGradient(
-                          begin: Alignment.bottomRight,
-                          stops: const [
-                            0.3,
-                            0.9
-                          ],
-                          colors: [
-                            Colors.black.withOpacity(.8),
-                            Colors.black.withOpacity(.2)
-                          ]),
+                      image: DecorationImage(
+                          fit: BoxFit.fill, image: AssetImage(galleryImage)),
                     ),
-                    child: const Align(
-                      alignment: Alignment.bottomLeft,
-                      child: Padding(
-                        padding: EdgeInsets.all(15.0),
-                        child: Text(
-                          'To The Gallery',
-                          style: TextStyle(color: Colors.white, fontSize: 20),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        gradient: LinearGradient(
+                            begin: Alignment.bottomRight,
+                            stops: const [
+                              0.3,
+                              0.9
+                            ],
+                            colors: [
+                              Colors.black.withOpacity(.8),
+                              Colors.black.withOpacity(.2)
+                            ]),
+                      ),
+                      child: const Align(
+                        alignment: Alignment.bottomLeft,
+                        child: Padding(
+                          padding: EdgeInsets.all(15.0),
+                          child: Text(
+                            'To The Gallery',
+                            style: TextStyle(color: Colors.white, fontSize: 20),
+                          ),
                         ),
                       ),
                     ),
                   ),
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) {
+                          return GalleryScreen(imageList);
+                        },
+                      ),
+                    );
+                    // Navigator.of(context)
+                    //     .pushReplacementNamed(GalleryScreen.routeName);
+                  },
                 ),
-                onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (_) {
-                        return GalleryScreen(imageList);
-                      },
-                    ),
-                  );
-                  // Navigator.of(context)
-                  //     .pushReplacementNamed(GalleryScreen.routeName);
-                },
               ),
               // const SizedBox(
               //   height: 20,
@@ -151,6 +155,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     buildSectionTitle(context, 'Group Members'),
                     const SizedBox(
@@ -164,18 +169,20 @@ class _HomeScreenState extends State<HomeScreen> {
                     //   height: 20,
                     // ),
                     buildSectionTitle(context, 'Messages'),
-                    buildContainer(
-                      ListView.builder(
-                        itemBuilder: (ctx, index) => Card(
-                          color: Theme.of(context).accentColor,
-                          child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 5, horizontal: 10),
-                              child: Text(
-                                wishes[index],
-                              )),
+                    Center(
+                      child: buildContainer(
+                        ListView.builder(
+                          itemBuilder: (ctx, index) => Card(
+                            color: Theme.of(context).accentColor,
+                            child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 5, horizontal: 10),
+                                child: Text(
+                                  wishes[index],
+                                )),
+                          ),
+                          itemCount: wishes.length,
                         ),
-                        itemCount: wishes.length,
                       ),
                     ),
                   ],
