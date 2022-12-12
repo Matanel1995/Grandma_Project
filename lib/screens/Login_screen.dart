@@ -44,8 +44,8 @@ class LoginPage extends StatelessWidget {
                   height: 300,
                   child: Text(
                     "Hi Family!\nAs you know grandma loves to see your"
-                    "activities. Share with her your day to day and make her"
-                    "happy!!",
+                    " activities. Share with her your day to day and make her"
+                    " happy!!",
                     style: GoogleFonts.gabriela(
                       fontSize: 20,
                     ),
