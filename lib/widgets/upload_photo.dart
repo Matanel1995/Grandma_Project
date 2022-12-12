@@ -197,6 +197,7 @@
 
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:google_signin/screens/home_screen.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:async';
 
@@ -222,6 +223,18 @@ class _HomeScreenState extends State<UploadPhoto> {
         title: Text(
           'Upload Photos',
           style: Theme.of(context).textTheme.titleMedium,
+        ),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (_) {
+                  return const HomeScreen();
+                },
+              ),
+            );
+          },
         ),
       ),
       backgroundColor: Colors.blueGrey,
@@ -251,7 +264,7 @@ class _HomeScreenState extends State<UploadPhoto> {
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 TextButton.icon(
                     style: ButtonStyle(
