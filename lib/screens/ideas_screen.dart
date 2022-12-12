@@ -51,18 +51,6 @@ class IdeasScreen extends StatelessWidget {
                 CategoryItem(catData.id, catData.title, catData.color))
             .toList(),
       ),
-      // a button to add a photo
-      // floatingActionButton: FloatingActionButton(
-      //   child: const Icon(
-      //     Icons.add,
-      //   ),
-      //   onPressed: () {
-      //     buildListTile('Upload Photo', Icons.score, () {
-      //       Navigator.of(context).pushReplacementNamed(UploadPhoto.routeName);
-      //     });
-      //     print("HERE");
-      //   },
-      // ),
     );
   }
 }

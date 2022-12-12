@@ -34,31 +34,23 @@ class LoginPage extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                // SizedBox(
-                //   height: 30,
-                // ),
                 Image.asset(
                   elizabethImage,
                   width: 300,
                   height: 200,
                 ),
-                // SizedBox(
-                //   height: 30,
-                // ),
                 Container(
                   width: 300,
                   height: 300,
-                  //padding: EdgeInsets.fromLTRB(0, 60, 0, 0),
                   child: Text(
-                    "Hi Family!\nAs you know grandma loves to see your activities. Share with her your day to day and make her happy!!",
+                    "Hi Family!\nAs you know grandma loves to see your"
+                    "activities. Share with her your day to day and make her"
+                    "happy!!",
                     style: GoogleFonts.gabriela(
                       fontSize: 20,
                     ),
                   ),
                 ),
-                // SizedBox(
-                //   height: 10,
-                // ),
                 Text(
                   'Please sign in to use the app!',
                   style: GoogleFonts.roboto(
@@ -66,9 +58,6 @@ class LoginPage extends StatelessWidget {
                     fontWeight: FontWeight.w700,
                   ),
                 ),
-                // SizedBox(
-                //   height: 50,
-                // ),
                 SignInButton(
                   Buttons.Google,
                   elevation: 4,

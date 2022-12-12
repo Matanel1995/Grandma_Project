@@ -143,14 +143,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         },
                       ),
                     );
-                    // Navigator.of(context)
-                    //     .pushReplacementNamed(GalleryScreen.routeName);
                   },
                 ),
               ),
-              // const SizedBox(
-              //   height: 20,
-              // ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: Column(
@@ -165,9 +160,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       height: 200,
                       child: UsersList(),
                     ),
-                    // const SizedBox(
-                    //   height: 20,
-                    // ),
                     buildSectionTitle(context, 'Messages'),
                     Center(
                       child: buildContainer(
