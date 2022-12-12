@@ -66,6 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
       imageList.add(result.items[i].name);
     }
     print(imageList);
+    print(imageList.length);
   }
 
   @override
