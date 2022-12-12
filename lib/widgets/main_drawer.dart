@@ -92,6 +92,7 @@ class MainDrawer extends StatelessWidget {
           final provider =
               Provider.of<GoogleSingInPovider>(context, listen: false);
           provider.logout();
+          Navigator.popUntil(context, ModalRoute.withName('/'));
         }),
       ],
     ));
