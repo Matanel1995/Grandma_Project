@@ -68,6 +68,14 @@ class _HomeScreenState extends State<HomeScreen> {
     print(imageList);
   }
 
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      getImages();
+    });
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color.fromRGBO(244, 243, 243, 1),
@@ -124,7 +132,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 onTap: () {
-                  getImages();
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (_) {
