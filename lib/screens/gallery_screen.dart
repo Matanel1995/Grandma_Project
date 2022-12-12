@@ -9,7 +9,7 @@ import 'package:google_signin/storage_service.dart';
 class GalleryScreen extends StatefulWidget {
   static const routeName = './gallery-screen';
   List<String> imageTest = <String>[];
-  GalleryScreen(this.imageTest);
+  GalleryScreen(this.imageTest, {super.key});
 
   @override
   State<GalleryScreen> createState() => _GalleryScreenState(imageTest);
@@ -20,19 +20,23 @@ class _GalleryScreenState extends State<GalleryScreen> {
   List<String> imageTest1 = <String>[];
   _GalleryScreenState(this.imageTest1);
 
-  // List<String> image_name = <String>[];
-  // _PicturesScreenState(this.image_name);
+  int index = 0;
 
-  // void getImages() async {
-  //   final firebase_storage.ListResult result = await firebase_storage
-  //       .FirebaseStorage.instance
-  //       .ref()
-  //       .child("test")
-  //       .listAll();
-  //   for (var i = 0; i < result.items.length; i++) {
-  //     image_name.add(result.items[i].name);
-  //   }
-  // }
+  @override
+  void initState() {
+    Random rnd = Random();
+    int min = 0, max = imageTest1.length;
+
+    super.initState();
+    Timer.periodic(const Duration(seconds: 6), (timer) {
+      setState(() {
+        index = (index + 1) % imageTest1.length;
+        // int r = min + rnd.nextInt(max - min);
+        // index = r;
+        // print(r);
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,8 +47,7 @@ class _GalleryScreenState extends State<GalleryScreen> {
         // drawer: const MainDrawer(),
         body: Center(
             child: FutureBuilder(
-                future: storage
-                    .downloadURL('scaled_image_picker1555005536174115340.jpg'),
+                future: storage.downloadURL(imageTest1[index]),
                 builder:
                     (BuildContext context, AsyncSnapshot<String> snapshot) {
                   if (snapshot.connectionState == ConnectionState.done &&
