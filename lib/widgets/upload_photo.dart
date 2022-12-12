@@ -1,203 +1,7 @@
-// import 'package:flutter/material.dart';
-
-// class UploadPhoto extends StatelessWidget {
-//   static const routeName = './upload_photo';
-//   const UploadPhoto({super.key});
-
-//   Widget buildListTile(
-//       String title, IconData iconData, VoidCallback tapHandler) {
-//     return ListTile(
-//       leading: Icon(
-//         iconData,
-//         size: 26,
-//       ),
-//       title: Text(
-//         title,
-//         style: const TextStyle(
-//           fontFamily: 'RobotoCondensed',
-//           fontSize: 24,
-//           fontWeight: FontWeight.bold,
-//         ),
-//       ),
-//       onTap: tapHandler,
-//     );
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       // appBar: AppBar(
-//       //   title: const Text('The Score Table'),
-//       // ),
-//       body: Column(
-//         children: <Widget>[
-//           Container(
-//             height: 120,
-//             width: double.infinity,
-//             padding: const EdgeInsets.all(20),
-//             alignment: Alignment.centerLeft,
-//             color: Theme.of(context).accentColor,
-//             child: Text(
-//               'Upload a photo',
-//               style: TextStyle(
-//                   fontWeight: FontWeight.w900,
-//                   fontSize: 30,
-//                   color: Theme.of(context).primaryColor),
-//             ),
-//           ),
-//           const SizedBox(
-//             height: 20,
-//           ),
-//           buildListTile('Camera', Icons.add_a_photo, () {
-//             // Navigator.of(context).pushReplacementNamed('/');
-//           }),
-//           buildListTile('Photo Library', Icons.file_upload, () {
-//             // Navigator.of(context).pushReplacementNamed(TableScore.routeName);
-//           }),
-//           buildListTile('Back Home', Icons.house, () {
-//             Navigator.of(context).pushReplacementNamed('/');
-//           }),
-//         ],
-//       ),
-//     );
-//   }
-// }
-
-// import 'dart:html';
-// import 'dart:async';
-// import 'dart:io';
-// import 'package:flutter/material.dart';
-// import 'package:flutter/services.dart';
-// import 'package:image_picker/image_picker.dart';
-
-// class UploadPhoto extends StatefulWidget {
-//   static const routeName = './upload_photo';
-//   const UploadPhoto({super.key});
-
-//   @override
-//   State<UploadPhoto> createState() => _UploadPhotoState();
-// }
-
-// class _UploadPhotoState extends State<UploadPhoto> {
-//   XFile? image;
-
-//   Future _pickImage() async {
-//     try {
-//       final XFile? image =
-//           await ImagePicker().pickImage(source: ImageSource.gallery);
-
-//       if (image == null) return;
-
-//       final XFile imageTemp = XFile(image.path);
-
-//       setState(() => this.image = imageTemp);
-//     } on PlatformException catch (e) {
-//       print("failed to pick image: $e");
-//     }
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//         appBar: AppBar(
-//           title: Text(
-//             'Upload Photo',
-//             style: Theme.of(context).textTheme.titleMedium,
-//           ),
-//         ),
-//         // drawer: const MainDrawer(),
-//         body: Column(
-//           children: [
-//             // const Divider(
-//             //   height: 30,
-//             // ),
-//             Center(
-//               child: InkWell(
-//                 onTap: () {
-//                   // Navigator.of(context)
-//                   //     .pushReplacementNamed(PicturesScreen.routeName);
-//                 },
-//                 child: Container(
-//                   height: 120,
-//                   width: double.infinity,
-//                   padding: const EdgeInsets.all(20),
-//                   alignment: Alignment.center,
-//                   color: Colors.lightBlue,
-//                   child: const Text(
-//                     'Camera',
-//                     style: TextStyle(
-//                         fontWeight: FontWeight.w900,
-//                         fontSize: 30,
-//                         color: Colors.black),
-//                   ),
-//                 ),
-//               ),
-//             ),
-//             // const Divider(
-//             //   height: 50,
-//             // ),
-//             Center(
-//               child: InkWell(
-//                 onTap: () {
-//                   // Navigator.of(context)
-//                   //     .pushReplacementNamed(PicturesScreen.routeName);
-//                 },
-//                 child: Container(
-//                   height: 120,
-//                   width: double.infinity,
-//                   padding: const EdgeInsets.all(20),
-//                   alignment: Alignment.center,
-//                   color: Colors.purple,
-//                   child: const Text(
-//                     'Photo Library',
-//                     style: TextStyle(
-//                         fontWeight: FontWeight.w900,
-//                         fontSize: 30,
-//                         color: Colors.black),
-//                   ),
-//                 ),
-//               ),
-//             ),
-//             // const Divider(
-//             //   height: 50,
-//             // ),
-
-//             // Container(
-//             //   height: 417,
-//             //   width: double.infinity,
-//             //   child: Image.network(
-//             //     'https://hips.hearstapps.com/hbz.h-cdn.co/assets/16/26/2048x2381/hbz-queen-elizabeth-national-photo-day-1982-gettyimages-52103217.jpg?resize=980:*',
-//             //     fit: BoxFit.cover,
-//             //   ),
-//             // ),
-//             MaterialButton(
-//               color: Colors.amber,
-//               child: const Text(
-//                 "Choose from gallery",
-//                 style: TextStyle(
-//                     color: Colors.white70, fontWeight: FontWeight.bold),
-//               ),
-//               onPressed: () {
-//                 _pickImage();
-//               },
-//             ),
-//             MaterialButton(
-//               color: Colors.amber,
-//               child: const Text(
-//                 "Camera",
-//                 style: TextStyle(
-//                     color: Colors.white70, fontWeight: FontWeight.bold),
-//               ),
-//               onPressed: () {},
-//             ),
-//           ],
-//         ));
-//   }
-// }
-
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:google_signin/screens/home_screen.dart';
+import 'package:google_signin/screens/welcome_screen.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:async';
 
@@ -230,7 +34,7 @@ class _HomeScreenState extends State<UploadPhoto> {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (_) {
-                  return const HomeScreen();
+                  return const WelcomeScreen();
                 },
               ),
             );
@@ -298,9 +102,33 @@ class _HomeScreenState extends State<UploadPhoto> {
                         textStyle: MaterialStateProperty.all(const TextStyle(
                             fontSize: 14, color: Colors.white))),
                     onPressed: () async {
-                      storage
-                          .uploadFile(_singleImage!.path, _singleImage!.name)
-                          .then((value) => print('Done'));
+                      selectedImagePath == ''
+                          ? ScaffoldMessenger.of(context)
+                              .showSnackBar(const SnackBar(
+                              content: Text("No Image Selected !"),
+                            ))
+                          : storage
+                              .uploadFile(
+                                  _singleImage!.path, _singleImage!.name)
+                              .then((value) {
+                              return showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: const Text("Done"),
+                                      content: const Text(
+                                          "The photo uploaded succesfully"),
+                                      actions: [
+                                        TextButton(
+                                            onPressed: (() {
+                                              Navigator.of(context).pop();
+                                            }),
+                                            child: const Text("Ok"))
+                                      ],
+                                    );
+                                  });
+                            });
+
                       setState(() {});
                     },
                     icon: const Icon(
