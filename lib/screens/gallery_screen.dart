@@ -1,9 +1,7 @@
 import 'dart:async';
-import 'dart:ffi';
-import 'dart:io';
 import 'dart:math';
-import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:flutter/material.dart';
+import 'package:google_signin/screens/welcome_screen.dart';
 import 'package:google_signin/storage_service.dart';
 
 class GalleryScreen extends StatefulWidget {
@@ -43,25 +41,44 @@ class _GalleryScreenState extends State<GalleryScreen> {
     return Scaffold(
         appBar: AppBar(
           title: const Text('The Gallery'),
+          leading: IconButton(
+              icon: const Icon(Icons.arrow_back),
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) {
+                      return const WelcomeScreen();
+                    },
+                  ),
+                );
+              }),
         ),
         // drawer: const MainDrawer(),
-        body: Center(
-            child: FutureBuilder(
-                future: storage.downloadURL(imageTest1[index]),
-                builder:
-                    (BuildContext context, AsyncSnapshot<String> snapshot) {
-                  if (snapshot.connectionState == ConnectionState.done &&
-                      snapshot.hasData) {
-                    return Image.network(
-                      snapshot.data!,
-                      fit: BoxFit.cover,
-                    );
-                  }
-                  if (snapshot.connectionState == ConnectionState.waiting ||
-                      !snapshot.hasData) {
-                    return const CircularProgressIndicator();
-                  }
-                  return Container();
-                })));
+        body: imageTest1.isEmpty
+            ? const Center(
+                child: Text("There are no images yet"),
+              )
+            : Center(
+                child: FutureBuilder(
+                    future: storage.downloadURL(imageTest1[index]),
+                    builder:
+                        (BuildContext context, AsyncSnapshot<String> snapshot) {
+                      if (snapshot.connectionState == ConnectionState.done &&
+                          snapshot.hasData) {
+                        return Container(
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.height,
+                          child: Image.network(
+                            snapshot.data!,
+                            fit: BoxFit.fill,
+                          ),
+                        );
+                      }
+                      if (snapshot.connectionState == ConnectionState.waiting ||
+                          !snapshot.hasData) {
+                        return const CircularProgressIndicator();
+                      }
+                      return Container();
+                    })));
   }
 }
