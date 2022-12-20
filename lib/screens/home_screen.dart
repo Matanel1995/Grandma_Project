@@ -79,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromRGBO(244, 243, 243, 1),
+      backgroundColor: const Color(0x00effffd),
       appBar: AppBar(
         title: Text(
           'Home',
