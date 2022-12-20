@@ -7,6 +7,10 @@ class MyUser {
   final String photoUrl;
   final String email;
   //final String displayName;
+  //userType
+  //GroupsList
+  //FavoritGroupID
+  //LastGroup - (when exit the app last time)
 
   const MyUser({
     required this.id,
