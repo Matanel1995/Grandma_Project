@@ -69,6 +69,91 @@ class _HomeScreenState extends State<HomeScreen> {
     print(imageList.length);
   }
 
+  Widget whatToShow() {
+    // if there are members and there is a group return list of members and messages box
+    // else write a message and send the user to build a group or join
+    if (false) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          buildSectionTitle(context, 'Group Members'),
+          const SizedBox(
+            height: 15,
+          ),
+          Container(
+            height: 200,
+            child: UsersList(),
+          ),
+          buildSectionTitle(context, 'Messages'),
+          Center(
+            child: buildContainer(
+              ListView.builder(
+                itemBuilder: (ctx, index) => Card(
+                  color: Theme.of(context).accentColor,
+                  child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 5, horizontal: 10),
+                      child: Text(
+                        wishes[index],
+                      )),
+                ),
+                itemCount: wishes.length,
+              ),
+            ),
+          ),
+        ],
+      );
+    }
+    return Container(
+        margin: const EdgeInsets.all(30),
+        padding: const EdgeInsets.all(15),
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+            border: Border.all(color: Colors.black, width: 6),
+            borderRadius: BorderRadius.all(Radius.circular(35))),
+        child: RichText(
+          text: const TextSpan(
+            style: TextStyle(fontSize: 26, color: Colors.black),
+            children: [
+              TextSpan(
+                text: 'You dont have any groups yet. \n\nPress the ',
+              ),
+              WidgetSpan(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 2.0),
+                  child: Icon(
+                    Icons.menu,
+                    size: 30,
+                  ),
+                ),
+              ),
+              TextSpan(
+                text: ' icon. \n\nNavigate to: \n\n',
+              ),
+              WidgetSpan(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 2.0),
+                  child: Icon(
+                    Icons.group,
+                    size: 30,
+                  ),
+                ),
+              ),
+              TextSpan(
+                text: ' My Groups. \n\nFollow the instructions.',
+              ),
+            ],
+          ),
+        )
+
+        // const Text(
+        //   'You dont have any groups yet. \nPress the hamburger button on the top left corner and press the - My Groups tab and follow the instructions.',
+        //   style: TextStyle(fontSize: 30),
+        // ),
+        );
+  }
+
   @override
   void initState() {
     super.initState();
@@ -148,37 +233,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    buildSectionTitle(context, 'Group Members'),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Container(
-                      height: 200,
-                      child: UsersList(),
-                    ),
-                    buildSectionTitle(context, 'Messages'),
-                    Center(
-                      child: buildContainer(
-                        ListView.builder(
-                          itemBuilder: (ctx, index) => Card(
-                            color: Theme.of(context).accentColor,
-                            child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 5, horizontal: 10),
-                                child: Text(
-                                  wishes[index],
-                                )),
-                          ),
-                          itemCount: wishes.length,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                child: whatToShow(),
               )
             ],
           ),
