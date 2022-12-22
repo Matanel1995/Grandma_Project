@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_signin/models/user.dart';
+import 'package:google_signin/models/variables.dart';
 
 class promoCard extends StatelessWidget {
   final MyUser user;

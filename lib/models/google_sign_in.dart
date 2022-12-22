@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:google_signin/models/Group.dart';
 import 'package:google_signin/models/user.dart';
 import 'package:google_signin/models/variables.dart';
 
@@ -41,6 +42,8 @@ class GoogleSingInPovider extends ChangeNotifier {
             if (doc.exists)
               {
                 //Create instance of user with the DB parameters
+                currentUser =
+                    MyUser.fromFirestore(doc.data() as Map<String, dynamic>)
               }
             else
               {
@@ -79,8 +82,7 @@ class GoogleSingInPovider extends ChangeNotifier {
   }
 
   Future logout() async {
-    await currentUser.addUserToGroup('iqZ0Hbm7VASEjnCcLcOM');
-
+    var test = Group.createAsync(currentUser, 'test', 'test');
     await googleSignIn.disconnect().whenComplete(() async {
       FirebaseAuth.instance.signOut();
     });

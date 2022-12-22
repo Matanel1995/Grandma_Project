@@ -13,13 +13,14 @@ class Group {
   late String groupId;
   late Map<String, int> groupUsers = Map();
   late String groupPhotoUrl;
+  late String groupManagerId;
 
-  Group._privateConstructor({
-    required this.groupId,
-    required this.groupName,
-    required this.groupPhotoUrl,
-    required this.groupUsers,
-  });
+  Group._privateConstructor(
+      {required this.groupId,
+      required this.groupName,
+      required this.groupPhotoUrl,
+      required this.groupUsers,
+      required this.groupManagerId});
 
   static Future<Group> createAsync(
       //Function to create new group and store it in firebase
@@ -29,20 +30,20 @@ class Group {
     //Create new document in Group collection
     DocumentReference docRef = collectionRef.doc();
     String groupId = docRef.id;
-    print(groupId);
     Map<String, int> groupUsers = {user.id: 0};
     collectionRef.doc(groupId).set({
       'groupName': groupName,
       'groupId': groupId,
       'groupPhotoUrl': groupPhotoUrl,
-      'groupUsers': groupUsers
+      'groupUsers': groupUsers,
+      'groupManagerId': user.id
     });
     return Group._privateConstructor(
-      groupId: groupId,
-      groupName: groupName,
-      groupPhotoUrl: groupPhotoUrl,
-      groupUsers: groupUsers,
-    );
+        groupId: groupId,
+        groupName: groupName,
+        groupPhotoUrl: groupPhotoUrl,
+        groupUsers: groupUsers,
+        groupManagerId: user.id);
   }
 
   //Function to create new group- the user that created is ADMIN

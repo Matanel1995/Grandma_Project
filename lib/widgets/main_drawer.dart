@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_signin/models/variables.dart';
 import 'package:google_signin/screens/my_groups_screen.dart';
 import 'package:google_signin/widgets/upload_photo.dart';
 import 'package:provider/provider.dart';
@@ -42,14 +43,13 @@ class MainDrawer extends StatelessWidget {
           color: Colors.blueGrey,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: const [
+            children: [
               CircleAvatar(
                 radius: 48,
-                backgroundImage: NetworkImage(
-                    'https://static.timesofisrael.com/www/uploads/2022/08/F220810TN13-e1660670449190.jpg'),
+                backgroundImage: NetworkImage(currentUser.photoUrl),
               ),
               Text(
-                'Bibi',
+                "bibi",
                 style: TextStyle(
                     fontWeight: FontWeight.w900,
                     fontSize: 30,
