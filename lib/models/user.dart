@@ -10,7 +10,7 @@ class MyUser {
   String photoUrl;
   final String email;
   //userType
-  List<String> GroupsList = [];
+  List<String> groupsList = [];
   //FavoritGroupID
   //LastGroup - (when exit the app last time) think about it can be complicated
   //                                          maybe use the first group when init
@@ -41,10 +41,10 @@ class MyUser {
     docRef.get().then((doc) => {
           if (doc.exists)
             {
-              this.GroupsList.add(groupId),
+              this.groupsList.add(groupId),
               userRef
                   .doc(currentUser.id)
-                  .update({'groupList': FieldValue.arrayUnion(GroupsList)})
+                  .update({'groupList': FieldValue.arrayUnion(groupsList)})
             }
           else
             {print('No such Document!')}

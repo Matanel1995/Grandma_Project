@@ -48,9 +48,6 @@ class Group {
 
   //Function to create new group- the user that created is ADMIN
   void createGroup(MyUser user, String groupName, String groupPhotoUrl) async {
-    //**************************************************************************
-    //*****when creating new user make sure to create as admin here!!!!*********
-    //**************************************************************************
     await Group.createAsync(user, groupName, groupPhotoUrl);
   }
 
@@ -99,8 +96,6 @@ class Group {
         usersMap.remove(user.id);
         //update the map on the database
         collectionRef.doc(groupId).update({'groupUsers': usersMap});
-      } else {
-        print("NO SUCH PERSON IN THIS GROUP!");
       }
     });
   }
