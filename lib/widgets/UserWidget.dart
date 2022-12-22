@@ -25,7 +25,11 @@ class UserWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     MyUser user = MyUser(
-        id: userId, userName: userName, photoUrl: photoUrl, email: email);
+      id: userId,
+      userName: userName,
+      photoUrl: photoUrl,
+      email: email,
+    );
     return promoCard(user);
   }
 }

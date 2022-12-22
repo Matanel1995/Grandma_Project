@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 
 import 'dummy_data.dart';
 import 'models/activity.dart';
+import 'models/user.dart';
 import 'screens/activity_detail_screen.dart';
 import 'screens/category_activities_screen.dart';
 import 'screens/ideas_screen.dart';
