@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_signin/models/user.dart';
-import 'package:google_signin/models/vriables.dart';
+import 'package:google_signin/models/variables.dart';
 
 class GoogleSingInPovider extends ChangeNotifier {
   BuildContext context;

@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:google_signin/models/vriables.dart';
+import 'package:google_signin/models/variables.dart';
 
 final userRef = FirebaseFirestore.instance.collection('User');
 
