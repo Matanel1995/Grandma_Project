@@ -82,7 +82,10 @@ class GoogleSingInPovider extends ChangeNotifier {
   }
 
   Future logout() async {
-    var test = Group.createAsync(currentUser, 'test', 'test');
+    // var test = Group.createAsync(currentUser, 'test', 'test');
+    // await currentUser.addUserToGroup('9KF8erLxd0HQKudaCv1Q');
+    // await currentUser.ChangeCurrentGroup('9KF8erLxd0HQKudaCv1Q');
+    // print(currentUser.currentGroupId);
     await googleSignIn.disconnect().whenComplete(() async {
       FirebaseAuth.instance.signOut();
     });

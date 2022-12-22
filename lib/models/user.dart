@@ -11,7 +11,7 @@ class MyUser {
   final String email;
   //userType
   List<String> groupsList = [];
-  //FavoritGroupID
+  late String currentGroupId = "this is not changed";
   //LastGroup - (when exit the app last time) think about it can be complicated
   //                                          maybe use the first group when init
 
@@ -38,16 +38,33 @@ class MyUser {
     DocumentReference docRef =
         FirebaseFirestore.instance.collection('Group').doc(groupId);
     //check if document exist
-    docRef.get().then((doc) => {
+    await docRef.get().then((doc) => {
           if (doc.exists)
             {
-              this.groupsList.add(groupId),
+              currentUser.currentGroupId = groupId,
+              groupsList.add(groupId),
               userRef
                   .doc(currentUser.id)
-                  .update({'groupList': FieldValue.arrayUnion(groupsList)})
+                  .update({'groupList': FieldValue.arrayUnion(groupsList)}),
             }
           else
             {print('No such Document!')}
+        });
+  }
+
+  Future ChangeCurrentGroup(String groupId) async {
+    DocumentReference docRef =
+        FirebaseFirestore.instance.collection('Group').doc(groupId);
+    //check if document exist
+    await docRef.get().then((doc) => {
+          if (doc.exists &&
+              groupsList
+                  .contains(groupId)) //if group exist and user is part of it
+            {
+              currentUser.currentGroupId = groupId,
+            }
+          else
+            {print("DOC NOT FOUND!")}
         });
   }
 }
