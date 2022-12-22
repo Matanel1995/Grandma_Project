@@ -53,7 +53,8 @@ class GoogleSingInPovider extends ChangeNotifier {
                   'userName': googleUser.displayName,
                   'photoUrl': googleUser.photoUrl,
                   'email': googleUser.email,
-                  'groupList': []
+                  'groupList': [],
+                  'currentGroupId': '0',
                 }),
                 //Create an instance of myUser
                 currentUser = MyUser(
@@ -61,6 +62,7 @@ class GoogleSingInPovider extends ChangeNotifier {
                   userName: googleUser.displayName.toString(),
                   photoUrl: googleUser.photoUrl.toString(),
                   email: googleUser.email,
+                  currentGroupId: currentUser.currentGroupId,
                   //groupList
                 )
               }

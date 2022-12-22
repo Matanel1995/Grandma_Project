@@ -15,21 +15,33 @@ class MyUser {
   //LastGroup - (when exit the app last time) think about it can be complicated
   //                                          maybe use the first group when init
 
-  MyUser({
-    required this.id,
-    required this.userName,
-    required this.photoUrl,
-    required this.email,
-  });
+  MyUser(
+      {required this.id,
+      required this.userName,
+      required this.photoUrl,
+      required this.email,
+      required this.currentGroupId});
+
+  factory MyUser.forUserWidget(
+      String id, String userName, String photoUrl, String email) {
+    return MyUser(
+        id: id,
+        userName: userName,
+        photoUrl: photoUrl,
+        email: email,
+        currentGroupId: currentUser.currentGroupId);
+  }
 
   factory MyUser.fromFirestore(
     Map<String, dynamic> snapshot,
   ) {
     return MyUser(
-        id: snapshot['userId'],
-        userName: snapshot['userName'],
-        photoUrl: snapshot['photoUrl'],
-        email: snapshot['email']);
+      id: snapshot['userId'],
+      userName: snapshot['userName'],
+      photoUrl: snapshot['photoUrl'],
+      email: snapshot['email'],
+      currentGroupId: snapshot['currentGroupId'],
+    );
   }
 
   //Function to add user to a group, the group id added to users list
@@ -43,9 +55,12 @@ class MyUser {
             {
               currentUser.currentGroupId = groupId,
               groupsList.add(groupId),
-              userRef
-                  .doc(currentUser.id)
-                  .update({'groupList': FieldValue.arrayUnion(groupsList)}),
+              userRef.doc(currentUser.id).update(
+                {
+                  'groupList': FieldValue.arrayUnion(groupsList),
+                  'currentGroupId': currentUser.currentGroupId
+                },
+              ),
             }
           else
             {print('No such Document!')}
@@ -61,6 +76,7 @@ class MyUser {
               groupsList
                   .contains(groupId)) //if group exist and user is part of it
             {
+              docRef.update({'currentGroupId': groupId}),
               currentUser.currentGroupId = groupId,
             }
           else

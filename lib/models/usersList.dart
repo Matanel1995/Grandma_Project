@@ -27,6 +27,7 @@ class UsersList extends StatelessWidget {
                 Map<String, dynamic> userDetails =
                     snapshot.data!.docs[index].data();
                 //creating user object with firestoreBuilder
+                print(userDetails);
                 MyUser tempUser = MyUser.fromFirestore(userDetails);
                 return UserWidget.fromMyUser(tempUser);
               },
