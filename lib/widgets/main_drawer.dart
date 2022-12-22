@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_signin/screens/my_groups_screen.dart';
 import 'package:google_signin/widgets/upload_photo.dart';
 import 'package:provider/provider.dart';
 
@@ -39,10 +40,22 @@ class MainDrawer extends StatelessWidget {
           padding: const EdgeInsets.all(20),
           alignment: Alignment.centerLeft,
           color: Colors.blueGrey,
-          child: Text(
-            'Menu',
-            style: TextStyle(
-                fontWeight: FontWeight.w900, fontSize: 30, color: Colors.black),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: const [
+              CircleAvatar(
+                radius: 48,
+                backgroundImage: NetworkImage(
+                    'https://static.timesofisrael.com/www/uploads/2022/08/F220810TN13-e1660670449190.jpg'),
+              ),
+              Text(
+                'Bibi',
+                style: TextStyle(
+                    fontWeight: FontWeight.w900,
+                    fontSize: 30,
+                    color: Colors.black),
+              ),
+            ],
           ),
         ),
         const SizedBox(
@@ -51,16 +64,18 @@ class MainDrawer extends StatelessWidget {
         buildListTile('Home', Icons.house, () {
           Navigator.of(context).pushReplacementNamed('/');
         }),
-        buildListTile('Ideas', Icons.light, () {
-          // Navigator.of(context).pushReplacementNamed(IdeasScreen.routeName);
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (_) {
-                return IdeasScreen();
-              },
-            ),
-          );
-        }),
+
+        // ******************************* FOR NOW IDEAS IS TURENED OFF *******************************
+        // buildListTile('Ideas', Icons.light, () {
+        //   // Navigator.of(context).pushReplacementNamed(IdeasScreen.routeName);
+        //   Navigator.of(context).push(
+        //     MaterialPageRoute(
+        //       builder: (_) {
+        //         return IdeasScreen();
+        //       },
+        //     ),
+        //   );
+        // }),
         buildListTile('Score Table', Icons.score, () {
           // Navigator.of(context).pushReplacementNamed(TableScore.routeName);
           Navigator.of(context).push(
@@ -83,7 +98,13 @@ class MainDrawer extends StatelessWidget {
           );
         }),
         buildListTile('My Groups', Icons.group, () {
-          // Navigator.of(context).pushReplacementNamed(UploadPhoto.routeName);
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (_) {
+                return MyGroups();
+              },
+            ),
+          );
         }),
         buildListTile('Settings', Icons.settings, () {
           // Navigator.of(context).pushReplacementNamed(UploadPhoto.routeName);
