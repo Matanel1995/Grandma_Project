@@ -48,12 +48,17 @@ class MainDrawer extends StatelessWidget {
                 radius: 48,
                 backgroundImage: NetworkImage(currentUser.photoUrl),
               ),
-              Text(
-                "bibi",
-                style: TextStyle(
-                    fontWeight: FontWeight.w900,
-                    fontSize: 30,
-                    color: Colors.black),
+              SizedBox(
+                width: 30,
+              ),
+              Flexible(
+                child: Text(
+                  currentUser.userName,
+                  style: TextStyle(
+                      fontWeight: FontWeight.w900,
+                      fontSize: 30,
+                      color: Colors.black),
+                ),
               ),
             ],
           ),
@@ -77,7 +82,6 @@ class MainDrawer extends StatelessWidget {
         //   );
         // }),
         buildListTile('Score Table', Icons.score, () {
-          // Navigator.of(context).pushReplacementNamed(TableScore.routeName);
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (_) {

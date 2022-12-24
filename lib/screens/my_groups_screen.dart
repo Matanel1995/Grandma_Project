@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:google_signin/models/variables.dart';
+import 'package:google_signin/screens/add_user_screen.dart';
+import 'package:google_signin/screens/create_group_screen.dart';
+import 'package:google_signin/screens/kick_user_screen.dart';
+import 'package:google_signin/screens/leave_group_screen.dart';
 
 class MyGroups extends StatelessWidget {
   const MyGroups({super.key});
@@ -6,7 +11,8 @@ class MyGroups extends StatelessWidget {
   Widget whatToShow() {
     // if a member has a group so he will see the groups list
     // if he doesn't so he will see a message
-    if (true) {
+    // if(currentUser.currentGroupId != null)
+    if (currentUser.currentGroupId == null) {
       return Column(
         children: [
           Container(
@@ -42,33 +48,75 @@ class MyGroups extends StatelessWidget {
       );
     }
     // return GroupList
+    // I think it will be good if Matanel can do here the same he did with usersList , just with a GridView
     return Container();
   }
 
   void nada() {}
 
-  Widget typeOfGroup(
-      String txt, Color c, IconData iconData, VoidCallback tapHandler) {
-    return Container(
-      alignment: Alignment.center,
-      padding: const EdgeInsets.all(0),
-      child: SizedBox(
-        width: double.infinity,
-        height: 60,
-        child: ElevatedButton.icon(
-          onPressed: tapHandler,
-          icon: Icon(iconData),
-          label: Text(
-            txt,
-            style: TextStyle(fontSize: 30),
-          ),
-          style: ElevatedButton.styleFrom(
-            primary: c,
-          ),
+  Widget buildListTile(
+      String title, IconData iconData, VoidCallback tapHandler) {
+    return ListTile(
+      leading: Icon(
+        iconData,
+        size: 26,
+      ),
+      title: Text(
+        title,
+        style: const TextStyle(
+          fontFamily: 'RobotoCondensed',
+          fontSize: 24,
+          fontWeight: FontWeight.bold,
         ),
       ),
+      onTap: tapHandler,
     );
   }
+
+  Widget buildListTileForAdmin(
+      String title, IconData iconData, VoidCallback tapHandler) {
+    //if(currentUser.isAdmin)
+    if (true) {
+      return ListTile(
+        leading: Icon(
+          iconData,
+          size: 26,
+        ),
+        title: Text(
+          title,
+          style: const TextStyle(
+            fontFamily: 'RobotoCondensed',
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        onTap: tapHandler,
+      );
+    }
+  }
+
+  // Widget typeOfGroup(
+  //     String txt, Color c, IconData iconData, VoidCallback tapHandler) {
+  //   return Container(
+  //     alignment: Alignment.center,
+  //     padding: const EdgeInsets.all(0),
+  //     child: SizedBox(
+  //       width: double.infinity,
+  //       height: 60,
+  //       child: ElevatedButton.icon(
+  //         onPressed: tapHandler,
+  //         icon: Icon(iconData),
+  //         label: Text(
+  //           txt,
+  //           style: TextStyle(fontSize: 30),
+  //         ),
+  //         style: ElevatedButton.styleFrom(
+  //           primary: c,
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 
   bottomSheet(context) {
     showModalBottomSheet(
@@ -78,9 +126,67 @@ class MyGroups extends StatelessWidget {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              typeOfGroup('Create Group', Colors.orange, Icons.create, nada),
-              typeOfGroup(
-                  'Join Group', Colors.red, Icons.family_restroom, nada),
+              buildListTile('Create Group', Icons.create, () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) {
+                      return CreateGroupScreen();
+                    },
+                  ),
+                );
+              }),
+              // buildListTile('Join Group', Icons.family_restroom, () {
+              //   // Navigator.of(context).push(
+              //   //   MaterialPageRoute(
+              //   //     builder: (_) {
+              //   //       return CreateGroupScreen();
+              //   //     },
+              //   //   ),
+              //   // );
+              // }),
+              buildListTile('Leave Group', Icons.exit_to_app, () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) {
+                      return LeaveGroupScreen();
+                    },
+                  ),
+                );
+              }),
+              buildListTileForAdmin('Add User', Icons.add_road, () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) {
+                      return AddUserScreen();
+                    },
+                  ),
+                );
+              }),
+              buildListTileForAdmin('Kick User', Icons.no_accounts, () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) {
+                      return kickUserScreen();
+                    },
+                  ),
+                );
+              }),
+
+              // typeOfGroup('Create Group', Colors.red, Icons.create, () {
+              //   Navigator.of(context).push(
+              //     MaterialPageRoute(
+              //       builder: (_) {
+              //         return CreateGroupScreen();
+              //       },
+              //     ),
+              //   );
+              // }),
+
+              // typeOfGroup(
+              //     'Join Group', Colors.orange, Icons.family_restroom, nada),
+              // typeOfGroup('Leave Group', Colors.lightGreen,
+              //     Icons.leave_bags_at_home, nada),
+              // addUser(context),
             ],
           );
         });

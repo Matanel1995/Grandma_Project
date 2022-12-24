@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_signin/models/usersList.dart';
+import 'package:google_signin/models/variables.dart';
 import 'package:google_signin/screens/gallery_screen.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import '../widgets/main_drawer.dart';
@@ -85,23 +86,34 @@ class _HomeScreenState extends State<HomeScreen> {
             height: 200,
             child: UsersList(),
           ),
-          buildSectionTitle(context, 'Messages'),
-          Center(
-            child: buildContainer(
-              ListView.builder(
-                itemBuilder: (ctx, index) => Card(
-                  color: Theme.of(context).accentColor,
-                  child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 5, horizontal: 10),
-                      child: Text(
-                        wishes[index],
-                      )),
-                ),
-                itemCount: wishes.length,
-              ),
-            ),
-          ),
+          // buildSectionTitle(context, 'Messages'),
+          // Center(
+          //   child: buildContainer(
+          //     ListView.builder(
+          //       itemBuilder: (ctx, index) => Card(
+          //         color: Theme.of(context).accentColor,
+          //         child: Padding(
+          //             padding: const EdgeInsets.symmetric(
+          //                 vertical: 5, horizontal: 10),
+          //             child: Text(
+          //               wishes[index],
+          //             )),
+          //       ),
+          //       itemCount: wishes.length,
+          //     ),
+          //   ),
+          // ),
+          //     GridView(
+          //   padding: const EdgeInsets.all(25),
+          //   gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+          //     maxCrossAxisExtent: 200,
+          //     childAspectRatio: 3 / 2,
+          //     crossAxisSpacing: 20,
+          //     mainAxisSpacing: 20,
+          //   ),
+
+          //   children: currentUser.photoUrl,
+          // )
         ],
       );
     }
