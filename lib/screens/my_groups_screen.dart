@@ -5,8 +5,8 @@ import 'package:google_signin/screens/create_group_screen.dart';
 import 'package:google_signin/screens/kick_user_screen.dart';
 import 'package:google_signin/screens/leave_group_screen.dart';
 
-class MyGroups extends StatelessWidget {
-  const MyGroups({super.key});
+class MyGroupsScreen extends StatelessWidget {
+  const MyGroupsScreen({super.key});
 
   Widget whatToShow() {
     // if a member has a group so he will see the groups list

@@ -12,6 +12,56 @@ class kickUserScreen extends StatefulWidget {
 class _kickUserScreen extends State<kickUserScreen> {
   final conteollerKickUser = TextEditingController();
   String kickUser = '';
+  bool isKicked = false;
+
+  Widget show() {
+    if (isKicked) {
+      return const Expanded(
+        child: Center(
+            child: Text(
+          'The user XXXXXXXX has been kicked. \nYou can go back now.',
+          style: TextStyle(color: Colors.black, fontSize: 20),
+        )),
+      );
+    }
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        TextField(
+          controller: conteollerKickUser,
+          decoration: InputDecoration(
+              hintText: 'Please provide a user to kick',
+              border: const OutlineInputBorder(),
+              suffixIcon: IconButton(
+                onPressed: () {
+                  // clear what's currently in the textfield
+                  conteollerKickUser.clear();
+                },
+                icon: const Icon(Icons.clear),
+              )),
+        ),
+        MaterialButton(
+          // update the group name
+          onPressed: () {
+            setState(() {
+              kickUser = conteollerKickUser.text;
+            });
+            if (kickUser != '') {
+              // createGroup(MyUser user, String groupName, String groupPhotoUrl)
+              // createGroup(currentUser, groupName, photoURL);
+              isKicked = true;
+            }
+          },
+          color: Colors.blue,
+          child: const Text(
+            'Confirm',
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
+      ],
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,49 +74,7 @@ class _kickUserScreen extends State<kickUserScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            //display text
-            // Expanded(
-            //   child: Container(
-            //       child: Center(
-            //     child: Text(groupName),
-            //   )),
-            // ),
-            TextField(
-              controller: conteollerKickUser,
-              decoration: InputDecoration(
-                  hintText: 'Please provide a user to kick',
-                  border: const OutlineInputBorder(),
-                  suffixIcon: IconButton(
-                    onPressed: () {
-                      // clear what's currently in the textfield
-                      conteollerKickUser.clear();
-                    },
-                    icon: const Icon(Icons.clear),
-                  )),
-            ),
-            MaterialButton(
-              // update the group name
-              onPressed: () {
-                setState(() {
-                  kickUser = conteollerKickUser.text;
-                });
-                if (kickUser != '') {
-                  // createGroup(MyUser user, String groupName, String groupPhotoUrl)
-                  // createGroup(currentUser, groupName, photoURL);
-                }
-              },
-              color: Colors.blue,
-              child: const Text(
-                'Confirm',
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-          ],
-        ),
+        child: show(),
       ),
     );
   }

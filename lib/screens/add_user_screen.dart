@@ -12,6 +12,56 @@ class AddUserScreen extends StatefulWidget {
 class _AddUserScreenState extends State<AddUserScreen> {
   final controllerAddUser = TextEditingController();
   String addUser = '';
+  bool isAdded = false;
+
+  Widget show() {
+    if (isAdded) {
+      return const Expanded(
+        child: Center(
+            child: Text(
+          'The user XXXXXXXX has been added. \nYou can go back now.',
+          style: TextStyle(color: Colors.black, fontSize: 20),
+        )),
+      );
+    }
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        TextField(
+          controller: controllerAddUser,
+          decoration: InputDecoration(
+              hintText: 'Please provide a user to add',
+              border: const OutlineInputBorder(),
+              suffixIcon: IconButton(
+                onPressed: () {
+                  // clear what's currently in the textfield
+                  controllerAddUser.clear();
+                },
+                icon: const Icon(Icons.clear),
+              )),
+        ),
+        MaterialButton(
+          // update the group name
+          onPressed: () {
+            setState(() {
+              addUser = controllerAddUser.text;
+            });
+            if (addUser != '') {
+              // createGroup(MyUser user, String groupName, String groupPhotoUrl)
+              // createGroup(currentUser, groupName, photoURL);
+              isAdded = true;
+            }
+          },
+          color: Colors.blue,
+          child: const Text(
+            'Confirm',
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
+      ],
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,49 +74,7 @@ class _AddUserScreenState extends State<AddUserScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            //display text
-            // Expanded(
-            //   child: Container(
-            //       child: Center(
-            //     child: Text(groupName),
-            //   )),
-            // ),
-            TextField(
-              controller: controllerAddUser,
-              decoration: InputDecoration(
-                  hintText: 'Please provide a user to add',
-                  border: const OutlineInputBorder(),
-                  suffixIcon: IconButton(
-                    onPressed: () {
-                      // clear what's currently in the textfield
-                      controllerAddUser.clear();
-                    },
-                    icon: const Icon(Icons.clear),
-                  )),
-            ),
-            MaterialButton(
-              // update the group name
-              onPressed: () {
-                setState(() {
-                  addUser = controllerAddUser.text;
-                });
-                if (addUser != '') {
-                  // createGroup(MyUser user, String groupName, String groupPhotoUrl)
-                  // createGroup(currentUser, groupName, photoURL);
-                }
-              },
-              color: Colors.blue,
-              child: const Text(
-                'Confirm',
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-          ],
-        ),
+        child: show(),
       ),
     );
   }

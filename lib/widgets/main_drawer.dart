@@ -105,7 +105,7 @@ class MainDrawer extends StatelessWidget {
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (_) {
-                return MyGroups();
+                return MyGroupsScreen();
               },
             ),
           );
