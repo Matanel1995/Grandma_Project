@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:google_signin/models/Group.dart';
 import 'package:google_signin/models/variables.dart';
@@ -11,6 +13,16 @@ class CreateGroupScreen extends StatefulWidget {
 }
 
 class _CreateGroupScreenState extends State<CreateGroupScreen> {
+  // @override
+  // void initState() {
+  //   // TODO: implement initState
+  //   super.initState();
+  //   Timer(
+  //       const Duration(seconds: 5),
+  //       () => Navigator.of(context).pushReplacement(MaterialPageRoute(
+  //           builder: (BuildContext context) => MyGroupsScreen())));
+  // }
+
   final controllerGroupName = TextEditingController();
   final controllerGroupPhoto = TextEditingController();
   String groupName = '';
@@ -86,6 +98,11 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                 // there is a selected photo
                 Group.createAsync(currentUser, groupName, photoURL);
               }
+              // auto switching page after 5 seconds
+              Timer(
+                  const Duration(seconds: 5),
+                  () => Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (BuildContext context) => MyGroupsScreen())));
               isCreated = true;
             } else {
               showError();
@@ -94,6 +111,17 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
           color: Colors.blue,
           child: const Text(
             'Create',
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
+        MaterialButton(
+          // update the group name
+          onPressed: () => Navigator.of(context).pushReplacement(
+              MaterialPageRoute(
+                  builder: (BuildContext context) => MyGroupsScreen())),
+          color: Colors.purple,
+          child: const Text(
+            'Back To My Groups',
             style: TextStyle(color: Colors.white),
           ),
         ),
