@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:google_signin/models/Group.dart';
+import 'package:google_signin/models/gruopList.dart';
 import 'package:google_signin/models/variables.dart';
 import 'package:google_signin/screens/add_user_screen.dart';
 import 'package:google_signin/screens/create_group_screen.dart';
 import 'package:google_signin/screens/kick_user_screen.dart';
 import 'package:google_signin/screens/leave_group_screen.dart';
+
+import '../widgets/groupPromoCard.dart';
 
 class MyGroupsScreen extends StatelessWidget {
   const MyGroupsScreen({super.key});
@@ -12,7 +16,7 @@ class MyGroupsScreen extends StatelessWidget {
     // if a member has a group so he will see the groups list
     // if he doesn't so he will see a message
     // if(currentUser.currentGroupId != null)
-    if (currentUser.currentGroupId == null) {
+    if (currentUser.groupsList.isEmpty) {
       return Column(
         children: [
           Container(
@@ -49,7 +53,14 @@ class MyGroupsScreen extends StatelessWidget {
     }
     // return GroupList
     // I think it will be good if Matanel can do here the same he did with usersList , just with a GridView
-    return Container();
+    else {
+      print(currentUser.currentGroupId);
+      return Expanded(
+        child: Container(
+          child: groupList(),
+        ),
+      );
+    }
   }
 
   void nada() {}

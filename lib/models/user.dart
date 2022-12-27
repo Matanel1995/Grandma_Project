@@ -9,18 +9,18 @@ class MyUser {
   final String userName;
   String photoUrl;
   final String email;
-  //userType
-  List<String> groupsList = [];
+  bool isViewer;
+  List<dynamic> groupsList = [];
   late String currentGroupId = "this is not changed";
-  //LastGroup - (when exit the app last time) think about it can be complicated
-  //                                          maybe use the first group when init
 
   MyUser(
       {required this.id,
       required this.userName,
       required this.photoUrl,
       required this.email,
-      required this.currentGroupId});
+      required this.currentGroupId,
+      required this.groupsList,
+      required this.isViewer});
 
   factory MyUser.forUserWidget(
       String id, String userName, String photoUrl, String email) {
@@ -29,7 +29,9 @@ class MyUser {
         userName: userName,
         photoUrl: photoUrl,
         email: email,
-        currentGroupId: currentUser.currentGroupId);
+        currentGroupId: currentUser.currentGroupId,
+        groupsList: currentUser.groupsList,
+        isViewer: currentUser.isViewer);
   }
 
   factory MyUser.fromFirestore(
@@ -41,11 +43,14 @@ class MyUser {
       photoUrl: snapshot['photoUrl'],
       email: snapshot['email'],
       currentGroupId: snapshot['currentGroupId'],
+      groupsList: snapshot['groupList'],
+      isViewer: snapshot['isViewer'],
     );
   }
 
   //Function to add user to a group, the group id added to users list
   Future addUserToGroup(String groupId) async {
+    print("In add user to Group!");
     //Get doc referance
     DocumentReference docRef =
         FirebaseFirestore.instance.collection('Group').doc(groupId);
@@ -53,6 +58,7 @@ class MyUser {
     await docRef.get().then((doc) => {
           if (doc.exists)
             {
+              print('Doc Exist!'),
               currentUser.currentGroupId = groupId,
               groupsList.add(groupId),
               userRef.doc(currentUser.id).update(
@@ -82,5 +88,18 @@ class MyUser {
           else
             {print("DOC NOT FOUND!")}
         });
+  }
+
+  Future changeViewMode(bool isViewer) async {
+    DocumentReference docRef =
+        FirebaseFirestore.instance.collection('User').doc(currentUser.id);
+    //check if document exist
+    await docRef.get().then(
+      (doc) {
+        if (doc.exists) {
+          docRef.update({'isViewer': isViewer});
+        }
+      },
+    );
   }
 }

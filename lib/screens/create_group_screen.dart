@@ -78,8 +78,14 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
               groupName = controllerGroupName.text;
               photoURL = controllerGroupPhoto.text;
             });
-            if (groupName != '' && photoURL != '') {
-              Group.createAsync(currentUser, groupName, photoURL);
+            if (groupName != '') {
+              if (photoURL == "") {
+                // no selected photo
+                Group.createAsync(currentUser, groupName);
+              } else {
+                // there is a selected photo
+                Group.createAsync(currentUser, groupName, photoURL);
+              }
               isCreated = true;
             } else {
               showError();

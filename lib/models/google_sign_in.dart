@@ -55,6 +55,7 @@ class GoogleSingInPovider extends ChangeNotifier {
                   'email': googleUser.email,
                   'groupList': [],
                   'currentGroupId': '0',
+                  'isViewer': false,
                 }),
                 //Create an instance of myUser
                 currentUser = MyUser(
@@ -63,7 +64,8 @@ class GoogleSingInPovider extends ChangeNotifier {
                   photoUrl: googleUser.photoUrl.toString(),
                   email: googleUser.email,
                   currentGroupId: currentUser.currentGroupId,
-                  //groupList
+                  groupsList: currentUser.groupsList,
+                  isViewer: false,
                 )
               }
           });
@@ -84,12 +86,17 @@ class GoogleSingInPovider extends ChangeNotifier {
   }
 
   Future logout() async {
-    // var test = Group.createAsync(currentUser, 'test', 'test');
-    // await currentUser.addUserToGroup('9KF8erLxd0HQKudaCv1Q');
-    // await currentUser.ChangeCurrentGroup('9KF8erLxd0HQKudaCv1Q');
-    // print(currentUser.currentGroupId);
+    await currentUser.changeViewMode(false);
     await googleSignIn.disconnect().whenComplete(() async {
       FirebaseAuth.instance.signOut();
     });
+    currentUser = MyUser(
+        id: '0',
+        userName: '0',
+        photoUrl: '0',
+        email: '0',
+        currentGroupId: '0',
+        groupsList: [],
+        isViewer: false);
   }
 }

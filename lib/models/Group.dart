@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:google_signin/models/variables.dart';
 import 'user.dart';
 
 //Get doc referance
@@ -11,9 +12,42 @@ CollectionReference collectionRef =
 class Group {
   late String groupName;
   late String groupId;
-  late Map<String, int> groupUsers = Map();
+  late Map<String, dynamic> groupUsers = Map();
   late String groupPhotoUrl;
   late String groupManagerId;
+
+  Group(
+      {required this.groupId,
+      required this.groupName,
+      required this.groupManagerId,
+      required this.groupPhotoUrl,
+      required this.groupUsers});
+
+  Group.widgetConstructor({
+    required this.groupName,
+    required this.groupPhotoUrl,
+  });
+
+  factory Group.fromFirestore(
+    Map<String, dynamic> snapshot,
+  ) {
+    //print(currentUser.groupsList.toString());
+    return Group(
+        groupName: snapshot['groupName'],
+        groupId: snapshot['groupId'],
+        groupUsers: snapshot['groupUsers'],
+        groupPhotoUrl: snapshot['groupPhotoUrl'],
+        groupManagerId: snapshot['groupManagerId']);
+  }
+
+  // static Future helperFromFirestore(String currGroupId) async {
+  //   await collectionRef
+  //       .doc(currGroupId)
+  //       .get()
+  //       .then((DocumentSnapshot docSnapshot) {
+  //     return docSnapshot.data() as Map<String, dynamic>;
+  //   });
+  // }
 
   Group._privateConstructor(
       {required this.groupId,
@@ -23,21 +57,25 @@ class Group {
       required this.groupManagerId});
 
   static Future<Group> createAsync(
-      //Function to create new group and store it in firebase
-      MyUser user,
-      String groupName,
-      String groupPhotoUrl) async {
+    //Function to create new group and store it in firebase
+    MyUser user,
+    String groupName, [
+    String groupPhotoUrl =
+        'https://st4.depositphotos.com/11634452/41441/v/600/depositphotos_414416674-stock-illustration-picture-profile-icon-male-icon.jpg',
+  ]) async {
+    print("In create async!");
     //Create new document in Group collection
     DocumentReference docRef = collectionRef.doc();
     String groupId = docRef.id;
     Map<String, int> groupUsers = {user.id: 0};
-    collectionRef.doc(groupId).set({
+    await collectionRef.doc(groupId).set({
       'groupName': groupName,
       'groupId': groupId,
       'groupPhotoUrl': groupPhotoUrl,
       'groupUsers': groupUsers,
       'groupManagerId': user.id
     });
+    await currentUser.addUserToGroup(groupId);
     return Group._privateConstructor(
         groupId: groupId,
         groupName: groupName,
@@ -55,8 +93,6 @@ class Group {
   Future addUser(String userIdAdd) async {
     late var users;
     //ADD HERE IF TO CHECK IF THE USER IS ADMIN!!!!!!!!!!
-    //Get doc referance
-    //CollectionReference docRef = FirebaseFirestore.instance.collection('Group');
     await collectionRef.doc(groupId).get().then(
       (DocumentSnapshot docSnapshot) {
         var data = docSnapshot.data() as Map<String, dynamic>;
@@ -65,6 +101,9 @@ class Group {
         }
         var updateUsers = parseMap(data['groupUsers'].toString());
         collectionRef.doc(groupId).update({'groupUsers': updateUsers});
+        if (currentUser.id == userIdAdd) {
+          currentUser.addUserToGroup(groupId);
+        }
       },
       onError: (e) => print('error!'),
     );

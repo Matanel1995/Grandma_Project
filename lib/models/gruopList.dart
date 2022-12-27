@@ -1,34 +1,40 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:google_signin/models/user.dart';
-import 'package:google_signin/widgets/UserWidget.dart';
-import 'package:google_signin/widgets/promoCard.dart';
+import 'package:google_signin/models/Group.dart';
+import 'package:google_signin/models/variables.dart';
+import 'package:google_signin/widgets/groupWidget.dart';
 
-class UsersList extends StatelessWidget {
-  const UsersList({super.key});
+class groupList extends StatelessWidget {
+  const groupList({super.key});
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: FirebaseFirestore.instance.collection('User').snapshots(),
+      stream: FirebaseFirestore.instance.collection('Group').snapshots(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator();
+          return const CircularProgressIndicator();
         } else if (snapshot.connectionState == ConnectionState.active ||
             snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasError) {
             return const Text('Error occuerrd');
           } else if (snapshot.hasData) {
             return ListView.builder(
-              scrollDirection: Axis.horizontal,
+              scrollDirection: Axis.vertical,
               itemCount: snapshot.data!.docs.length,
               itemBuilder: (context, index) {
                 //creating a map to store user details
-                Map<String, dynamic> userDetails =
+                Map<String, dynamic> groupDetails =
                     snapshot.data!.docs[index].data();
                 //creating user object with firestoreBuilder
-                MyUser tempUser = MyUser.fromFirestore(userDetails);
-                return UserWidget.fromMyUser(tempUser);
+                var toCheck =
+                    GetGroupId(snapshot.data!.docs[index].data().toString());
+                if (currentUser.groupsList.contains(toCheck)) {
+                  Group tempGroup = Group.fromFirestore(groupDetails);
+                  return groupWidget.fromGroup(tempGroup);
+                } else {
+                  return Container();
+                }
               },
             );
           } else {
@@ -39,5 +45,12 @@ class UsersList extends StatelessWidget {
         }
       },
     );
+  }
+
+  String GetGroupId(String data) {
+    String helper = data.split(',')[2];
+    helper = helper.split(':')[1];
+    helper = helper.trim();
+    return helper;
   }
 }

@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_signin/models/Group.dart';
+import 'package:google_signin/models/user.dart';
 import 'package:google_signin/models/variables.dart';
 
 class AddUserScreen extends StatefulWidget {
@@ -48,8 +50,14 @@ class _AddUserScreenState extends State<AddUserScreen> {
               addUser = controllerAddUser.text;
             });
             if (addUser != '') {
-              // createGroup(MyUser user, String groupName, String groupPhotoUrl)
-              // createGroup(currentUser, groupName, photoURL);
+              // late Group currGroup;
+              // FirebaseFirestore.instance
+              //     .collection('Group')
+              //     .doc(currentUser.currentGroupId)
+              //     .get()
+              //     .then((value) {
+              //   currGroup = Group.fromFirestore(value as Map<String, dynamic>);
+              // });
               isAdded = true;
             }
           },
