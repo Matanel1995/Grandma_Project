@@ -28,6 +28,7 @@ class _MainDrawerState extends State<MainDrawer> {
           buildListTile('Home', Icons.house, () {
             Navigator.of(context).pushReplacementNamed('/');
           }),
+
           buildListTile('Score Table', Icons.score, () {
             Navigator.of(context).push(
               MaterialPageRoute(

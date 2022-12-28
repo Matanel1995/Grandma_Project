@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:google_signin/models/Group.dart';
 import 'package:google_signin/models/variables.dart';
-import 'package:google_signin/screens/home_screen.dart';
-import 'package:google_signin/screens/welcome_screen.dart';
+
+import '../models/user.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -51,9 +52,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         'Only shows the gallery, very simple for grandma.'),
                     onChanged: (newValue) {
                       setState(() {
-                        currentUser.changeViewMode(newValue);
+                        currentUser.SetViewMode(newValue);
                       });
-                    })
+                    }),
               ],
             ),
           )

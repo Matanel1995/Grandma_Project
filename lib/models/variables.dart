@@ -1,3 +1,4 @@
+import 'package:google_signin/models/Group.dart';
 import 'package:google_signin/models/user.dart';
 
 //define global variables here
@@ -9,3 +10,7 @@ MyUser currentUser = MyUser(
     currentGroupId: '0',
     groupsList: [],
     isViewer: false);
+
+List<MyUser> usersList = [];
+
+List<Group> groupsListToReturn = [];
