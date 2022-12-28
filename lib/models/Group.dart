@@ -1,7 +1,4 @@
-import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/material.dart';
 import 'package:google_signin/models/variables.dart';
 import 'user.dart';
 
@@ -16,6 +13,9 @@ class Group {
   late String groupPhotoUrl;
   late String groupManagerId;
 
+  ///*************************Constructors - Start************************* */
+
+//Group Constructor
   Group(
       {required this.groupId,
       required this.groupName,
@@ -23,11 +23,17 @@ class Group {
       required this.groupPhotoUrl,
       required this.groupUsers});
 
+//Group Constractor fir GroupWidget
   Group.widgetConstructor({
     required this.groupName,
     required this.groupPhotoUrl,
+    required this.groupId,
+    required this.groupManagerId,
+    required this.groupUsers,
   });
-
+//Group Constructor from firebase
+//Input: Map<String,dynamic>
+//Putput : Group object
   factory Group.fromFirestore(
     Map<String, dynamic> snapshot,
   ) {
@@ -39,16 +45,7 @@ class Group {
         groupPhotoUrl: snapshot['groupPhotoUrl'],
         groupManagerId: snapshot['groupManagerId']);
   }
-
-  // static Future helperFromFirestore(String currGroupId) async {
-  //   await collectionRef
-  //       .doc(currGroupId)
-  //       .get()
-  //       .then((DocumentSnapshot docSnapshot) {
-  //     return docSnapshot.data() as Map<String, dynamic>;
-  //   });
-  // }
-
+//Group private consturctor (to use inside createAsync)
   Group._privateConstructor(
       {required this.groupId,
       required this.groupName,
@@ -56,6 +53,35 @@ class Group {
       required this.groupUsers,
       required this.groupManagerId});
 
+  ///*************************Constructors - End***************************** */
+
+  ///***********************Getter & Setters - Start************************* */
+  get getGroupId {
+    return groupId;
+  }
+
+  get getGroupManagerId {
+    return groupManagerId;
+  }
+
+  get getGroupName {
+    return groupName;
+  }
+
+  get getGroupPhotoUrl {
+    return groupPhotoUrl;
+  }
+
+  get getGroupUsers {
+    return groupUsers;
+  }
+
+  ///***********************Getter & Setters - End*************************** */
+
+  ///***********************Other functions - Start**************************** */
+
+//Function to create new group in firebase
+//And set the user that creating it to its Admin field /
   static Future<Group> createAsync(
     //Function to create new group and store it in firebase
     MyUser user,
@@ -63,7 +89,6 @@ class Group {
     String groupPhotoUrl =
         'https://st4.depositphotos.com/11634452/41441/v/600/depositphotos_414416674-stock-illustration-picture-profile-icon-male-icon.jpg',
   ]) async {
-    print("In create async!");
     //Create new document in Group collection
     DocumentReference docRef = collectionRef.doc();
     String groupId = docRef.id;
@@ -90,24 +115,27 @@ class Group {
   }
 
   //Function to add user to existing group - ONLY ADMIN!
-  Future addUser(String userIdAdd) async {
-    late var users;
-    //ADD HERE IF TO CHECK IF THE USER IS ADMIN!!!!!!!!!!
-    await collectionRef.doc(groupId).get().then(
-      (DocumentSnapshot docSnapshot) {
-        var data = docSnapshot.data() as Map<String, dynamic>;
-        if (data['groupUsers'][userIdAdd] == null) {
-          data['groupUsers'][userIdAdd] = 0;
-        }
-        var updateUsers = parseMap(data['groupUsers'].toString());
-        collectionRef.doc(groupId).update({'groupUsers': updateUsers});
-        if (currentUser.id == userIdAdd) {
-          currentUser.addUserToGroup(groupId);
-        }
-      },
-      onError: (e) => print('error!'),
-    );
+  Future addUser(MyUser userToAdd) async {
+    if (groupManagerId == currentUser.id) {
+      await collectionRef.doc(groupId).get().then(
+        (DocumentSnapshot docSnapshot) {
+          var data = docSnapshot.data() as Map<String, dynamic>;
+          if (data['groupUsers'][userToAdd.id] == null) {
+            data['groupUsers'][userToAdd.id] = 0;
+          }
+          var updateUsers = parseMap(data['groupUsers'].toString());
+          collectionRef.doc(groupId).update({'groupUsers': updateUsers});
+          if (currentUser.id == userToAdd.id) {
+            currentUser.addUserToGroup(groupId);
+          }
+        },
+        onError: (e) => print('Error in addUser! ' + e.toString()),
+      );
+    } else {
+      print('You need to be Admin to kick some one from the group!');
+    }
     //UPDATE HERE THE USER GROUPS LIST WITH THE USER METHOD!!!!!!!!!
+    await userToAdd.addUserToGroup(groupId);
   }
 
   Map<String, int> parseMap(String mapString) {
@@ -141,9 +169,12 @@ class Group {
 
   //Function to kick someone from group - ONLY ADMIN!
   Future kickFromGroup(MyUser userToKick, String groupId) async {
-    //ADD HERE CHECK IF THE USER THAT RUN THIS FUNCTION IS ADMIN!!!!!!!!
-    await leaveGroup(userToKick, groupId);
-    //IF THE USER IS NOT ADMIN SEND MASSAGE ONLY ANDIM CAN KICK
-    print('You need to be Admin to kick some one from the group!');
+    if (groupManagerId == currentUser.id) {
+      await leaveGroup(userToKick, groupId);
+    } else {
+      print('You need to be Admin to kick some one from the group!');
+    }
   }
 }
+
+///***********************Other functions - End**************************** */

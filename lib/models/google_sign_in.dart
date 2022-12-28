@@ -86,7 +86,6 @@ class GoogleSingInPovider extends ChangeNotifier {
   }
 
   Future logout() async {
-    await currentUser.changeViewMode(false);
     await googleSignIn.disconnect().whenComplete(() async {
       FirebaseAuth.instance.signOut();
     });

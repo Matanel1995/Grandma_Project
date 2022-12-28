@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_signin/models/Group.dart';
-import 'package:google_signin/models/variables.dart';
 
 class groupPromoCard extends StatelessWidget {
   final Group currGroup;

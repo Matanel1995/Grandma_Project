@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:google_signin/models/Group.dart';
+import 'package:google_signin/models/variables.dart';
+
+import '../models/user.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -8,12 +12,6 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  bool isGrandma = false;
-
-  bool getViewMode() {
-    return isGrandma;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,15 +35,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
               children: [
                 SwitchListTile(
                     title: const Text('Grandma View'),
-                    value: isGrandma,
+                    value: currentUser.isViewer,
                     subtitle: const Text(
                         'Only shows the gallery, very simple for grandma.'),
                     onChanged: (newValue) {
-                      print(isGrandma);
                       setState(() {
-                        isGrandma = newValue;
+                        currentUser.SetViewMode(newValue);
                       });
-                    })
+                    }),
               ],
             ),
           )

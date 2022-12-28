@@ -7,6 +7,7 @@ import 'package:google_signin/screens/create_group_screen.dart';
 import 'package:google_signin/screens/kick_user_screen.dart';
 import 'package:google_signin/screens/leave_group_screen.dart';
 
+import '../models/user.dart';
 import '../widgets/groupPromoCard.dart';
 
 class MyGroupsScreen extends StatelessWidget {
@@ -178,7 +179,6 @@ class MyGroupsScreen extends StatelessWidget {
                   ),
                 );
               }),
-
               // typeOfGroup('Create Group', Colors.red, Icons.create, () {
               //   Navigator.of(context).push(
               //     MaterialPageRoute(
