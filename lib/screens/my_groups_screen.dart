@@ -136,24 +136,24 @@ class MyGroupsScreen extends StatelessWidget {
                   ),
                 );
               }),
-              buildListTileForAdmin('Add User', Icons.add_road, () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (_) {
-                      return AddUserScreen();
-                    },
-                  ),
-                );
-              }),
-              buildListTileForAdmin('Kick User', Icons.no_accounts, () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (_) {
-                      return kickUserScreen();
-                    },
-                  ),
-                );
-              }),
+              // buildListTileForAdmin('Add User', Icons.add_road, () {
+              //   Navigator.of(context).push(
+              //     MaterialPageRoute(
+              //       builder: (_) {
+              //         return AddUserScreen();
+              //       },
+              //     ),
+              //   );
+              // }),
+              // buildListTileForAdmin('Kick User', Icons.no_accounts, () {
+              //   Navigator.of(context).push(
+              //     MaterialPageRoute(
+              //       builder: (_) {
+              //         return kickUserScreen();
+              //       },
+              //     ),
+              //   );
+              // }),
             ],
           );
         });

@@ -6,7 +6,14 @@ import 'package:google_signin/models/variables.dart';
 import 'package:google_signin/screens/welcome_screen.dart';
 
 class AddUserScreen extends StatefulWidget {
-  const AddUserScreen({super.key});
+  // const AddUserScreen({super.key});
+  final Group currGroup;
+  // const GroupProfileScreen({super.key, this.groupId});
+
+  const AddUserScreen({
+    super.key,
+    required this.currGroup,
+  });
 
   @override
   State<AddUserScreen> createState() => _AddUserScreenState();
@@ -16,6 +23,7 @@ class _AddUserScreenState extends State<AddUserScreen> {
   final controllerAddUser = TextEditingController();
   String addUser = '';
   bool isAdded = false;
+  late final Group currGroup;
 
   Widget show() {
     if (isAdded) {
@@ -51,14 +59,16 @@ class _AddUserScreenState extends State<AddUserScreen> {
               addUser = controllerAddUser.text;
             });
             if (addUser != '') {
-              // late Group currGroup;
-              // FirebaseFirestore.instance
-              //     .collection('Group')
-              //     .doc(currentUser.currentGroupId)
-              //     .get()
-              //     .then((value) {
-              //   currGroup = Group.fromFirestore(value as Map<String, dynamic>);
-              // });
+              // List<MyUser> addedUser = [];
+              // FutureBuilder(
+              //   initialData: usersList = [],
+              //   future: currentUser.getUsers([addUser]),
+              //   builder: (context, snapshot) {
+              //     usersList = snapshot.data as List<MyUser>;
+              //     usersList.elementAt(0).addUserToGroup(currGroup.groupId);
+              //     return Container();
+              //   },
+              // );
               isAdded = true;
             }
           },

@@ -43,7 +43,9 @@ class GroupProfileScreen extends StatelessWidget {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (_) {
-                  return AddUserScreen();
+                  return AddUserScreen(
+                    currGroup: currGroup,
+                  );
                 },
               ),
             );
@@ -130,9 +132,14 @@ class GroupProfileScreen extends StatelessWidget {
                 ),
               ),
             ),
-            buildListTile('Group ID : ', Icons.group, () {}),
-            buildListTile('Group Admin ID : ', Icons.man, () {}),
-            buildListTile('Number Of Users : ', Icons.numbers, () {}),
+            buildListTile(
+                'Group ID : ${currGroup.getGroupId}', Icons.group, () {}),
+            buildListTile('Group Admin ID : ${currGroup.getGroupManagerId}',
+                Icons.man, () {}),
+            buildListTile(
+                'Number Of Users : ${(currGroup.getGroupUsers).length}',
+                Icons.numbers,
+                () {}),
             adminCanAddKick(context),
             buildListTile(
                 'Switch To This Group', Icons.switch_access_shortcut, () {}),
