@@ -13,11 +13,11 @@ class UsersList extends StatelessWidget {
       stream: FirebaseFirestore.instance.collection('User').snapshots(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator();
+          return const CircularProgressIndicator();
         } else if (snapshot.connectionState == ConnectionState.active ||
             snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasError) {
-            return const Text('Error occuerrd');
+            return const Text('Error occurred');
           } else if (snapshot.hasData) {
             return ListView.builder(
               scrollDirection: Axis.horizontal,

@@ -117,7 +117,7 @@ class _HomeScreenState extends State<UploadPhoto> {
                                     return AlertDialog(
                                       title: const Text("Done"),
                                       content: const Text(
-                                          "The photo uploaded succesfully"),
+                                          "The photo uploaded successfully"),
                                       actions: [
                                         TextButton(
                                             onPressed: (() {

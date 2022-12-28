@@ -59,16 +59,16 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void getImages() async {
-    // final firebase_storage.ListResult result = await firebase_storage
-    //     .FirebaseStorage.instance
-    //     .ref()
-    //     .child("test")
-    //     .listAll();
-    // for (var i = 0; i < result.items.length; i++) {
-    //   imageList.add(result.items[i].name);
-    // }
-    // print(imageList);
-    // print(imageList.length);
+    final firebase_storage.ListResult result = await firebase_storage
+        .FirebaseStorage.instance
+        .ref()
+        .child(currentUser.currentGroupId)
+        .listAll();
+    for (var i = 0; i < result.items.length; i++) {
+      imageList.add(result.items[i].name);
+    }
+    print(imageList);
+    print(imageList.length);
   }
 
   Widget whatToShow() {
