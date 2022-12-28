@@ -80,6 +80,15 @@ class _MainDrawerState extends State<MainDrawer> {
           buildListTile('Home', Icons.house, () {
             Navigator.of(context).pushReplacementNamed('/');
           }),
+          buildListTile('My Groups', Icons.group, () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (_) {
+                  return MyGroupsScreen();
+                },
+              ),
+            );
+          }),
           buildListTile('Settings', Icons.settings, () {
             Navigator.of(context).push(
               MaterialPageRoute(

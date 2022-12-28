@@ -25,18 +25,6 @@ class MyGroupsScreen extends StatelessWidget {
             child:
                 Image.asset('assets/pictures/You dont have any groups yet.png'),
           ),
-          // Container(
-          //   margin: const EdgeInsets.all(15),
-          //   padding: const EdgeInsets.all(10),
-          //   alignment: Alignment.center,
-          //   decoration: BoxDecoration(
-          //       border: Border.all(color: Colors.black, width: 6),
-          //       borderRadius: BorderRadius.all(Radius.circular(35))),
-          //   child: const Text(
-          //     'You dont have any groups. \nStart by creating a group or join an existing one!',
-          //     style: TextStyle(fontSize: 30),
-          //   ),
-          // ),
           const Divider(
             height: 20,
           ),
@@ -64,6 +52,21 @@ class MyGroupsScreen extends StatelessWidget {
   }
 
   void nada() {}
+
+  Widget viewType(BuildContext context) {
+    if (!currentUser.isViewer) {
+      return FloatingActionButton(
+        backgroundColor: Colors.green,
+        child: const Icon(
+          Icons.add,
+        ),
+        onPressed: () {
+          bottomSheet(context);
+        },
+      );
+    }
+    return Container();
+  }
 
   Widget buildListTile(
       String title, IconData iconData, VoidCallback tapHandler) {
@@ -106,29 +109,6 @@ class MyGroupsScreen extends StatelessWidget {
     }
   }
 
-  // Widget typeOfGroup(
-  //     String txt, Color c, IconData iconData, VoidCallback tapHandler) {
-  //   return Container(
-  //     alignment: Alignment.center,
-  //     padding: const EdgeInsets.all(0),
-  //     child: SizedBox(
-  //       width: double.infinity,
-  //       height: 60,
-  //       child: ElevatedButton.icon(
-  //         onPressed: tapHandler,
-  //         icon: Icon(iconData),
-  //         label: Text(
-  //           txt,
-  //           style: TextStyle(fontSize: 30),
-  //         ),
-  //         style: ElevatedButton.styleFrom(
-  //           primary: c,
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
-
   bottomSheet(context) {
     showModalBottomSheet(
         backgroundColor: Color.fromARGB(255, 251, 247, 247),
@@ -145,21 +125,7 @@ class MyGroupsScreen extends StatelessWidget {
                     },
                   ),
                 );
-              }
-
-                  // () => Navigator.of(context).pushReplacement(MaterialPageRoute(
-                  //     builder: (BuildContext context) => CreateGroupScreen()))
-
-                  ),
-              // buildListTile('Join Group', Icons.family_restroom, () {
-              //   // Navigator.of(context).push(
-              //   //   MaterialPageRoute(
-              //   //     builder: (_) {
-              //   //       return CreateGroupScreen();
-              //   //     },
-              //   //   ),
-              //   // );
-              // }),
+              }),
               buildListTile('Leave Group', Icons.exit_to_app, () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
@@ -187,22 +153,6 @@ class MyGroupsScreen extends StatelessWidget {
                   ),
                 );
               }),
-
-              // typeOfGroup('Create Group', Colors.red, Icons.create, () {
-              //   Navigator.of(context).push(
-              //     MaterialPageRoute(
-              //       builder: (_) {
-              //         return CreateGroupScreen();
-              //       },
-              //     ),
-              //   );
-              // }),
-
-              // typeOfGroup(
-              //     'Join Group', Colors.orange, Icons.family_restroom, nada),
-              // typeOfGroup('Leave Group', Colors.lightGreen,
-              //     Icons.leave_bags_at_home, nada),
-              // addUser(context),
             ],
           );
         });
@@ -225,15 +175,7 @@ class MyGroupsScreen extends StatelessWidget {
           whatToShow(),
         ]),
       ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.green,
-        child: const Icon(
-          Icons.add,
-        ),
-        onPressed: () {
-          bottomSheet(context);
-        },
-      ),
+      floatingActionButton: viewType(context),
     );
   }
 }

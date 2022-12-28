@@ -11,16 +11,6 @@ class TableScore extends StatefulWidget {
 }
 
 class _FiltersScreenState extends State<TableScore> {
-//   onSortColum(int columnIndex, bool ascending) {
-//   if (columnIndex == 0) {
-//     if (ascending) {
-//       yourDataList.sort((a, b) => a['name'].compareTo(b['name']));
-//     } else {
-//       yourDataList.sort((a, b) => b['name'].compareTo(a['name']));
-//     }
-//   }
-// }
-
   bool sort = true;
   @override
   Widget build(BuildContext context) {
