@@ -22,24 +22,12 @@ class _MainDrawerState extends State<MainDrawer> {
   final settings = new SettingsScreen();
 
   Column viewType() {
-    if (true) {
+    if (!currentUser.isViewer) {
       return Column(
         children: <Widget>[
           buildListTile('Home', Icons.house, () {
             Navigator.of(context).pushReplacementNamed('/');
           }),
-
-          // ******************************* FOR NOW IDEAS IS TURENED OFF *******************************
-          // buildListTile('Ideas', Icons.light, () {
-          //   // Navigator.of(context).pushReplacementNamed(IdeasScreen.routeName);
-          //   Navigator.of(context).push(
-          //     MaterialPageRoute(
-          //       builder: (_) {
-          //         return IdeasScreen();
-          //       },
-          //     ),
-          //   );
-          // }),
           buildListTile('Score Table', Icons.score, () {
             Navigator.of(context).push(
               MaterialPageRoute(

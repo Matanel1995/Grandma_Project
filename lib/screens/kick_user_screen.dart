@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_signin/models/Group.dart';
 import 'package:google_signin/models/variables.dart';
+import 'package:google_signin/screens/welcome_screen.dart';
 
 class kickUserScreen extends StatefulWidget {
   const kickUserScreen({super.key});
@@ -70,6 +71,18 @@ class _kickUserScreen extends State<kickUserScreen> {
         title: Text(
           'Kick User',
           style: Theme.of(context).textTheme.titleMedium,
+        ),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (_) {
+                  return const WelcomeScreen();
+                },
+              ),
+            );
+          },
         ),
       ),
       body: Padding(

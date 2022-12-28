@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_signin/models/Group.dart';
 import 'package:google_signin/models/variables.dart';
+import 'package:google_signin/screens/welcome_screen.dart';
 
 class LeaveGroupScreen extends StatefulWidget {
   const LeaveGroupScreen({super.key});
@@ -20,6 +21,18 @@ class _LeaveGroupScreen extends State<LeaveGroupScreen> {
         title: Text(
           'Leave Group',
           style: Theme.of(context).textTheme.titleMedium,
+        ),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (_) {
+                  return const WelcomeScreen();
+                },
+              ),
+            );
+          },
         ),
       ),
       body: Padding(

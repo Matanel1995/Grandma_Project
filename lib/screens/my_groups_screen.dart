@@ -137,11 +137,20 @@ class MyGroupsScreen extends StatelessWidget {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              buildListTile(
-                  'Create Group',
-                  Icons.create,
-                  () => Navigator.of(context).pushReplacement(MaterialPageRoute(
-                      builder: (BuildContext context) => CreateGroupScreen()))),
+              buildListTile('Create Group', Icons.create, () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) {
+                      return CreateGroupScreen();
+                    },
+                  ),
+                );
+              }
+
+                  // () => Navigator.of(context).pushReplacement(MaterialPageRoute(
+                  //     builder: (BuildContext context) => CreateGroupScreen()))
+
+                  ),
               // buildListTile('Join Group', Icons.family_restroom, () {
               //   // Navigator.of(context).push(
               //   //   MaterialPageRoute(

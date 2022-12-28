@@ -3,7 +3,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_signin/models/Group.dart';
 import 'package:google_signin/models/variables.dart';
+import 'package:google_signin/screens/home_screen.dart';
 import 'package:google_signin/screens/my_groups_screen.dart';
+import 'package:google_signin/screens/welcome_screen.dart';
 
 class CreateGroupScreen extends StatefulWidget {
   const CreateGroupScreen({super.key});
@@ -98,11 +100,12 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                 // there is a selected photo
                 Group.createAsync(currentUser, groupName, photoURL);
               }
-              // auto switching page after 5 seconds
-              Timer(
-                  const Duration(seconds: 5),
-                  () => Navigator.of(context).pushReplacement(MaterialPageRoute(
-                      builder: (BuildContext context) => MyGroupsScreen())));
+              // auto switching page after 5 secondss
+              // Timer(
+              //     const Duration(seconds: 5),
+              //     () => Navigator.of(context).pushReplacement(MaterialPageRoute(
+              //         builder: (BuildContext context) => MyGroupsScreen())));
+
               isCreated = true;
             } else {
               showError();
@@ -136,6 +139,18 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
         title: Text(
           'Create Group',
           style: Theme.of(context).textTheme.titleMedium,
+        ),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (_) {
+                  return const WelcomeScreen();
+                },
+              ),
+            );
+          },
         ),
       ),
       body: Padding(

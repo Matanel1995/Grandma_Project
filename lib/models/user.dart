@@ -101,5 +101,6 @@ class MyUser {
         }
       },
     );
+    currentUser.isViewer = isViewer;
   }
 }
