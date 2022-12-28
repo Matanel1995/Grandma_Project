@@ -1,0 +1,29 @@
+FutureBuilder<dynamic>(
+	initialData: List= [] //make sute to init every parameter so it wont be null!!!!,
+	future: AsyncFunction // here i call any async function and get her results,
+        builder: (context, snapshot) {
+		//in snapshot i have the returned value from the function and here in the build 
+		//i can do whatever i want with it  
+                },
+),
+
+FOR EXAMPLE GET USERS:
+FutureBuilder<dynamic>(
+	initialData: usersList = [],
+        future:currentUser.getUsers([currentUser.id]),
+        builder: (context, snapshot) {
+              usersList = snapshot.data as List<MyUser>;
+              return Text(usersList.toString());
+        },
+),
+
+
+FOR EXAMPLE GET GROUPS:
+FutureBuilder<dynamic>(
+	initialData: groupsListToReturn = [],
+        future: currentUser.getGroups([currentUser.currentGroupId]),
+        builder: (context, snapshot) {
+              groupsListToReturn = snapshot.data as List<Group>;
+              return Text(groupsListToReturn.toString());
+        },
+),

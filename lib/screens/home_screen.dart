@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_signin/models/user.dart';
 import 'package:google_signin/models/usersList.dart';
 import 'package:google_signin/models/variables.dart';
 import 'package:google_signin/screens/gallery_screen.dart';
@@ -58,16 +59,16 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void getImages() async {
-    final firebase_storage.ListResult result = await firebase_storage
-        .FirebaseStorage.instance
-        .ref()
-        .child("test")
-        .listAll();
-    for (var i = 0; i < result.items.length; i++) {
-      imageList.add(result.items[i].name);
-    }
-    print(imageList);
-    print(imageList.length);
+    // final firebase_storage.ListResult result = await firebase_storage
+    //     .FirebaseStorage.instance
+    //     .ref()
+    //     .child("test")
+    //     .listAll();
+    // for (var i = 0; i < result.items.length; i++) {
+    //   imageList.add(result.items[i].name);
+    // }
+    // print(imageList);
+    // print(imageList.length);
   }
 
   Widget whatToShow() {
