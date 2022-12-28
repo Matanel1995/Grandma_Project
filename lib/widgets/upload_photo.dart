@@ -244,7 +244,7 @@ class _HomeScreenState extends State<UploadPhoto> {
 
   selectImageFromGallery() async {
     XFile? file = await ImagePicker()
-        .pickImage(source: ImageSource.gallery, imageQuality: 75);
+        .pickImage(source: ImageSource.gallery, imageQuality: 10);
     if (file != null) {
       _singleImage = file;
       return file.path;
@@ -255,7 +255,7 @@ class _HomeScreenState extends State<UploadPhoto> {
 
   selectImageFromCamera() async {
     XFile? file = await ImagePicker()
-        .pickImage(source: ImageSource.camera, imageQuality: 75);
+        .pickImage(source: ImageSource.camera, imageQuality: 10);
     if (file != null) {
       _singleImage = file;
       return file.path;
