@@ -61,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final firebase_storage.ListResult result = await firebase_storage
         .FirebaseStorage.instance
         .ref()
-        .child("test")
+        .child(currentUser.currentGroupId)
         .listAll();
     for (var i = 0; i < result.items.length; i++) {
       imageList.add(result.items[i].name);
