@@ -23,17 +23,15 @@ class _AddUserScreenState extends State<AddUserScreen> {
   final controllerAddUser = TextEditingController();
   String addUser = '';
   bool isAdded = false;
-  late final Group currGroup;
 
   Widget show() {
     if (isAdded) {
-      return const Expanded(
-        child: Center(
-            child: Text(
-          'The user XXXXXXXX has been added. \nYou can go back now.',
-          style: TextStyle(color: Colors.black, fontSize: 20),
-        )),
-      );
+      return Center(
+          child: Text(
+        'The user has been added to ${widget.currGroup.getGroupName}'
+        '\nYou can go back now.',
+        style: TextStyle(color: Colors.black, fontSize: 20),
+      ));
     }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
@@ -59,17 +57,31 @@ class _AddUserScreenState extends State<AddUserScreen> {
               addUser = controllerAddUser.text;
             });
             if (addUser != '') {
-              // List<MyUser> addedUser = [];
+              print(addUser);
+              print(currentUser.currentGroupId);
+              () async {
+                usersList =
+                    await currentUser.getUsers([addUser]) as List<MyUser>;
+              }.call().then((value) {
+                //print(usersList.length);
+                if (usersList.isEmpty) {
+                  print("NOT FOUND");
+                } else {
+                  widget.currGroup.addUser(usersList.elementAt(0));
+                  print('AFTER ADD USER');
+                }
+              });
               // FutureBuilder(
-              //   initialData: usersList = [],
-              //   future: currentUser.getUsers([addUser]),
+              //   future: widget.currGroup.addUser(usersList.elementAt(0)),
               //   builder: (context, snapshot) {
-              //     usersList = snapshot.data as List<MyUser>;
-              //     usersList.elementAt(0).addUserToGroup(currGroup.groupId);
+              //     print('INSIDE FUTURE BUILDER');
+              //     // groupsListToReturn = snapshot.data as List<Group>;
+              //     // print(groupsListToReturn.elementAt(0).getGroupId.toString());
               //     return Container();
               //   },
               // );
               isAdded = true;
+              print('after isADDED = TRUE');
             }
           },
           color: Colors.blue,

@@ -138,7 +138,32 @@ class MyUser {
   /// *******************Other functions -Start***************************/
 
   //Function to add user to a group, the group id added to users list
-  Future addUserToGroup(String groupId) async {
+  Future addUserToGroup(String groupId, MyUser userToAdd) async {
+    print("in add user to group");
+    //Get doc referance
+    DocumentReference docRef =
+        FirebaseFirestore.instance.collection('Group').doc(groupId);
+    //check if document exist
+    await docRef.get().then((doc) => {
+          if (doc.exists)
+            {
+              print('Doc Exist!'),
+              userToAdd.groupsList.add(groupId),
+              userRef.doc(userToAdd.id).update(
+                {
+                  'groupList': FieldValue.arrayUnion(userToAdd.groupsList),
+                },
+              ),
+            }
+          else
+            {print('No such Document!')}
+        });
+    print("AFTER add user to group");
+  }
+
+  //Function to add user to a group, the group id added to users list
+  Future addUserOnCreation(String groupId) async {
+    print("in add user to group");
     //Get doc referance
     DocumentReference docRef =
         FirebaseFirestore.instance.collection('Group').doc(groupId);
@@ -159,6 +184,7 @@ class MyUser {
           else
             {print('No such Document!')}
         });
+    print("AFTER add user to group");
   }
 
   //Input: list of users Id
@@ -174,6 +200,7 @@ class MyUser {
         }
       });
     }
+    print(usersList.length);
     return usersList;
   }
 
@@ -190,6 +217,7 @@ class MyUser {
         }
       });
     }
+    print(groupsListToReturn.elementAt(0).getGroupName);
     return groupsListToReturn;
   }
 }

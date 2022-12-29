@@ -100,7 +100,7 @@ class Group {
       'groupUsers': groupUsers,
       'groupManagerId': user.id
     });
-    await currentUser.addUserToGroup(groupId);
+    await currentUser.addUserOnCreation(groupId);
     return Group._privateConstructor(
         groupId: groupId,
         groupName: groupName,
@@ -126,16 +126,17 @@ class Group {
           var updateUsers = parseMap(data['groupUsers'].toString());
           collectionRef.doc(groupId).update({'groupUsers': updateUsers});
           if (currentUser.id == userToAdd.id) {
-            currentUser.addUserToGroup(groupId);
+            currentUser.addUserToGroup(groupId, userToAdd);
           }
+          //UPDATE HERE THE USER GROUPS LIST WITH THE USER METHOD!!!!!!!!!
+          print("BEFORE ADDING GROUP TO USER!!!");
+          userToAdd.addUserToGroup(groupId, userToAdd);
         },
         onError: (e) => print('Error in addUser! ' + e.toString()),
       );
     } else {
       print('You need to be Admin to kick some one from the group!');
     }
-    //UPDATE HERE THE USER GROUPS LIST WITH THE USER METHOD!!!!!!!!!
-    await userToAdd.addUserToGroup(groupId);
   }
 
   Map<String, int> parseMap(String mapString) {
