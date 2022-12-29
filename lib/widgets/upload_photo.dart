@@ -1,9 +1,12 @@
 import 'dart:io';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:google_signin/models/variables.dart';
 import 'package:google_signin/screens/home_screen.dart';
 import 'package:google_signin/screens/welcome_screen.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:async';
+import 'package:firebase_core/firebase_core.dart' as firebase_core;
 
 import '../storage_service.dart';
 
@@ -17,8 +20,18 @@ class UploadPhoto extends StatefulWidget {
 
 class _HomeScreenState extends State<UploadPhoto> {
   final Storage storage = Storage();
+  final testStorage = FirebaseStorage.instance;
   String selectedImagePath = '';
   XFile? _singleImage;
+  UploadTask? uploadTask;
+  // bool isUpload = false;
+  // Widget work() {
+  //   if (isUpload) {
+  //     print("testing work work WPRDLDSDAKFH");
+  //     return Text("uploaded");
+  //   }
+  //   return Container();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -107,29 +120,7 @@ class _HomeScreenState extends State<UploadPhoto> {
                               .showSnackBar(const SnackBar(
                               content: Text("No Image Selected !"),
                             ))
-                          : storage
-                              .uploadFile(
-                                  _singleImage!.path, _singleImage!.name)
-                              .then((value) {
-                              return showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return AlertDialog(
-                                      title: const Text("Done"),
-                                      content: const Text(
-                                          "The photo uploaded successfully"),
-                                      actions: [
-                                        TextButton(
-                                            onPressed: (() {
-                                              Navigator.of(context).pop();
-                                            }),
-                                            child: const Text("Ok"))
-                                      ],
-                                    );
-                                  });
-                            });
-
-                      setState(() {});
+                          : uploadFile();
                     },
                     icon: const Icon(
                       Icons.send,
@@ -142,6 +133,7 @@ class _HomeScreenState extends State<UploadPhoto> {
               ],
             ),
             const SizedBox(height: 10),
+            buildProgress()
           ],
         ),
       ),
@@ -241,6 +233,99 @@ class _HomeScreenState extends State<UploadPhoto> {
           );
         });
   }
+
+  Future uploadFile() async {
+    final ref = FirebaseStorage.instance
+        .ref()
+        .child('${currentUser.currentGroupId}/${_singleImage!.name}');
+
+    setState(() {
+      uploadTask = ref.putFile(File(_singleImage!.path));
+    });
+
+    final snapshot = await uploadTask!.whenComplete(() {});
+
+    final urlDownload = await snapshot.ref.getDownloadURL();
+    if (urlDownload.isNotEmpty) {
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text("Done"),
+              content: const Text("The photo uploaded successfully"),
+              actions: [
+                TextButton(
+                    onPressed: (() {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (_) {
+                            return const UploadPhoto();
+                          },
+                        ),
+                      );
+                    }),
+                    child: const Text("Ok"))
+              ],
+            );
+          });
+    }
+    if (urlDownload.isEmpty) {
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text("Error"),
+              content: const Text("The photo didn\'t uploaded"),
+              actions: [
+                TextButton(
+                    onPressed: (() {
+                      Navigator.of(context).pop();
+                    }),
+                    child: const Text("Ok"))
+              ],
+            );
+          });
+    }
+    print('Download Link: $urlDownload');
+
+    setState(() {
+      uploadTask = null;
+    });
+  }
+
+  Widget buildProgress() => StreamBuilder<TaskSnapshot>(
+        stream: uploadTask?.snapshotEvents,
+        builder: ((context, snapshot) {
+          if (snapshot.hasData) {
+            final data = snapshot.data!;
+            double progress = data.bytesTransferred / data.totalBytes;
+
+            return SizedBox(
+              height: 50,
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  LinearProgressIndicator(
+                    value: progress,
+                    backgroundColor: Colors.grey,
+                    color: Colors.green,
+                  ),
+                  Center(
+                    child: Text(
+                      '${(100 * progress).roundToDouble()}%',
+                      style: const TextStyle(color: Colors.white),
+                    ),
+                  )
+                ],
+              ),
+            );
+          } else {
+            return const SizedBox(
+              height: 50,
+            );
+          }
+        }),
+      );
 
   selectImageFromGallery() async {
     XFile? file = await ImagePicker()
