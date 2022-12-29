@@ -3,6 +3,7 @@ import 'package:google_signin/models/variables.dart';
 import 'package:google_signin/screens/add_user_screen.dart';
 import 'package:google_signin/screens/kick_user_screen.dart';
 import 'package:google_signin/screens/leave_group_screen.dart';
+import 'package:google_signin/screens/switch_group_screen.dart';
 
 import '../models/Group.dart';
 
@@ -144,8 +145,18 @@ class GroupProfileScreen extends StatelessWidget {
                 Icons.numbers,
                 () {}),
             adminCanAddKick(context),
-            buildListTile(
-                'Switch To This Group', Icons.switch_access_shortcut, () {}),
+            buildListTile('Switch To This Group', Icons.switch_access_shortcut,
+                () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) {
+                    return SwitchGroupScreen(
+                      currGroup: currGroup,
+                    );
+                  },
+                ),
+              );
+            }),
             buildListTile('Leave Group', Icons.exit_to_app, () {
               Navigator.of(context).push(
                 MaterialPageRoute(

@@ -3,28 +3,28 @@ import 'package:google_signin/models/Group.dart';
 import 'package:google_signin/models/variables.dart';
 import 'package:google_signin/screens/welcome_screen.dart';
 
-class LeaveGroupScreen extends StatefulWidget {
+class SwitchGroupScreen extends StatefulWidget {
   final Group currGroup;
 
-  const LeaveGroupScreen({
+  const SwitchGroupScreen({
     super.key,
     required this.currGroup,
   });
 
   @override
-  State<LeaveGroupScreen> createState() => _LeaveGroupScreen();
+  State<SwitchGroupScreen> createState() => _SwitchGroupScreen();
 }
 
-class _LeaveGroupScreen extends State<LeaveGroupScreen> {
-  final controllerLeaveGroup = TextEditingController();
-  String leaveGroup = '';
-  bool left = false;
+class _SwitchGroupScreen extends State<SwitchGroupScreen> {
+  final controllerSwitchGroup = TextEditingController();
+  String switchGroup = '';
+  bool switched = false;
 
   Widget show() {
-    if (left) {
+    if (switched) {
       return Center(
           child: Text(
-        'You left the ${widget.currGroup.getGroupName} group'
+        'You switched to the ${widget.currGroup.getGroupName} group'
         '\nYou can go back now.',
         style: TextStyle(color: Colors.black, fontSize: 20),
       ));
@@ -34,14 +34,14 @@ class _LeaveGroupScreen extends State<LeaveGroupScreen> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         TextField(
-          controller: controllerLeaveGroup,
+          controller: controllerSwitchGroup,
           decoration: InputDecoration(
-              hintText: '"yes" to confirm',
+              hintText: '"switch" to confirm',
               border: const OutlineInputBorder(),
               suffixIcon: IconButton(
                 onPressed: () {
                   // clear what's currently in the textfield
-                  controllerLeaveGroup.clear();
+                  controllerSwitchGroup.clear();
                 },
                 icon: const Icon(Icons.clear),
               )),
@@ -50,11 +50,11 @@ class _LeaveGroupScreen extends State<LeaveGroupScreen> {
           // update the group name
           onPressed: () {
             setState(() {
-              leaveGroup = controllerLeaveGroup.text;
+              switchGroup = controllerSwitchGroup.text;
             });
-            if (leaveGroup.toLowerCase() == 'yes') {
+            if (switchGroup.toLowerCase() == 'switch') {
               setState(() {
-                left = true;
+                switched = true;
               });
               // createGroup(MyUser user, String groupName, String groupPhotoUrl)
               // createGroup(currentUser, groupName, photoURL);
@@ -64,14 +64,14 @@ class _LeaveGroupScreen extends State<LeaveGroupScreen> {
                   builder: (BuildContext context) {
                     return AlertDialog(
                       title: const Text('Wrong input'),
-                      content: const Text('You didn\'t type "yes"'),
+                      content: const Text('You didn\'t type "switch"'),
                       actions: [
                         TextButton(
                             onPressed: () {
                               Navigator.of(context).push(
                                 MaterialPageRoute(
                                   builder: (_) {
-                                    return LeaveGroupScreen(
+                                    return SwitchGroupScreen(
                                       currGroup: widget.currGroup,
                                     );
                                   },
@@ -99,7 +99,7 @@ class _LeaveGroupScreen extends State<LeaveGroupScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Leave Group',
+          'Switch Group',
           style: Theme.of(context).textTheme.titleMedium,
         ),
         leading: IconButton(
