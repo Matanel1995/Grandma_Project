@@ -58,6 +58,10 @@ class _LeaveGroupScreen extends State<LeaveGroupScreen> {
               });
               // createGroup(MyUser user, String groupName, String groupPhotoUrl)
               // createGroup(currentUser, groupName, photoURL);
+              () async {
+                await widget.currGroup
+                    .leaveGroup(currentUser, widget.currGroup.groupId);
+              }.call();
             } else {
               showDialog(
                   context: context,
@@ -117,46 +121,6 @@ class _LeaveGroupScreen extends State<LeaveGroupScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            TextField(
-              controller: controllerLeaveGroup,
-              decoration: InputDecoration(
-                  hintText: '"yes" to confirm',
-                  border: const OutlineInputBorder(),
-                  suffixIcon: IconButton(
-                    onPressed: () {
-                      // clear what's currently in the textfield
-                      controllerLeaveGroup.clear();
-                    },
-                    icon: const Icon(Icons.clear),
-                  )),
-            ),
-            MaterialButton(
-              // update the group name
-              onPressed: () {
-                setState(() {
-                  leaveGroup = controllerLeaveGroup.text;
-                });
-                if (leaveGroup.toLowerCase() == 'yes') {
-                  // createGroup(MyUser user, String groupName, String groupPhotoUrl)
-                  // createGroup(currentUser, groupName, photoURL);
-                  () async {
-                    await widget.currGroup
-                        .leaveGroup(currentUser, widget.currGroup.groupId);
-                  }.call();
-                }
-              },
-              color: Colors.blue,
-              child: const Text(
-                'Confirm',
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-          ],
-        ),
         child: show(),
       ),
     );
