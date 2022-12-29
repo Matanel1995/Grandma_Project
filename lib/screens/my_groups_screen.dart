@@ -127,15 +127,15 @@ class MyGroupsScreen extends StatelessWidget {
                   ),
                 );
               }),
-              buildListTile('Leave Group', Icons.exit_to_app, () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (_) {
-                      return LeaveGroupScreen();
-                    },
-                  ),
-                );
-              }),
+              // buildListTile('Leave Group', Icons.exit_to_app, () {
+              //   Navigator.of(context).push(
+              //     MaterialPageRoute(
+              //       builder: (_) {
+              //         return LeaveGroupScreen();
+              //       },
+              //     ),
+              //   );
+              // }),
               // buildListTileForAdmin('Add User', Icons.add_road, () {
               //   Navigator.of(context).push(
               //     MaterialPageRoute(

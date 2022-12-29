@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_signin/models/variables.dart';
 import 'package:google_signin/screens/add_user_screen.dart';
 import 'package:google_signin/screens/kick_user_screen.dart';
+import 'package:google_signin/screens/leave_group_screen.dart';
 
 import '../models/Group.dart';
 
@@ -34,9 +35,7 @@ class GroupProfileScreen extends StatelessWidget {
   }
 
   Widget adminCanAddKick(BuildContext context) {
-    if (true
-        // currentUser.id == currGroup.groupManagerId
-        ) {
+    if (currentUser.id == currGroup.groupManagerId) {
       return Column(
         children: [
           buildListTile('Add User', Icons.add_road, () {
@@ -91,7 +90,7 @@ class GroupProfileScreen extends StatelessWidget {
             //   ],
             // ),
             Container(
-              height: 300,
+              height: 200,
               width: 1000,
               padding: const EdgeInsets.all(4),
               child: AspectRatio(
@@ -143,6 +142,15 @@ class GroupProfileScreen extends StatelessWidget {
             adminCanAddKick(context),
             buildListTile(
                 'Switch To This Group', Icons.switch_access_shortcut, () {}),
+            buildListTile('Leave Group', Icons.exit_to_app, () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) {
+                    return LeaveGroupScreen();
+                  },
+                ),
+              );
+            }),
           ],
         ));
   }
