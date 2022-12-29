@@ -6,9 +6,7 @@ import 'package:google_signin/models/variables.dart';
 import 'package:google_signin/screens/welcome_screen.dart';
 
 class AddUserScreen extends StatefulWidget {
-  // const AddUserScreen({super.key});
   final Group currGroup;
-  // const GroupProfileScreen({super.key, this.groupId});
 
   const AddUserScreen({
     super.key,

@@ -53,7 +53,9 @@ class GroupProfileScreen extends StatelessWidget {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (_) {
-                  return kickUserScreen();
+                  return kickUserScreen(
+                    currGroup: currGroup,
+                  );
                 },
               ),
             );
@@ -75,7 +77,7 @@ class GroupProfileScreen extends StatelessWidget {
         ),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
-          // mainAxisAlignment: MainAxisAlignment.center,
+          // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             // Row(
             //   children: [
@@ -91,11 +93,12 @@ class GroupProfileScreen extends StatelessWidget {
             // ),
             Container(
               height: 200,
-              width: 1000,
+              width: double.infinity,
               padding: const EdgeInsets.all(4),
               child: AspectRatio(
                 aspectRatio: 2.62 / 3,
                 child: Container(
+                  width: double.infinity,
                   margin: EdgeInsets.only(right: 15.0),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
@@ -104,6 +107,7 @@ class GroupProfileScreen extends StatelessWidget {
                         image: NetworkImage(currGroup.groupPhotoUrl)),
                   ),
                   child: Container(
+                    width: double.infinity,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
                         gradient: LinearGradient(
@@ -146,7 +150,9 @@ class GroupProfileScreen extends StatelessWidget {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (_) {
-                    return LeaveGroupScreen();
+                    return LeaveGroupScreen(
+                      currGroup: currGroup,
+                    );
                   },
                 ),
               );

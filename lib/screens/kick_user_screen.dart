@@ -4,7 +4,12 @@ import 'package:google_signin/models/variables.dart';
 import 'package:google_signin/screens/welcome_screen.dart';
 
 class kickUserScreen extends StatefulWidget {
-  const kickUserScreen({super.key});
+  final Group currGroup;
+
+  const kickUserScreen({
+    super.key,
+    required this.currGroup,
+  });
 
   @override
   State<kickUserScreen> createState() => _kickUserScreen();
@@ -17,13 +22,11 @@ class _kickUserScreen extends State<kickUserScreen> {
 
   Widget show() {
     if (isKicked) {
-      return const Expanded(
-        child: Center(
-            child: Text(
-          'The user XXXXXXXX has been kicked. \nYou can go back now.',
-          style: TextStyle(color: Colors.black, fontSize: 20),
-        )),
-      );
+      return Center(
+          child: Text(
+        'The user ${widget.currGroup.getGroupName} has been kicked. \nYou can go back now.',
+        style: TextStyle(color: Colors.black, fontSize: 20),
+      ));
     }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,

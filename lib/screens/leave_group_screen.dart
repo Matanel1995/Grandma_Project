@@ -4,7 +4,12 @@ import 'package:google_signin/models/variables.dart';
 import 'package:google_signin/screens/welcome_screen.dart';
 
 class LeaveGroupScreen extends StatefulWidget {
-  const LeaveGroupScreen({super.key});
+  final Group currGroup;
+
+  const LeaveGroupScreen({
+    super.key,
+    required this.currGroup,
+  });
 
   @override
   State<LeaveGroupScreen> createState() => _LeaveGroupScreen();
@@ -41,13 +46,6 @@ class _LeaveGroupScreen extends State<LeaveGroupScreen> {
           crossAxisAlignment: CrossAxisAlignment.end,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            //display text
-            // Expanded(
-            //   child: Container(
-            //       child: Center(
-            //     child: Text(groupName),
-            //   )),
-            // ),
             TextField(
               controller: controllerLeaveGroup,
               decoration: InputDecoration(
@@ -67,7 +65,7 @@ class _LeaveGroupScreen extends State<LeaveGroupScreen> {
                 setState(() {
                   leaveGroup = controllerLeaveGroup.text;
                 });
-                if (leaveGroup != '') {
+                if (leaveGroup.toLowerCase() == 'yes') {
                   // createGroup(MyUser user, String groupName, String groupPhotoUrl)
                   // createGroup(currentUser, groupName, photoURL);
                 }
