@@ -139,7 +139,6 @@ class MyUser {
 
   //Function to add user to a group, the group id added to users list
   Future addUserToGroup(String groupId, MyUser userToAdd) async {
-    print("in add user to group");
     //Get doc referance
     DocumentReference docRef =
         FirebaseFirestore.instance.collection('Group').doc(groupId);
@@ -147,7 +146,6 @@ class MyUser {
     await docRef.get().then((doc) => {
           if (doc.exists)
             {
-              print('Doc Exist!'),
               userToAdd.groupsList.add(groupId),
               userRef.doc(userToAdd.id).update(
                 {
@@ -158,12 +156,10 @@ class MyUser {
           else
             {print('No such Document!')}
         });
-    print("AFTER add user to group");
   }
 
   //Function to add user to a group, the group id added to users list
   Future addUserOnCreation(String groupId) async {
-    print("in add user to group");
     //Get doc referance
     DocumentReference docRef =
         FirebaseFirestore.instance.collection('Group').doc(groupId);
@@ -184,7 +180,6 @@ class MyUser {
           else
             {print('No such Document!')}
         });
-    print("AFTER add user to group");
   }
 
   //Input: list of users Id
@@ -200,7 +195,6 @@ class MyUser {
         }
       });
     }
-    print(usersList.length);
     return usersList;
   }
 
@@ -217,7 +211,39 @@ class MyUser {
         }
       });
     }
-    print(groupsListToReturn.elementAt(0).getGroupName);
     return groupsListToReturn;
+  }
+
+  //Function to leave group
+  Future leaveGroup(MyUser user, String groupId) async {
+    //get user group list
+    await userRef.doc(user.id).get().then((doc) {
+      if (doc.exists) {
+        var data = doc.data() as Map<String, dynamic>;
+        List<String> temp = parseGroupList(data['groupList'].toString());
+        print(temp);
+        if (temp.contains(groupId)) {
+          //if user is in group
+          temp.remove(groupId);
+          //update DB about emoving user!
+          userRef.doc(user.id).update({'groupList': temp});
+        } else {
+          print("You are not a member in this group!");
+        }
+      }
+    });
+  }
+
+  List<String> parseGroupList(String groupsList) {
+    print(groupsList);
+    List<String> dataToReturn = [];
+    List<String> Helper = [];
+    Helper = groupsList.split(",");
+    for (String groupId in Helper) {
+      String groupid = groupId.trim().replaceAll(']', "");
+      groupid = groupid.trim().replaceAll('[', "");
+      dataToReturn.add(groupid);
+    }
+    return dataToReturn;
   }
 }
