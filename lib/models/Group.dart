@@ -37,7 +37,6 @@ class Group {
   factory Group.fromFirestore(
     Map<String, dynamic> snapshot,
   ) {
-    //print(currentUser.groupsList.toString());
     return Group(
         groupName: snapshot['groupName'],
         groupId: snapshot['groupId'],
@@ -129,7 +128,6 @@ class Group {
             currentUser.addUserToGroup(groupId, userToAdd);
           }
           //UPDATE HERE THE USER GROUPS LIST WITH THE USER METHOD!!!!!!!!!
-          print("BEFORE ADDING GROUP TO USER!!!");
           userToAdd.addUserToGroup(groupId, userToAdd);
         },
         onError: (e) => print('Error in addUser! ' + e.toString()),
@@ -154,6 +152,9 @@ class Group {
 
   //Function to leave group
   Future leaveGroup(MyUser user, String groupId) async {
+    print('IN LEAVE GROUP!!');
+    print(user.email);
+    print(groupId);
     Map<String, int> usersMap = {};
     //delete the user from the groupUsers List
     await collectionRef.doc(groupId).get().then((DocumentSnapshot docSnapshot) {
@@ -164,6 +165,7 @@ class Group {
         usersMap.remove(user.id);
         //update the map on the database
         collectionRef.doc(groupId).update({'groupUsers': usersMap});
+        user.leaveGroup(user, groupId);
       }
     });
   }

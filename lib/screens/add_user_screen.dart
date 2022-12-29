@@ -69,6 +69,7 @@ class _AddUserScreenState extends State<AddUserScreen> {
                   print('AFTER ADD USER');
                 }
               });
+              usersList = [];
               // FutureBuilder(
               //   future: widget.currGroup.addUser(usersList.elementAt(0)),
               //   builder: (context, snapshot) {

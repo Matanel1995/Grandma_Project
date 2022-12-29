@@ -3,6 +3,8 @@ import 'package:google_signin/models/Group.dart';
 import 'package:google_signin/models/variables.dart';
 import 'package:google_signin/screens/welcome_screen.dart';
 
+import '../models/user.dart';
+
 class kickUserScreen extends StatefulWidget {
   final Group currGroup;
 
@@ -52,6 +54,17 @@ class _kickUserScreen extends State<kickUserScreen> {
               kickUser = conteollerKickUser.text;
             });
             if (kickUser != '') {
+              () async {
+                await currentUser.getUsers([kickUser]) as List<MyUser>;
+              }.call().then((value) {
+                if (usersList.isEmpty) {
+                  print('NOT FOUND!');
+                } else {
+                  widget.currGroup.kickFromGroup(
+                      usersList.elementAt(0), widget.currGroup.groupId);
+                }
+              });
+              usersList = [];
               // createGroup(MyUser user, String groupName, String groupPhotoUrl)
               // createGroup(currentUser, groupName, photoURL);
               isKicked = true;
