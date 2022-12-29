@@ -17,7 +17,7 @@ class groupList extends StatelessWidget {
         } else if (snapshot.connectionState == ConnectionState.active ||
             snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasError) {
-            return const Text('Error occuerrd');
+            return const Text('Error occurred');
           } else if (snapshot.hasData) {
             return ListView.builder(
               scrollDirection: Axis.vertical,
