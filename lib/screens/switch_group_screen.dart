@@ -53,6 +53,13 @@ class _SwitchGroupScreen extends State<SwitchGroupScreen> {
               switchGroup = controllerSwitchGroup.text;
             });
             if (switchGroup.toLowerCase() == 'switch') {
+              print("GOT HERE!!!");
+              //ADD HRER CHANGE CURRENT GROUP FUNCTION
+              () async {
+                print('CALLED FUNCTION');
+                await currentUser.SetCurrentGroup(widget.currGroup.groupId);
+                print('Returend from function');
+              }.call();
               setState(() {
                 switched = true;
               });

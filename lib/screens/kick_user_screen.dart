@@ -26,7 +26,7 @@ class _kickUserScreen extends State<kickUserScreen> {
     if (isKicked) {
       return Center(
           child: Text(
-        'The user ${widget.currGroup.getGroupName} has been kicked. \nYou can go back now.',
+        'The user has been kicked. \nYou can go back now.',
         style: TextStyle(color: Colors.black, fontSize: 20),
       ));
     }
@@ -91,13 +91,17 @@ class _kickUserScreen extends State<kickUserScreen> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (_) {
-                  return const WelcomeScreen();
-                },
-              ),
-            );
+            if (isKicked) {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) {
+                    return const WelcomeScreen();
+                  },
+                ),
+              );
+            } else {
+              Navigator.of(context).pop();
+            }
           },
         ),
       ),

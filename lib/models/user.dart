@@ -104,8 +104,12 @@ class MyUser {
 
   //set currentGruopId
   Future SetCurrentGroup(String groupId) async {
+    DocumentReference userDocRef;
     DocumentReference docRef =
         FirebaseFirestore.instance.collection('Group').doc(groupId);
+    print(groupId);
+    print(currentUser.currentGroupId);
+    print(currentUser.email);
     //check if document exist
     await docRef.get().then(
         (doc) => {
@@ -113,8 +117,10 @@ class MyUser {
                   groupsList.contains(
                       groupId)) //if group exist and user is part of it
                 {
-                  docRef.update({'currentGroupId': groupId}),
+                  userDocRef = userRef.doc(currentUser.id),
+                  userDocRef.update({'currentGroupId': groupId}),
                   currentUser.currentGroupId = groupId,
+                  print(currentUser.currentGroupId),
                 }
               else
                 {print("DOC NOT FOUND!")}

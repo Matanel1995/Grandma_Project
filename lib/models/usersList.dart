@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_signin/models/user.dart';
+import 'package:google_signin/models/variables.dart';
 import 'package:google_signin/widgets/UserWidget.dart';
 import 'package:google_signin/widgets/promoCard.dart';
 
@@ -26,9 +27,17 @@ class UsersList extends StatelessWidget {
                 //creating a map to store user details
                 Map<String, dynamic> userDetails =
                     snapshot.data!.docs[index].data();
+                print(userDetails['groupList'].toString());
+                if (userDetails['groupList']
+                        .toString()
+                        .contains(currentUser.currentGroupId) &&
+                    currentUser.currentGroupId != '0 ') {
+                  MyUser tempUser = MyUser.fromFirestore(userDetails);
+                  return UserWidget.fromMyUser(tempUser);
+                } else {
+                  return Container();
+                }
                 //creating user object with firestoreBuilder
-                MyUser tempUser = MyUser.fromFirestore(userDetails);
-                return UserWidget.fromMyUser(tempUser);
               },
             );
           } else {

@@ -104,13 +104,17 @@ class _AddUserScreenState extends State<AddUserScreen> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (_) {
-                  return const WelcomeScreen();
-                },
-              ),
-            );
+            if (isAdded) {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) {
+                    return const WelcomeScreen();
+                  },
+                ),
+              );
+            } else {
+              Navigator.of(context).pop();
+            }
           },
         ),
       ),

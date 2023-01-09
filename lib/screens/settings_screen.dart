@@ -13,6 +13,7 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
+  bool _isViewer = currentUser.getIsViewer;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,12 +49,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
               children: [
                 SwitchListTile(
                     title: const Text('Grandma View'),
-                    value: currentUser.isViewer,
+                    value: _isViewer,
                     subtitle: const Text(
                         'Only shows the gallery, very simple for grandma.'),
-                    onChanged: (newValue) {
+                    onChanged: (value) {
                       setState(() {
-                        currentUser.SetViewMode(newValue);
+                        currentUser.SetViewMode(value);
+                        _isViewer = value;
                       });
                     }),
               ],

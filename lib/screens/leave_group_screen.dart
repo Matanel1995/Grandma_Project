@@ -109,13 +109,17 @@ class _LeaveGroupScreen extends State<LeaveGroupScreen> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (_) {
-                  return const WelcomeScreen();
-                },
-              ),
-            );
+            if (left) {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) {
+                    return const WelcomeScreen();
+                  },
+                ),
+              );
+            } else {
+              Navigator.of(context).pop();
+            }
           },
         ),
       ),
