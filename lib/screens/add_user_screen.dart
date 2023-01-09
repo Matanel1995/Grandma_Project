@@ -58,8 +58,8 @@ class _AddUserScreenState extends State<AddUserScreen> {
               print(addUser);
               print(currentUser.currentGroupId);
               () async {
-                usersList =
-                    await currentUser.getUsers([addUser]) as List<MyUser>;
+                usersList = await currentUser.getUsersUsingServer([addUser])
+                    as List<MyUser>;
               }.call().then((value) {
                 //print(usersList.length);
                 if (usersList.isEmpty) {

@@ -115,6 +115,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
           //   children: currentUser.photoUrl,
           // )
+          ElevatedButton(
+              onPressed: () async {
+                currentUser.getUsersUsingServer([currentUser.id]);
+              },
+              child: Text('Test'))
         ],
       );
     }
