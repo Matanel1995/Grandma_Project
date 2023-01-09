@@ -4,8 +4,10 @@ import 'package:google_signin/models/gruopList.dart';
 import 'package:google_signin/models/variables.dart';
 import 'package:google_signin/screens/add_user_screen.dart';
 import 'package:google_signin/screens/create_group_screen.dart';
+import 'package:google_signin/screens/home_screen.dart';
 import 'package:google_signin/screens/kick_user_screen.dart';
 import 'package:google_signin/screens/leave_group_screen.dart';
+import 'package:google_signin/screens/welcome_screen.dart';
 
 import '../models/user.dart';
 import '../widgets/groupPromoCard.dart';
@@ -122,7 +124,7 @@ class MyGroupsScreen extends StatelessWidget {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (_) {
-                      return CreateGroupScreen();
+                      return const CreateGroupScreen();
                     },
                   ),
                 );
@@ -166,6 +168,18 @@ class MyGroupsScreen extends StatelessWidget {
         title: Text(
           'My Groups',
           style: Theme.of(context).textTheme.titleMedium,
+        ),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (_) {
+                  return const WelcomeScreen();
+                },
+              ),
+            );
+          },
         ),
       ),
       body: Container(
