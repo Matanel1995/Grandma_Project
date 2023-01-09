@@ -28,7 +28,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (_) {
-                  return WelcomeScreen();
+                  return const WelcomeScreen();
                 },
               ),
             );

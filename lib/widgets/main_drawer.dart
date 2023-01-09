@@ -99,6 +99,12 @@ class _MainDrawerState extends State<MainDrawer> {
               ),
             );
           }),
+          buildListTile('Log Out', Icons.logout, () {
+            final provider =
+                Provider.of<GoogleSingInPovider>(context, listen: false);
+            provider.logout();
+            Navigator.popUntil(context, ModalRoute.withName('/'));
+          })
         ],
       );
     }
