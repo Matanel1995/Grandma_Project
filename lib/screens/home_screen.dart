@@ -67,8 +67,8 @@ class _HomeScreenState extends State<HomeScreen> {
     for (var i = 0; i < result.items.length; i++) {
       imageList.add(result.items[i].name);
     }
-    print(imageList);
-    print(imageList.length);
+    // print(imageList);
+    // print(imageList.length);
   }
 
   Widget whatToShow() {

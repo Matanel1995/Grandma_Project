@@ -29,15 +29,15 @@ class _MainDrawerState extends State<MainDrawer> {
             Navigator.of(context).pushReplacementNamed('/');
           }),
 
-          buildListTile('Score Table', Icons.score, () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (_) {
-                  return TableScore();
-                },
-              ),
-            );
-          }),
+          // buildListTile('Score Table', Icons.score, () {
+          //   Navigator.of(context).push(
+          //     MaterialPageRoute(
+          //       builder: (_) {
+          //         return TableScore();
+          //       },
+          //     ),
+          //   );
+          // }),
           // maybe
           buildListTile('Upload Photo', Icons.add_a_photo, () {
             // Navigator.of(context).pushReplacementNamed(UploadPhoto.routeName);
