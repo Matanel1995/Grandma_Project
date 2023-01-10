@@ -13,7 +13,7 @@ class groupPromoCard extends StatelessWidget {
     return InkWell(
       child: Row(
         children: [
-          const Icon(Icons.looks_one),
+          //const Icon(Icons.looks_one),
           Expanded(
               flex: 1,
               child: Container(
@@ -32,6 +32,13 @@ class groupPromoCard extends StatelessWidget {
                     ),
                     child: Container(
                       decoration: BoxDecoration(
+                          border: Border.all(
+                            color:
+                                currGroup.groupId == currentUser.currentGroupId
+                                    ? Colors.blue
+                                    : Colors.transparent,
+                            width: 2.2,
+                          ),
                           borderRadius: BorderRadius.circular(20),
                           gradient: LinearGradient(
                               begin: Alignment.bottomRight,

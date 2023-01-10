@@ -24,7 +24,14 @@ class WelcomeScreen extends StatelessWidget {
             );
           } else if (snapshot.hasData) {
             var userId = paresProvider(snapshot.data!.providerData.toString());
-            initCurrentUser(userId).then((value) {});
+            print('THE USER ID IS NOW:' + userId);
+            () async {
+              print('BEFORE INITCURRENT USER !!!!');
+              await initCurrentUser(userId);
+              print("AFTER INITCURRENYUSER!!!!");
+            }.call();
+            print('curreny user current group id: ' +
+                currentUser.getCurrentGroupId);
             return HomeScreen();
           } else if (snapshot.hasError) {
             return Center(
@@ -39,15 +46,26 @@ class WelcomeScreen extends StatelessWidget {
   }
 
   Future initCurrentUser(String userId) async {
-    DocumentReference docRef =
-        FirebaseFirestore.instance.collection('User').doc(userId);
-    await docRef.get().then((doc) => {
-          if (doc.exists)
-            {
-              currentUser =
-                  MyUser.fromFirestore(doc.data() as Map<String, dynamic>),
-            }
-        });
+    print("IN INIT CURR USER THE ID IS : " + userId);
+    // DocumentReference docRef =
+    //     FirebaseFirestore.instance.collection('User').doc(userId);
+    // print('GOT THE DOC!!!!');
+    // print(docRef.toString());
+    usersList = await currentUser.getUsersUsingServer([userId]) as List<MyUser>;
+    currentUser = usersList[0];
+    print(currentUser.toString());
+    // await docRef.get().then((doc) => {
+    //       print('BEFORE IF!!!'),
+    //       if (doc.exists)
+    //         {
+    //           print('DOC EXIXST!!'),
+    //           currentUser =
+    //               MyUser.fromFirestore(doc.data() as Map<String, dynamic>),
+    //         }
+    //       else
+    //         print("No such Document!!!!!"),
+    //     });
+    print(currentUser.currentGroupId);
   }
 
   String paresProvider(String info) {

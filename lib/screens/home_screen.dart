@@ -169,6 +169,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
+    print("IN INIT STATE!!! HOME SCREEN");
     super.initState();
     setState(() {
       getImages();

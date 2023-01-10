@@ -26,14 +26,16 @@ class _GalleryScreenState extends State<GalleryScreen> {
     int min = 0, max = imageTest1.length;
 
     super.initState();
-    Timer.periodic(const Duration(seconds: 6), (timer) {
-      setState(() {
-        index = (index + 1) % imageTest1.length;
-        // int r = min + rnd.nextInt(max - min);
-        // index = r;
-        // print(r);
+    if (imageTest1.length > 0) {
+      Timer.periodic(const Duration(seconds: 6), (timer) {
+        setState(() {
+          index = (index + 1) % imageTest1.length;
+          // int r = min + rnd.nextInt(max - min);
+          // index = r;
+          // print(r);
+        });
       });
-    });
+    }
   }
 
   @override

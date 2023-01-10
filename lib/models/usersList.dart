@@ -31,7 +31,7 @@ class UsersList extends StatelessWidget {
                 if (userDetails['groupList']
                         .toString()
                         .contains(currentUser.currentGroupId) &&
-                    currentUser.currentGroupId != '0 ') {
+                    currentUser.currentGroupId != '0') {
                   MyUser tempUser = MyUser.fromFirestore(userDetails);
                   return UserWidget.fromMyUser(tempUser);
                 } else {
