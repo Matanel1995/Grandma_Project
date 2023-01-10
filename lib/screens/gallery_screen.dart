@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:google_signin/screens/home_screen.dart';
 import 'package:google_signin/screens/welcome_screen.dart';
 import 'package:google_signin/storage_service.dart';
 
@@ -22,11 +23,10 @@ class _GalleryScreenState extends State<GalleryScreen> {
 
   @override
   void initState() {
-    Random rnd = Random();
-    int min = 0, max = imageTest1.length;
-
+    // Random rnd = Random();
+    // int min = 0, max = imageTest1.length;
     super.initState();
-    if (imageTest1.length > 0) {
+    if (imageTest1.isNotEmpty) {
       Timer.periodic(const Duration(seconds: 6), (timer) {
         setState(() {
           index = (index + 1) % imageTest1.length;
