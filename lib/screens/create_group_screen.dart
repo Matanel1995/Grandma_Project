@@ -170,17 +170,17 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                 )),
           ],
         ),
-        MaterialButton(
-          // update the group name
-          onPressed: () => Navigator.of(context).pushReplacement(
-              MaterialPageRoute(
-                  builder: (BuildContext context) => const MyGroupsScreen())),
-          color: Colors.purple,
-          child: const Text(
-            'Back To My Groups',
-            style: TextStyle(color: Colors.white),
-          ),
-        ),
+        // MaterialButton(
+        //   // update the group name
+        //   onPressed: () => Navigator.of(context).pushReplacement(
+        //       MaterialPageRoute(
+        //           builder: (BuildContext context) => const MyGroupsScreen())),
+        //   color: Colors.purple,
+        //   child: const Text(
+        //     'Back To My Groups',
+        //     style: TextStyle(color: Colors.white),
+        //   ),
+        // ),
       ],
     );
   }
