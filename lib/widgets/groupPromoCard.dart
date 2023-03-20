@@ -17,7 +17,7 @@ class groupPromoCard extends StatelessWidget {
           Expanded(
               flex: 1,
               child: Container(
-                height: 80,
+                height: 200,
                 width: 1000,
                 padding: const EdgeInsets.all(4),
                 child: AspectRatio(
