@@ -8,65 +8,141 @@ class groupPromoCard extends StatelessWidget {
 
   groupPromoCard(this.currGroup);
 
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      child: Row(
-        children: [
-          const Icon(Icons.looks_one),
-          Expanded(
-              flex: 1,
-              child: Container(
-                height: 200,
-                width: 1000,
-                padding: const EdgeInsets.all(4),
-                child: AspectRatio(
-                  aspectRatio: 2.62 / 3,
-                  child: Container(
-                    margin: const EdgeInsets.only(right: 15.0),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: NetworkImage(currGroup.groupPhotoUrl)),
-                    ),
-                    child: Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          gradient: LinearGradient(
-                              begin: Alignment.bottomRight,
-                              stops: const [
-                                0.1,
-                                0.9
-                              ],
-                              colors: [
-                                Colors.black.withOpacity(.8),
-                                Colors.black.withOpacity(.1)
-                              ])),
-                      child: Align(
-                        alignment: const Alignment(-0.8, 0.77),
-                        child: Text(
-                          currGroup.groupName,
-                          style: const TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              )),
-        ],
+  Widget buildListTile(VoidCallback tapHandler) {
+    return
+        // ListTile(
+        //   leading: ConstrainedBox(
+        //     constraints: const BoxConstraints(
+        //         maxHeight: 50, maxWidth: 50, minHeight: 50, minWidth: 50),
+        //     child: Image.network(currGroup.groupPhotoUrl),
+        //   ),
+        //   title: Text(
+        //     currGroup.groupName,
+        //     style: const TextStyle(
+        //       fontFamily: 'RobotoCondensed',
+        //       fontSize: 24,
+        //       fontWeight: FontWeight.bold,
+        //     ),
+        //   ),
+        //   onTap: tapHandler,
+        // );
+
+        ListTile(
+      tileColor: Colors.white,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+        side: BorderSide(color: Colors.grey.shade300),
       ),
-      onTap: () {
-        Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-          return GroupProfileScreen(
-            currGroup: currGroup,
-          );
-        }));
-      },
+      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      leading: CircleAvatar(
+        radius: 25,
+        backgroundImage: NetworkImage(currGroup.groupPhotoUrl),
+      ),
+      title: Text(
+        currGroup.groupName,
+        style: const TextStyle(
+          fontFamily: 'Montserrat',
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+          // color: Colors.grey.shade800,
+        ),
+      ),
+      trailing: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+        decoration: BoxDecoration(
+          color: Colors.greenAccent,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Text(
+          '${currGroup.groupUsers.length} members',
+          style: const TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: 14,
+          ),
+        ),
+      ),
+      onTap: tapHandler,
     );
   }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        buildListTile(() {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (_) {
+                return GroupProfileScreen(
+                  currGroup: currGroup,
+                );
+              },
+            ),
+          );
+        })
+      ],
+    );
+  }
+
+  // Widget build(BuildContext context) {
+  //   return InkWell(
+  //     child: Row(
+  //       children: [
+  //         const Icon(Icons.looks_one),
+  //         Expanded(
+  //             flex: 1,
+  //             child: Container(
+  //               height: 200,
+  //               width: 1000,
+  //               padding: const EdgeInsets.all(4),
+  //               child: AspectRatio(
+  //                 aspectRatio: 2.62 / 3,
+  //                 child: Container(
+  //                   margin: const EdgeInsets.only(right: 15.0),
+  //                   decoration: BoxDecoration(
+  //                     borderRadius: BorderRadius.circular(20),
+  //                     image: DecorationImage(
+  //                         fit: BoxFit.cover,
+  //                         image: NetworkImage(currGroup.groupPhotoUrl)),
+  //                   ),
+  //                   child: Container(
+  //                     decoration: BoxDecoration(
+  //                         borderRadius: BorderRadius.circular(20),
+  //                         gradient: LinearGradient(
+  //                             begin: Alignment.bottomRight,
+  //                             stops: const [
+  //                               0.1,
+  //                               0.9
+  //                             ],
+  //                             colors: [
+  //                               Colors.black.withOpacity(.8),
+  //                               Colors.black.withOpacity(.1)
+  //                             ])),
+  //                     child: Align(
+  //                       alignment: const Alignment(-0.8, 0.77),
+  //                       child: Text(
+  //                         currGroup.groupName,
+  //                         style: const TextStyle(
+  //                           fontSize: 20,
+  //                           fontWeight: FontWeight.w500,
+  //                           color: Colors.white,
+  //                         ),
+  //                       ),
+  //                     ),
+  //                   ),
+  //                 ),
+  //               ),
+  //             )),
+  //       ],
+  //     ),
+  //     onTap: () {
+  //       Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+  //         return GroupProfileScreen(
+  //           currGroup: currGroup,
+  //         );
+  //       }));
+  //     },
+  //   );
+  // }
 }
