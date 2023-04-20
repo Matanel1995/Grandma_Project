@@ -30,7 +30,7 @@ class WelcomeScreen extends StatelessWidget {
               await initCurrentUser(userId);
               print("AFTER INITCURRENYUSER!!!!");
             }.call();
-            print('curreny user current group id: ' +
+            print('current user current group id: ' +
                 currentUser.getCurrentGroupId);
             return HomeScreen();
           } else if (snapshot.hasError) {
@@ -53,19 +53,8 @@ class WelcomeScreen extends StatelessWidget {
     // print(docRef.toString());
     usersList = await currentUser.getUsersUsingServer([userId]) as List<MyUser>;
     currentUser = usersList[0];
-    print(currentUser.toString());
-    // await docRef.get().then((doc) => {
-    //       print('BEFORE IF!!!'),
-    //       if (doc.exists)
-    //         {
-    //           print('DOC EXIXST!!'),
-    //           currentUser =
-    //               MyUser.fromFirestore(doc.data() as Map<String, dynamic>),
-    //         }
-    //       else
-    //         print("No such Document!!!!!"),
-    //     });
-    print(currentUser.currentGroupId);
+    print("current user" + currentUser.toString());
+    print("gurrent user group " + currentUser.currentGroupId);
   }
 
   String paresProvider(String info) {

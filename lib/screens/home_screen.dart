@@ -73,6 +73,13 @@ class _HomeScreenState extends State<HomeScreen> {
     // print(imageList.length);
   }
 
+  Future<String> testFunction() async {
+    print("before");
+    print(await currentUser.fetchDataFromNode("103114568448640701398 "));
+    print("after");
+    return "";
+  }
+
   Widget whatToShow() {
     // if there are members and there is a group return list of members and messages box
     // else write a message and send the user to build a group or join
@@ -87,8 +94,12 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           Container(
             height: 200,
-            child: const UsersList(),
+            child: UsersList(),
           ),
+          Container(
+            height: 100,
+            child: Text(testFunction().toString()),
+          )
           // buildSectionTitle(context, 'Messages'),
           // Center(
           //   child: buildContainer(
