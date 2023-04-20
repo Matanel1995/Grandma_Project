@@ -39,7 +39,7 @@ class MyUser {
         id: id,
         userName: userName,
         photoUrl: photoUrl,
-        email: email,
+        email: email.toLowerCase(),
         currentGroupId: currentUser.currentGroupId,
         groupsList: currentUser.groupsList,
         isViewer: currentUser.isViewer);
@@ -211,12 +211,32 @@ class MyUser {
   //Input: list of users Id
   //Output: List of MyUser objects
   Future getUsersUsingServer(List<String> usersId) async {
+    print("IN GETUSERFROMSERVERS");
+    print(usersId[0]);
     usersList = [];
     for (String userId in usersId) {
       var tempUserJson = await fetchDataFromNode(userId);
       MyUser userToAdd = MyUser.fromFirestore(tempUserJson);
       usersList.add(userToAdd);
     }
+    print(usersList);
+    return usersList;
+  }
+
+  Future getUserByEmail(List<String> userEmail) async {
+    usersList = [];
+    var queryRef = await userRef
+        .where('email', isEqualTo: userEmail[0].toString().toLowerCase())
+        .get()
+        .then((value) async {
+      print("Number of matching users: ${value.docs.length}");
+      for (var element in value.docs) {
+        var tempUserJson = await fetchDataFromNode(element.id);
+        print("Fetched user with id ${element.id}: $tempUserJson");
+        MyUser userToAdd = MyUser.fromFirestore(tempUserJson);
+        usersList.add(userToAdd);
+      }
+    });
     return usersList;
   }
 
@@ -271,12 +291,13 @@ class MyUser {
   Future fetchDataFromNode(String userId) async {
     try {
       var url = Uri(
-        scheme: 'http',
-        host: '10.0.2.2',
-        port: 8080,
-        path: '/getUser',
-        queryParameters: {'id': userId},
+        scheme: 'https',
+        host: 'gproject1995.onrender.com',
+        // port: 8080,
+        path: '/user/${userId}',
+        // queryParameters: {'userId': userId},
       );
+      print("(((((((((((((((((((((())))))))))))))))))))))" + url.toString());
       final response = await http.get(url);
       if (response.statusCode == 200) {
         var tempString = response.body.substring(1, response.body.length - 1);

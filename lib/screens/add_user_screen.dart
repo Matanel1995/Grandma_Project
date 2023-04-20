@@ -35,10 +35,18 @@ class _AddUserScreenState extends State<AddUserScreen> {
       crossAxisAlignment: CrossAxisAlignment.end,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
+        Center(
+            child: const Text(
+          "Enter the user Email",
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        )),
+        SizedBox(
+          height: 10,
+        ),
         TextField(
           controller: controllerAddUser,
           decoration: InputDecoration(
-              hintText: 'Please provide a user to add',
+              hintText: 'Example@mail.com',
               border: const OutlineInputBorder(),
               suffixIcon: IconButton(
                 onPressed: () {
@@ -58,8 +66,8 @@ class _AddUserScreenState extends State<AddUserScreen> {
               print(addUser);
               print(currentUser.currentGroupId);
               () async {
-                usersList = await currentUser.getUsersUsingServer([addUser])
-                    as List<MyUser>;
+                usersList =
+                    await currentUser.getUserByEmail([addUser]) as List<MyUser>;
               }.call().then((value) {
                 //print(usersList.length);
                 if (usersList.isEmpty) {

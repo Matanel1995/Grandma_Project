@@ -55,7 +55,8 @@ class _kickUserScreen extends State<kickUserScreen> {
             });
             if (kickUser != '') {
               () async {
-                await currentUser.getUsers([kickUser]) as List<MyUser>;
+                await currentUser.getUsersUsingServer([kickUser])
+                    as List<MyUser>;
               }.call().then((value) {
                 if (usersList.isEmpty) {
                   print('NOT FOUND!');
