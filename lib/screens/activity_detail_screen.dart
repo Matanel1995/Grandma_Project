@@ -42,7 +42,9 @@ class ActivityDetailScreen extends StatelessWidget {
     final selectedActivity =
         DUMMY_ACTIVITIES.firstWhere((activity) => activity.id == activityId);
     return Scaffold(
+      backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         title: Text('${selectedActivity.title}'),
       ),
       body: SingleChildScrollView(

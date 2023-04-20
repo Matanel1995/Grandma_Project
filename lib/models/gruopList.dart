@@ -7,6 +7,25 @@ import 'package:google_signin/widgets/groupWidget.dart';
 class groupList extends StatelessWidget {
   const groupList({super.key});
 
+  Widget buildListTile(
+      String title, IconData iconData, VoidCallback tapHandler) {
+    return ListTile(
+      leading: Icon(
+        iconData,
+        size: 26,
+      ),
+      title: Text(
+        title,
+        style: const TextStyle(
+          fontFamily: 'RobotoCondensed',
+          fontSize: 24,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      onTap: tapHandler,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(

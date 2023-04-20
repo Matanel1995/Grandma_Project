@@ -38,8 +38,11 @@ class _MyAppState extends State<MyApp> {
         title: 'Grandma Project',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-            primarySwatch: Colors.blueGrey,
-            accentColor: Color.fromARGB(255, 226, 137, 19),
+            primaryColor: Colors.brown,
+            scaffoldBackgroundColor: Colors.brown,
+            // accentColor: Colors.brown[100],
+            cardColor: Colors.black45,
+            backgroundColor: Colors.brown[100],
             canvasColor: const Color.fromRGBO(244, 243, 243, 1),
             fontFamily: 'Raleway',
             textTheme: ThemeData.light().textTheme.copyWith(
@@ -50,7 +53,7 @@ class _MyAppState extends State<MyApp> {
                   color: Color.fromRGBO(20, 51, 51, 1),
                 ),
                 subtitle1: const TextStyle(
-                  fontSize: 20,
+                  fontSize: 25,
                   fontFamily: 'RobotoCondensed',
                   fontWeight: FontWeight.bold,
                 ))),

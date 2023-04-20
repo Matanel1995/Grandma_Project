@@ -8,7 +8,310 @@ import 'package:google_signin/models/variables.dart';
 import 'package:google_signin/screens/home_screen.dart';
 import 'package:google_signin/screens/my_groups_screen.dart';
 import 'package:google_signin/screens/welcome_screen.dart';
+import 'dart:async';
+import 'dart:io';
+
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
+import 'package:google_signin/models/Group.dart';
+import 'package:google_signin/models/variables.dart';
+import 'package:google_signin/screens/home_screen.dart';
+import 'package:google_signin/screens/my_groups_screen.dart';
+import 'package:google_signin/screens/welcome_screen.dart';
+import 'dart:async';
+import 'dart:io';
+
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
+import 'package:google_signin/models/Group.dart';
+import 'package:google_signin/models/variables.dart';
+import 'package:google_signin/screens/home_screen.dart';
+import 'package:google_signin/screens/my_groups_screen.dart';
+import 'package:google_signin/screens/welcome_screen.dart';
 import 'package:image_picker/image_picker.dart';
+
+// class CreateGroupScreen extends StatefulWidget {
+//   const CreateGroupScreen({super.key});
+
+//   @override
+//   State<CreateGroupScreen> createState() => _CreateGroupScreenState();
+// }
+
+// class _CreateGroupScreenState extends State<CreateGroupScreen> {
+//   final controllerGroupName = TextEditingController();
+//   final controllerGroupPhoto = TextEditingController();
+//   String groupName = '';
+//   String photoURL = '';
+//   bool isCreated = false;
+
+//   Widget showError() {
+//     return Expanded(
+//       child: Center(
+//           child: Text(
+//         'congratulations!!\nThe group $groupName has been created! \nYou can go back now.',
+//         style: const TextStyle(color: Colors.black, fontSize: 20),
+//       )),
+//     );
+//   }
+
+//   Widget show() {
+//     if (isCreated) {
+//       //display text
+//       return Expanded(
+//         child: Center(
+//             child: Text(
+//           'congratulations!!\nThe group $groupName has been created! \nYou can go back now.',
+//           style: const TextStyle(color: Colors.black, fontSize: 20),
+//         )),
+//       );
+//     }
+//     return Column(
+//       crossAxisAlignment: CrossAxisAlignment.end,
+//       mainAxisAlignment: MainAxisAlignment.center,
+//       children: [
+//         TextField(
+//           controller: controllerGroupName,
+//           decoration: InputDecoration(
+//               hintText: 'Please provide a group name?',
+//               border: OutlineInputBorder(),
+//               suffixIcon: IconButton(
+//                 onPressed: () {
+//                   // clear what's currently in the textfield
+//                   controllerGroupName.clear();
+//                 },
+//                 icon: const Icon(Icons.clear),
+//               )),
+//         ),
+//         Divider(
+//           height: 20,
+//         ),
+//         TextField(
+//           controller: controllerGroupPhoto,
+//           decoration: InputDecoration(
+//               hintText: 'Please provide a photo URL',
+//               border: OutlineInputBorder(),
+//               suffixIcon: IconButton(
+//                 onPressed: () {
+//                   // clear what's currently in the textfield
+//                   controllerGroupPhoto.clear();
+//                 },
+//                 icon: const Icon(Icons.clear),
+//               )),
+//         ),
+//         MaterialButton(
+//           // update the group name
+//           onPressed: () {
+//             setState(() {
+//               groupName = controllerGroupName.text;
+//               photoURL = controllerGroupPhoto.text;
+//             });
+//             if (groupName != '') {
+//               if (photoURL == "") {
+//                 // no selected photo
+//                 Group.createAsync(currentUser, groupName);
+//               } else {
+//                 // there is a selected photo
+//                 Group.createAsync(currentUser, groupName, photoURL);
+//               }
+//               isCreated = true;
+//             } else {
+//               showError();
+//             }
+//           },
+//           color: Colors.blue,
+//           child: const Text(
+//             'Create',
+//             style: TextStyle(color: Colors.white),
+//           ),
+//         ),
+//         MaterialButton(
+//           // update the group name
+//           onPressed: () => Navigator.of(context).pushReplacement(
+//               MaterialPageRoute(
+//                   builder: (BuildContext context) => MyGroupsScreen())),
+//           color: Colors.purple,
+//           child: const Text(
+//             'Back To My Groups',
+//             style: TextStyle(color: Colors.white),
+//           ),
+//         ),
+//       ],
+//     );
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text(
+//           'Create Group',
+//           style: Theme.of(context).textTheme.titleMedium,
+//         ),
+//         leading: IconButton(
+//           icon: const Icon(Icons.arrow_back),
+//           onPressed: () {
+//             Navigator.of(context).push(
+//               MaterialPageRoute(
+//                 builder: (_) {
+//                   return const WelcomeScreen();
+//                 },
+//               ),
+//             );
+//           },
+//         ),
+//       ),
+//       body: Padding(
+//         padding: const EdgeInsets.all(20),
+//         child: Column(
+//           crossAxisAlignment: CrossAxisAlignment.end,
+//           mainAxisAlignment: MainAxisAlignment.center,
+//           children: [
+//             show(),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+// version 2.0
+// class CreateGroupScreen extends StatefulWidget {
+//   const CreateGroupScreen({super.key});
+
+//   @override
+//   State<CreateGroupScreen> createState() => _CreateGroupScreenState();
+// }
+
+// class _CreateGroupScreenState extends State<CreateGroupScreen> {
+//   final controllerGroupName = TextEditingController();
+//   final controllerGroupPhoto = TextEditingController();
+//   String groupName = '';
+//   String photoURL = '';
+//   bool isCreated = false;
+
+//   Widget showError() {
+//     return Expanded(
+//       child: Center(
+//         child: Text(
+//           'Congratulations!\nThe group "$groupName" has been created!\nYou can go back now.',
+//           style: TextStyle(color: Colors.black, fontSize: 20),
+//           textAlign: TextAlign.center,
+//         ),
+//       ),
+//     );
+//   }
+
+//   Widget show() {
+//     if (isCreated) {
+//       // display success message
+//       return Expanded(
+//         child: Center(
+//           child: Text(
+//             'Congratulations!\nThe group "$groupName" has been created!\nYou can go back now.',
+//             style: TextStyle(color: Colors.black, fontSize: 20),
+//             textAlign: TextAlign.center,
+//           ),
+//         ),
+//       );
+//     }
+//     return Column(
+//       crossAxisAlignment: CrossAxisAlignment.stretch,
+//       mainAxisAlignment: MainAxisAlignment.center,
+//       children: [
+//         TextField(
+//           controller: controllerGroupName,
+//           decoration: InputDecoration(
+//             hintText: 'Enter group name',
+//             border: OutlineInputBorder(),
+//             suffixIcon: IconButton(
+//               onPressed: () {
+//                 controllerGroupName.clear();
+//               },
+//               icon: const Icon(Icons.clear),
+//             ),
+//           ),
+//         ),
+//         const SizedBox(height: 16),
+//         TextField(
+//           controller: controllerGroupPhoto,
+//           decoration: InputDecoration(
+//             hintText: 'Enter photo URL (optional)',
+//             border: OutlineInputBorder(),
+//             suffixIcon: IconButton(
+//               onPressed: () {
+//                 controllerGroupPhoto.clear();
+//               },
+//               icon: const Icon(Icons.clear),
+//             ),
+//           ),
+//         ),
+//         const SizedBox(height: 24),
+//         MaterialButton(
+//           onPressed: () {
+//             setState(() {
+//               groupName = controllerGroupName.text;
+//               photoURL = controllerGroupPhoto.text;
+//             });
+//             if (groupName.isNotEmpty) {
+//               if (photoURL.isEmpty) {
+//                 // no selected photo
+//                 Group.createAsync(currentUser, groupName);
+//               } else {
+//                 // there is a selected photo
+//                 Group.createAsync(currentUser, groupName, photoURL);
+//               }
+//               isCreated = true;
+//             } else {
+//               showError();
+//             }
+//           },
+//           color: Colors.blue,
+//           textColor: Colors.white,
+//           child: const Text('Create Group'),
+//         ),
+//         const SizedBox(height: 12),
+//         MaterialButton(
+//           onPressed: () => Navigator.of(context).pushReplacement(
+//             MaterialPageRoute(
+//               builder: (BuildContext context) => MyGroupsScreen(),
+//             ),
+//           ),
+//           color: Colors.purple,
+//           textColor: Colors.white,
+//           child: const Text('Back to My Groups'),
+//         ),
+//       ],
+//     );
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text(
+//           'Create Group',
+//           style: Theme.of(context).textTheme.headline6,
+//         ),
+//         leading: IconButton(
+//           icon: const Icon(Icons.arrow_back),
+//           onPressed: () {
+//             Navigator.of(context).push(
+//               MaterialPageRoute(
+//                 builder: (_) => const WelcomeScreen(),
+//               ),
+//             );
+//           },
+//         ),
+//       ),
+//       body: Padding(
+//         padding: const EdgeInsets.all(20),
+//         child: show(),
+//       ),
+//     );
+//   }
+// }
+
+// version 3.0
 
 class CreateGroupScreen extends StatefulWidget {
   const CreateGroupScreen({super.key});
@@ -18,16 +321,6 @@ class CreateGroupScreen extends StatefulWidget {
 }
 
 class _CreateGroupScreenState extends State<CreateGroupScreen> {
-  // @override
-  // void initState() {
-  //   // TODO: implement initState
-  //   super.initState();
-  //   Timer(
-  //       const Duration(seconds: 5),
-  //       () => Navigator.of(context).pushReplacement(MaterialPageRoute(
-  //           builder: (BuildContext context) => MyGroupsScreen())));
-  // }
-
   final controllerGroupName = TextEditingController();
   final controllerGroupPhoto = TextEditingController();
   String groupName = '';
@@ -38,39 +331,22 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
   UploadTask? uploadTask;
   String finalUrl = '';
 
-  // Widget showError() {
-  //   return const Expanded(
-  //     child: Center(
-  //         child: Text(
-  //       'You did not pick a group name.',
-  //       style: TextStyle(color: Colors.black, fontSize: 20),
-  //     )),
-  //   );
-  // }
-
   Widget show() {
-    // if (isCreated) {
-    //   //display text
-    //   return Center(
-    //       child: Text(
-    //     'congratulations!!\nThe group $groupName has been created! \nYou can go back now.',
-    //     style: const TextStyle(color: Colors.black, fontSize: 20),
-    //   ));
-    // }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        selectedImagePath == ''
+        selectedImagePath.isEmpty
             ? Container(
-                width: 100,
-                height: 100,
-                alignment: Alignment.center,
-                child: Image.asset(
-                  './assets/pictures/image_placeholder.png',
-                  height: 200,
-                  width: 200,
-                  fit: BoxFit.fill,
+                width: 200,
+                height: 200,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage(
+                      'assets/pictures/image_placeholder.png',
+                    ),
+                    fit: BoxFit.fill,
+                  ),
                 ),
               )
             : CircleAvatar(
@@ -79,95 +355,45 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                   File(selectedImagePath),
                 ),
               ),
-        const SizedBox(
-          height: 50,
-        ),
+        const SizedBox(height: 50),
         TextField(
           controller: controllerGroupName,
           decoration: InputDecoration(
-              hintText: 'Please provide a group name?',
-              border: OutlineInputBorder(),
-              suffixIcon: IconButton(
-                onPressed: () {
-                  // clear what's currently in the textfield
-                  controllerGroupName.clear();
-                },
-                icon: const Icon(Icons.clear),
-              )),
+            hintText: 'Please provide a group name',
+            border: OutlineInputBorder(),
+            suffixIcon: IconButton(
+              onPressed: () {
+                // clear what's currently in the textfield
+                controllerGroupName.clear();
+              },
+              icon: const Icon(Icons.clear),
+            ),
+          ),
         ),
-        const Divider(
-          height: 20,
-        ),
+        const Divider(height: 20),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             TextButton.icon(
-                style: ButtonStyle(
-                    // backgroundColor:
-                    //     MaterialStateProperty.all(Colors.green),
-                    padding:
-                        MaterialStateProperty.all(const EdgeInsets.all(20)),
-                    textStyle: MaterialStateProperty.all(
-                        const TextStyle(fontSize: 14, color: Colors.white))),
-                onPressed: () async {
-                  selectImage();
-                  setState(() {});
-                },
-                icon: const Icon(
-                  Icons.image,
-                  color: Colors.black,
-                ),
-                label: const Text(
-                  'Add Image',
-                  style: TextStyle(color: Colors.black),
-                )),
+              style: TextButton.styleFrom(
+                padding: const EdgeInsets.all(20),
+                backgroundColor: Colors.green,
+              ),
+              onPressed: selectImage,
+              icon: const Icon(Icons.image),
+              label: const Text('Add Image'),
+            ),
+            const SizedBox(width: 20),
             TextButton.icon(
-                style: ButtonStyle(
-                    // backgroundColor:
-                    //     MaterialStateProperty.all(Colors.green),
-                    padding:
-                        MaterialStateProperty.all(const EdgeInsets.all(20)),
-                    textStyle: MaterialStateProperty.all(
-                        const TextStyle(fontSize: 14, color: Colors.white))),
-                onPressed: () async {
-                  createGroup();
-
-                  // setState(() {
-                  //   groupName = controllerGroupName.text;
-                  //   photoURL = _singleImage!.name;
-                  // });
-                  // if (groupName != '') {
-                  //   if (photoURL == "") {
-                  //     // no selected photo
-                  //     print("Create group with no image");
-                  //     Group.createAsync(currentUser, groupName);
-                  //   } else {
-                  //     // there is a selected photo
-                  //     print("Create group with image");
-                  //     // print(urlDownload);
-                  //     print(finalUrl);
-                  //     Group.createAsync(currentUser, groupName, finalUrl);
-                  //   }
-                  // auto switching page after 5 secondss
-                  // Timer(
-                  //     const Duration(seconds: 5),
-                  //     () => Navigator.of(context).pushReplacement(MaterialPageRoute(
-                  //         builder: (BuildContext context) => MyGroupsScreen())));
-
-                  // isCreated = true;
-                  // } else {
-                  //   showError();
-                  // }
-                },
-                icon: const Icon(
-                  Icons.create,
-                  color: Colors.black,
-                ),
-                label: const Text(
-                  'Create Group',
-                  style: TextStyle(color: Colors.black),
-                )),
+              style: TextButton.styleFrom(
+                padding: const EdgeInsets.all(20),
+                backgroundColor: Colors.green,
+              ),
+              onPressed: createGroup,
+              icon: const Icon(Icons.create),
+              label: const Text('Create Group'),
+            ),
           ],
         ),
         // MaterialButton(
@@ -188,7 +414,9 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         title: Text(
           'Create Group',
           style: Theme.of(context).textTheme.titleMedium,
@@ -202,13 +430,6 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(20),
-        // child: Column(
-        //   crossAxisAlignment: CrossAxisAlignment.end,
-        //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        //   children: [
-        //     show(),
-        //   ],
-        // ),
         child: Center(child: show()),
       ),
     );
@@ -403,9 +624,9 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
               context: context,
               builder: (BuildContext context) {
                 return AlertDialog(
-                  title: const Text("Error"),
+                  title: const Text("Alerts"),
                   content: const Text(
-                      "The photo didn\'t upload, but your group was created"),
+                      "The photo didn't upload, but your group was created"),
                   actions: [
                     TextButton(
                         onPressed: (() {

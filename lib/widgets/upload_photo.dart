@@ -36,7 +36,9 @@ class _HomeScreenState extends State<UploadPhoto> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         title: Text(
           'Upload Photos',
           style: Theme.of(context).textTheme.titleMedium,
@@ -54,7 +56,6 @@ class _HomeScreenState extends State<UploadPhoto> {
           },
         ),
       ),
-      backgroundColor: Colors.blueGrey,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

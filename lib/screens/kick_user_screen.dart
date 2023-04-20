@@ -83,7 +83,9 @@ class _kickUserScreen extends State<kickUserScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         title: Text(
           'Kick User',
           style: Theme.of(context).textTheme.titleMedium,

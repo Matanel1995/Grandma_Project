@@ -20,8 +20,25 @@ class UsersList extends StatelessWidget {
           if (snapshot.hasError) {
             return const Text('Error occurred');
           } else if (snapshot.hasData) {
-            return ListView.builder(
-              scrollDirection: Axis.horizontal,
+            // return ListView.builder(
+            //   scrollDirection: Axis.vertical,
+            //   itemCount: snapshot.data!.docs.length,
+            //   itemBuilder: (context, index) {
+            //     //creating a map to store user details
+            //     Map<String, dynamic> userDetails =
+            //         snapshot.data!.docs[index].data();
+            //     //creating user object with firestoreBuilder
+            //     MyUser tempUser = MyUser.fromFirestore(userDetails);
+            //     return UserWidget.fromMyUser(tempUser);
+            //   },
+            // );
+            return GridView.builder(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                mainAxisSpacing: 10.0,
+                crossAxisSpacing: 10.0,
+                childAspectRatio: 2,
+              ),
               itemCount: snapshot.data!.docs.length,
               itemBuilder: (context, index) {
                 //creating a map to store user details

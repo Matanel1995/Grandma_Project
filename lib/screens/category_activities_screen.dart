@@ -41,7 +41,9 @@ class _CategoryActivitiessScreen extends State<CategoryActivitiessScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         title: Text(categoryTitle),
       ),
       body: ListView.builder(
