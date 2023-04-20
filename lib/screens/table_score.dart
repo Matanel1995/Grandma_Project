@@ -15,7 +15,9 @@ class _FiltersScreenState extends State<TableScore> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: Theme.of(context).backgroundColor,
         appBar: AppBar(
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           title: Text(
             'The Table Score',
             style: Theme.of(context).textTheme.titleMedium,

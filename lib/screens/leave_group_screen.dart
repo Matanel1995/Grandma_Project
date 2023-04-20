@@ -101,7 +101,9 @@ class _LeaveGroupScreen extends State<LeaveGroupScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         title: Text(
           'Leave Group',
           style: Theme.of(context).textTheme.titleMedium,

@@ -97,7 +97,9 @@ class _SwitchGroupScreen extends State<SwitchGroupScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         title: Text(
           'Switch Group',
           style: Theme.of(context).textTheme.titleMedium,

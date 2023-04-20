@@ -39,7 +39,9 @@ class _GalleryScreenState extends State<GalleryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: Theme.of(context).backgroundColor,
         appBar: AppBar(
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           title: const Text('The Gallery'),
           leading: IconButton(
               icon: const Icon(Icons.arrow_back),

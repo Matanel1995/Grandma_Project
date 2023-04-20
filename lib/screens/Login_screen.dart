@@ -16,16 +16,14 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         title: Text(
-          'G r a n d m a    P r o j e c t',
-          style: TextStyle(
-            fontFamily: 'Kanit',
-            fontSize: 28,
-          ),
+          'Grandma Project',
+          style: Theme.of(context).textTheme.subtitle1,
         ),
         centerTitle: true,
-        backgroundColor: Colors.teal[400],
       ),
       body: Center(
         child: Padding(
@@ -72,7 +70,6 @@ class LoginPage extends StatelessWidget {
           ),
         ),
       ),
-      backgroundColor: Color.fromARGB(90, 188, 212, 230),
     );
   }
 }

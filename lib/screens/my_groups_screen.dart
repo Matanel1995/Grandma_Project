@@ -112,7 +112,7 @@ class MyGroupsScreen extends StatelessWidget {
 
   bottomSheet(context) {
     showModalBottomSheet(
-        backgroundColor: Color.fromARGB(255, 251, 247, 247),
+        backgroundColor: Theme.of(context).backgroundColor,
         context: context,
         builder: (BuildContext c) {
           return Column(
@@ -162,7 +162,9 @@ class MyGroupsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         title: Text(
           'My Groups',
           style: Theme.of(context).textTheme.titleMedium,

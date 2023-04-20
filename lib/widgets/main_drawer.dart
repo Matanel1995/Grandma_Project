@@ -295,6 +295,7 @@ class _MainDrawerState extends State<MainDrawer> {
 
   Widget build(BuildContext context) {
     return Drawer(
+      backgroundColor: Theme.of(context).backgroundColor,
       child: Column(
         children: [
           Container(
@@ -303,7 +304,7 @@ class _MainDrawerState extends State<MainDrawer> {
             padding:
                 const EdgeInsets.fromLTRB(20, 30, 20, 10), // add top padding
             alignment: Alignment.centerLeft,
-            color: Colors.brown,
+            color: Theme.of(context).scaffoldBackgroundColor,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,

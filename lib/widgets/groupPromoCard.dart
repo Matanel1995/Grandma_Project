@@ -9,60 +9,59 @@ class groupPromoCard extends StatelessWidget {
   groupPromoCard(this.currGroup);
 
   Widget buildListTile(VoidCallback tapHandler) {
-    return
-        // ListTile(
-        //   leading: ConstrainedBox(
-        //     constraints: const BoxConstraints(
-        //         maxHeight: 50, maxWidth: 50, minHeight: 50, minWidth: 50),
-        //     child: Image.network(currGroup.groupPhotoUrl),
-        //   ),
-        //   title: Text(
-        //     currGroup.groupName,
-        //     style: const TextStyle(
-        //       fontFamily: 'RobotoCondensed',
-        //       fontSize: 24,
-        //       fontWeight: FontWeight.bold,
-        //     ),
-        //   ),
-        //   onTap: tapHandler,
-        // );
-
-        ListTile(
-      tileColor: Colors.white,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-        side: BorderSide(color: Colors.grey.shade300),
+    return Container(
+      // height: 40,
+      margin: EdgeInsets.all(4),
+      padding: EdgeInsets.symmetric(horizontal: 8),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8),
+        color: Colors.brown[100],
+        boxShadow: [
+          BoxShadow(
+            color: Colors.brown.withOpacity(0.6),
+            spreadRadius: 1,
+            blurRadius: 2,
+            offset: Offset(0, 2),
+          ),
+        ],
       ),
-      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      leading: CircleAvatar(
-        radius: 25,
-        backgroundImage: NetworkImage(currGroup.groupPhotoUrl),
-      ),
-      title: Text(
-        currGroup.groupName,
-        style: const TextStyle(
-          fontFamily: 'Montserrat',
-          fontSize: 20,
-          fontWeight: FontWeight.bold,
-          // color: Colors.grey.shade800,
+      child: ListTile(
+        tileColor: Colors.brown[100],
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+          side: BorderSide(color: Colors.grey.shade300),
         ),
-      ),
-      trailing: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-        decoration: BoxDecoration(
-          color: Colors.greenAccent,
-          borderRadius: BorderRadius.circular(20),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        leading: CircleAvatar(
+          radius: 25,
+          backgroundImage: NetworkImage(currGroup.groupPhotoUrl),
         ),
-        child: Text(
-          '${currGroup.groupUsers.length} members',
+        title: Text(
+          currGroup.groupName,
           style: const TextStyle(
-            color: Colors.white,
+            fontFamily: 'Montserrat',
+            fontSize: 20,
             fontWeight: FontWeight.bold,
-            fontSize: 14,
+            // color: Colors.grey.shade800,
           ),
         ),
+        trailing: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+          decoration: BoxDecoration(
+            color: Colors.greenAccent,
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Text(
+            '${currGroup.groupUsers.length} members',
+            style: const TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 14,
+            ),
+          ),
+        ),
+        onTap: tapHandler,
       ),
-      onTap: tapHandler,
     );
   }
 
