@@ -1,14 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:google_signin/main.dart';
 import 'package:google_signin/models/Group.dart';
 import 'package:google_signin/models/variables.dart';
 import 'package:google_signin/widgets/groupWidget.dart';
 
 class groupList extends StatelessWidget {
-  const groupList({super.key});
+  const groupList(BuildContext context, {super.key});
 
-  Widget buildListTile(
-      String title, IconData iconData, VoidCallback tapHandler) {
+  Widget buildListTile(BuildContext context, String title, IconData iconData,
+      VoidCallback tapHandler) {
     return ListTile(
       leading: Icon(
         iconData,
@@ -16,11 +17,7 @@ class groupList extends StatelessWidget {
       ),
       title: Text(
         title,
-        style: const TextStyle(
-          fontFamily: 'RobotoCondensed',
-          fontSize: 24,
-          fontWeight: FontWeight.bold,
-        ),
+        style: Theme.of(context).textTheme.bodyText1,
       ),
       onTap: tapHandler,
     );
@@ -57,7 +54,7 @@ class groupList extends StatelessWidget {
               },
             );
           } else {
-            return const Text('Empty data');
+            return buildTitle(context, 'Empty data');
           }
         } else {
           return Text('state: ${snapshot.connectionState}');

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_signin/models/Group.dart';
 import 'package:google_signin/models/variables.dart';
 import 'package:google_signin/screens/welcome_screen.dart';
+import 'package:google_signin/main.dart';
 
 class SwitchGroupScreen extends StatefulWidget {
   final Group currGroup;
@@ -23,11 +24,10 @@ class _SwitchGroupScreen extends State<SwitchGroupScreen> {
   Widget show() {
     if (switched) {
       return Center(
-          child: Text(
-        'You switched to the ${widget.currGroup.getGroupName} group'
-        '\nYou can go back now.',
-        style: TextStyle(color: Colors.black, fontSize: 20),
-      ));
+          child: buildText(
+              context,
+              'You switched to the ${widget.currGroup.getGroupName} group'
+              '\nYou can go back now.'));
     }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
@@ -70,8 +70,8 @@ class _SwitchGroupScreen extends State<SwitchGroupScreen> {
                   context: context,
                   builder: (BuildContext context) {
                     return AlertDialog(
-                      title: const Text('Wrong input'),
-                      content: const Text('You didn\'t type "switch"'),
+                      title: buildTitle(context, 'Wrong input'),
+                      content: buildText(context, 'You didn\'t type "switch"'),
                       actions: [
                         TextButton(
                             onPressed: () {
@@ -85,17 +85,14 @@ class _SwitchGroupScreen extends State<SwitchGroupScreen> {
                                 ),
                               );
                             },
-                            child: Text('OK'))
+                            child: buildText(context, 'OK'))
                       ],
                     );
                   });
             }
           },
-          color: Colors.blue,
-          child: const Text(
-            'Confirm',
-            style: TextStyle(color: Colors.white),
-          ),
+          color: Theme.of(context).cardColor,
+          child: buildText(context, 'Confirm'),
         ),
       ],
     );
@@ -107,10 +104,7 @@ class _SwitchGroupScreen extends State<SwitchGroupScreen> {
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        title: Text(
-          'Switch Group',
-          style: Theme.of(context).textTheme.titleMedium,
-        ),
+        title: buildTitle(context, 'Switch Group'),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {

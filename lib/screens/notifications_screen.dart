@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:google_signin/main.dart';
 
 class NotificationScreen extends StatefulWidget {
   const NotificationScreen({super.key});
@@ -16,10 +17,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        title: Text(
-          'Notifications',
-          style: Theme.of(context).textTheme.titleMedium,
-        ),
+        title: buildTitle(context, 'Notifications'),
       ),
       body: Container(
         alignment: Alignment.center,

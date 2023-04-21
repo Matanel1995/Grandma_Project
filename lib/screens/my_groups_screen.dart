@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_signin/main.dart';
 import 'package:google_signin/models/Group.dart';
 import 'package:google_signin/models/gruopList.dart';
 import 'package:google_signin/models/variables.dart';
@@ -15,7 +16,7 @@ import '../widgets/groupPromoCard.dart';
 class MyGroupsScreen extends StatelessWidget {
   const MyGroupsScreen({super.key});
 
-  Widget whatToShow() {
+  Widget whatToShow(BuildContext context) {
     // if a member has a group so he will see the groups list
     // if he doesn't so he will see a message
     // if(currentUser.currentGroupId != null)
@@ -48,7 +49,7 @@ class MyGroupsScreen extends StatelessWidget {
       print(currentUser.currentGroupId);
       return Expanded(
         child: Container(
-          child: groupList(),
+          child: groupList(context),
         ),
       );
     }
@@ -59,7 +60,7 @@ class MyGroupsScreen extends StatelessWidget {
   Widget viewType(BuildContext context) {
     if (!currentUser.isViewer) {
       return FloatingActionButton(
-        backgroundColor: Colors.green,
+        backgroundColor: Theme.of(context).cardColor,
         child: const Icon(
           Icons.add,
         ),
@@ -71,8 +72,8 @@ class MyGroupsScreen extends StatelessWidget {
     return Container();
   }
 
-  Widget buildListTile(
-      String title, IconData iconData, VoidCallback tapHandler) {
+  Widget buildListTile(BuildContext context, String title, IconData iconData,
+      VoidCallback tapHandler) {
     return ListTile(
       leading: Icon(
         iconData,
@@ -80,18 +81,14 @@ class MyGroupsScreen extends StatelessWidget {
       ),
       title: Text(
         title,
-        style: const TextStyle(
-          fontFamily: 'RobotoCondensed',
-          fontSize: 24,
-          fontWeight: FontWeight.bold,
-        ),
+        style: Theme.of(context).textTheme.bodyText2,
       ),
       onTap: tapHandler,
     );
   }
 
-  Widget buildListTileForAdmin(
-      String title, IconData iconData, VoidCallback tapHandler) {
+  Widget buildListTileForAdmin(BuildContext context, String title,
+      IconData iconData, VoidCallback tapHandler) {
     //if(currentUser.isAdmin)
     if (true) {
       return ListTile(
@@ -101,11 +98,7 @@ class MyGroupsScreen extends StatelessWidget {
         ),
         title: Text(
           title,
-          style: const TextStyle(
-            fontFamily: 'RobotoCondensed',
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-          ),
+          style: Theme.of(context).textTheme.bodyText2,
         ),
         onTap: tapHandler,
       );
@@ -120,7 +113,7 @@ class MyGroupsScreen extends StatelessWidget {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              buildListTile('Create Group', Icons.create, () {
+              buildListTile(context, 'Create Group', Icons.create, () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (_) {
@@ -129,33 +122,6 @@ class MyGroupsScreen extends StatelessWidget {
                   ),
                 );
               }),
-              // buildListTile('Leave Group', Icons.exit_to_app, () {
-              //   Navigator.of(context).push(
-              //     MaterialPageRoute(
-              //       builder: (_) {
-              //         return LeaveGroupScreen();
-              //       },
-              //     ),
-              //   );
-              // }),
-              // buildListTileForAdmin('Add User', Icons.add_road, () {
-              //   Navigator.of(context).push(
-              //     MaterialPageRoute(
-              //       builder: (_) {
-              //         return AddUserScreen();
-              //       },
-              //     ),
-              //   );
-              // }),
-              // buildListTileForAdmin('Kick User', Icons.no_accounts, () {
-              //   Navigator.of(context).push(
-              //     MaterialPageRoute(
-              //       builder: (_) {
-              //         return kickUserScreen();
-              //       },
-              //     ),
-              //   );
-              // }),
             ],
           );
         });
@@ -167,10 +133,7 @@ class MyGroupsScreen extends StatelessWidget {
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        title: Text(
-          'My Groups',
-          style: Theme.of(context).textTheme.titleMedium,
-        ),
+        title: buildTitle(context, 'My Groups'),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
@@ -189,7 +152,7 @@ class MyGroupsScreen extends StatelessWidget {
         margin: const EdgeInsets.all(20),
         padding: const EdgeInsets.all(10),
         child: Column(children: [
-          whatToShow(),
+          whatToShow(context),
         ]),
       ),
       floatingActionButton: viewType(context),

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:google_signin/main.dart';
 import 'package:google_signin/models/Group.dart';
 import 'package:google_signin/models/user.dart';
 import 'package:google_signin/models/variables.dart';
@@ -25,21 +26,16 @@ class _AddUserScreenState extends State<AddUserScreen> {
   Widget show() {
     if (isAdded) {
       return Center(
-          child: Text(
-        'The user has been added to ${widget.currGroup.getGroupName}'
-        '\nYou can go back now.',
-        style: TextStyle(color: Colors.black, fontSize: 20),
-      ));
+          child: buildText(
+              context,
+              'The user has been added to ${widget.currGroup.getGroupName}'
+              '\nYou can go back now.'));
     }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Center(
-            child: const Text(
-          "Enter the user Email",
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-        )),
+        Center(child: buildText(context, 'Enter the user Email')),
         SizedBox(
           height: 10,
         ),
@@ -78,24 +74,12 @@ class _AddUserScreenState extends State<AddUserScreen> {
                 }
               });
               usersList = [];
-              // FutureBuilder(
-              //   future: widget.currGroup.addUser(usersList.elementAt(0)),
-              //   builder: (context, snapshot) {
-              //     print('INSIDE FUTURE BUILDER');
-              //     // groupsListToReturn = snapshot.data as List<Group>;
-              //     // print(groupsListToReturn.elementAt(0).getGroupId.toString());
-              //     return Container();
-              //   },
-              // );
               isAdded = true;
               print('after isADDED = TRUE');
             }
           },
-          color: Colors.blue,
-          child: const Text(
-            'Confirm',
-            style: TextStyle(color: Colors.white),
-          ),
+          color: Theme.of(context).cardColor,
+          child: buildText(context, 'Confirm'),
         ),
       ],
     );
@@ -107,10 +91,7 @@ class _AddUserScreenState extends State<AddUserScreen> {
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        title: Text(
-          'Add User',
-          style: Theme.of(context).textTheme.titleMedium,
-        ),
+        title: buildTitle(context, 'Add User'),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {

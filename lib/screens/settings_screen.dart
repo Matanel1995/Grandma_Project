@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_signin/models/Group.dart';
 import 'package:google_signin/models/variables.dart';
 import 'package:google_signin/screens/welcome_screen.dart';
-
+import 'package:google_signin/main.dart';
 import '../models/user.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -20,10 +20,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        title: Text(
-          'Settings',
-          style: Theme.of(context).textTheme.titleMedium,
-        ),
+        title: buildTitle(context, 'Settings'),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
@@ -41,18 +38,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
         children: [
           Container(
             padding: const EdgeInsets.all(20),
-            child: Text(
-              'Adjust your view type',
-              style: Theme.of(context).textTheme.titleSmall,
-            ),
+            child: buildText(context, 'Adjust your view type'),
           ),
           Expanded(
             child: ListView(
               children: [
                 SwitchListTile(
-                    title: const Text('Grandma View'),
+                    title: buildText(context, 'Grandma View'),
                     value: _isViewer,
-                    subtitle: const Text(
+                    subtitle: buildTextSmall(context,
                         'Only shows the gallery, very simple for grandma.'),
                     onChanged: (value) {
                       setState(() {
