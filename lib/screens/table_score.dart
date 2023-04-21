@@ -10,6 +10,20 @@ class TableScore extends StatefulWidget {
   State<TableScore> createState() => _FiltersScreenState();
 }
 
+Widget buildText(BuildContext context, String text) {
+  return Text(
+    text,
+    style: Theme.of(context).textTheme.bodyText2,
+  );
+}
+
+Widget buildTitle(BuildContext context, String text) {
+  return Text(
+    text,
+    style: Theme.of(context).textTheme.bodyText1,
+  );
+}
+
 class _FiltersScreenState extends State<TableScore> {
   bool sort = true;
   @override
@@ -18,10 +32,7 @@ class _FiltersScreenState extends State<TableScore> {
         backgroundColor: Theme.of(context).backgroundColor,
         appBar: AppBar(
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          title: Text(
-            'The Table Score',
-            style: Theme.of(context).textTheme.titleMedium,
-          ),
+          title: buildTitle(context, 'The Table Score'),
         ),
         // drawer: const MainDrawer(),
         body: DataTable(
