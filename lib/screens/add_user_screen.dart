@@ -64,13 +64,29 @@ class _AddUserScreenState extends State<AddUserScreen> {
                     await currentUser.getUserByEmail([addUser]) as List<MyUser>;
               }.call().then((value) {
                 if (usersList.isEmpty) {
-                  print("No user with this email found!");
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: buildText(context, 'Error.'),
+                          content: buildText(context,
+                              'Email is not valid.\nTry again with a valid email.'),
+                          actions: [
+                            TextButton(
+                                onPressed: (() {
+                                  Navigator.of(context).pop();
+                                }),
+                                child: const Text("Ok"))
+                          ],
+                        );
+                      });
                 } else {
                   widget.currGroup.addUser(usersList.elementAt(0));
+                  isAdded = true;
                 }
               });
               usersList = [];
-              isAdded = true;
+              // isAdded = true;
             }
           },
           color: Theme.of(context).cardColor,

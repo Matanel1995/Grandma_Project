@@ -161,10 +161,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                 padding: const EdgeInsets.all(12.0),
                 child: Column(
                   children: [
-                    Text(
-                      'Select Image From !',
-                      style: Theme.of(context).textTheme.bodyText2,
-                    ),
+                    buildText(context, 'Select Image From !'),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
