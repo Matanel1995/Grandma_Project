@@ -25,14 +25,9 @@ class WelcomeScreen extends StatelessWidget {
             );
           } else if (snapshot.hasData) {
             var userId = paresProvider(snapshot.data!.providerData.toString());
-            print('THE USER ID IS NOW:' + userId);
             () async {
-              print('BEFORE INITCURRENT USER !!!!');
               await initCurrentUser(userId);
-              print("AFTER INITCURRENYUSER!!!!");
             }.call();
-            print('current user current group id: ' +
-                currentUser.getCurrentGroupId);
             return HomeScreen();
           } else if (snapshot.hasError) {
             return Center(
@@ -47,15 +42,8 @@ class WelcomeScreen extends StatelessWidget {
   }
 
   Future initCurrentUser(String userId) async {
-    print("IN INIT CURR USER THE ID IS : " + userId);
-    // DocumentReference docRef =
-    //     FirebaseFirestore.instance.collection('User').doc(userId);
-    // print('GOT THE DOC!!!!');
-    // print(docRef.toString());
     usersList = await currentUser.getUsersUsingServer([userId]) as List<MyUser>;
     currentUser = usersList[0];
-    print("current user" + currentUser.toString());
-    print("gurrent user group " + currentUser.currentGroupId);
   }
 
   String paresProvider(String info) {

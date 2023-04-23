@@ -459,8 +459,6 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                         GestureDetector(
                           onTap: () async {
                             selectedImagePath = await selectImageFromGallery();
-                            print('Image_Path:-');
-                            print(selectedImagePath);
                             if (selectedImagePath != '') {
                               Navigator.pop(context);
                               setState(() {});
@@ -490,9 +488,6 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                         GestureDetector(
                           onTap: () async {
                             selectedImagePath = await selectImageFromCamera();
-                            print('Image_Path:-');
-                            print(selectedImagePath);
-
                             if (selectedImagePath != '') {
                               Navigator.pop(context);
                               setState(() {});
@@ -661,7 +656,6 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
             );
           });
     }
-    // print('Download Link: $urlDownload');
 
     setState(() {
       uploadTask = null;

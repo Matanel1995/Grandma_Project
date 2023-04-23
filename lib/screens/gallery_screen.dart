@@ -30,9 +30,6 @@ class _GalleryScreenState extends State<GalleryScreen> {
       Timer.periodic(const Duration(seconds: 6), (timer) {
         setState(() {
           index = (index + 1) % imageTest1.length;
-          // int r = min + rnd.nextInt(max - min);
-          // index = r;
-          // print(r);
         });
       });
     }

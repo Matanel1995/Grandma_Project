@@ -68,14 +68,9 @@ class _HomeScreenState extends State<HomeScreen> {
     for (var i = 0; i < result.items.length; i++) {
       imageList.add(result.items[i].name);
     }
-    // print(imageList);
-    // print(imageList.length);
   }
 
   Future<String> testFunction() async {
-    print("before");
-    print(await currentUser.fetchDataFromNode("103114568448640701398 "));
-    print("after");
     return "";
   }
 
@@ -149,7 +144,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    print("IN INIT STATE!!! HOME SCREEN");
     super.initState();
     setState(() {
       getImages();

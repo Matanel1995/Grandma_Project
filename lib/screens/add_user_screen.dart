@@ -63,18 +63,14 @@ class _AddUserScreenState extends State<AddUserScreen> {
               addUser = controllerAddUser.text;
             });
             if (addUser != '') {
-              print(addUser);
-              print(currentUser.currentGroupId);
               () async {
                 usersList =
                     await currentUser.getUserByEmail([addUser]) as List<MyUser>;
               }.call().then((value) {
-                //print(usersList.length);
                 if (usersList.isEmpty) {
-                  print("NOT FOUND");
+                  print("No user with this email found!");
                 } else {
                   widget.currGroup.addUser(usersList.elementAt(0));
-                  print('AFTER ADD USER');
                 }
               });
               usersList = [];
@@ -88,7 +84,6 @@ class _AddUserScreenState extends State<AddUserScreen> {
               //   },
               // );
               isAdded = true;
-              print('after isADDED = TRUE');
             }
           },
           color: Colors.blue,

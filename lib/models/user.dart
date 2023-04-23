@@ -107,9 +107,6 @@ class MyUser {
     DocumentReference userDocRef;
     DocumentReference docRef =
         FirebaseFirestore.instance.collection('Group').doc(groupId);
-    print(groupId);
-    print(currentUser.currentGroupId);
-    print(currentUser.email);
     //check if document exist
     await docRef.get().then(
         (doc) => {
@@ -120,7 +117,6 @@ class MyUser {
                   userDocRef = userRef.doc(currentUser.id),
                   userDocRef.update({'currentGroupId': groupId}),
                   currentUser.currentGroupId = groupId,
-                  print(currentUser.currentGroupId),
                 }
               else
                 {print("DOC NOT FOUND!")}
@@ -177,7 +173,6 @@ class MyUser {
     await docRef.get().then((doc) => {
           if (doc.exists)
             {
-              print('Doc Exist!'),
               currentUser.currentGroupId = groupId,
               groupsList.add(groupId),
               userRef.doc(currentUser.id).update(
@@ -211,15 +206,12 @@ class MyUser {
   //Input: list of users Id
   //Output: List of MyUser objects
   Future getUsersUsingServer(List<String> usersId) async {
-    print("IN GETUSERFROMSERVERS");
-    print(usersId[0]);
     usersList = [];
     for (String userId in usersId) {
       var tempUserJson = await fetchDataFromNode(userId);
       MyUser userToAdd = MyUser.fromFirestore(tempUserJson);
       usersList.add(userToAdd);
     }
-    print(usersList);
     return usersList;
   }
 
@@ -229,10 +221,8 @@ class MyUser {
         .where('email', isEqualTo: userEmail[0].toString().toLowerCase())
         .get()
         .then((value) async {
-      print("Number of matching users: ${value.docs.length}");
       for (var element in value.docs) {
         var tempUserJson = await fetchDataFromNode(element.id);
-        print("Fetched user with id ${element.id}: $tempUserJson");
         MyUser userToAdd = MyUser.fromFirestore(tempUserJson);
         usersList.add(userToAdd);
       }
@@ -276,7 +266,6 @@ class MyUser {
   }
 
   List<String> parseGroupList(String groupsList) {
-    print(groupsList);
     List<String> dataToReturn = [];
     List<String> Helper = [];
     Helper = groupsList.split(",");
@@ -297,7 +286,6 @@ class MyUser {
         path: '/user/${userId}',
         // queryParameters: {'userId': userId},
       );
-      print("(((((((((((((((((((((())))))))))))))))))))))" + url.toString());
       final response = await http.get(url);
       if (response.statusCode == 200) {
         var tempString = response.body.substring(1, response.body.length - 1);

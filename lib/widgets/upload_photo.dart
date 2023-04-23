@@ -165,8 +165,6 @@ class _HomeScreenState extends State<UploadPhoto> {
                         GestureDetector(
                           onTap: () async {
                             selectedImagePath = await selectImageFromGallery();
-                            print('Image_Path:-');
-                            print(selectedImagePath);
                             if (selectedImagePath != '') {
                               Navigator.pop(context);
                               setState(() {});
@@ -196,8 +194,6 @@ class _HomeScreenState extends State<UploadPhoto> {
                         GestureDetector(
                           onTap: () async {
                             selectedImagePath = await selectImageFromCamera();
-                            print('Image_Path:-');
-                            print(selectedImagePath);
 
                             if (selectedImagePath != '') {
                               Navigator.pop(context);
@@ -287,7 +283,6 @@ class _HomeScreenState extends State<UploadPhoto> {
             );
           });
     }
-    print('Download Link: $urlDownload');
 
     setState(() {
       uploadTask = null;

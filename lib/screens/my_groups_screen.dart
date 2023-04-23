@@ -45,7 +45,6 @@ class MyGroupsScreen extends StatelessWidget {
     // return GroupList
     // I think it will be good if Matanel can do here the same he did with usersList , just with a GridView
     else {
-      print(currentUser.currentGroupId);
       return Expanded(
         child: Container(
           child: groupList(),

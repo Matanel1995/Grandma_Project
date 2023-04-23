@@ -115,6 +115,7 @@ class Group {
 
   //Function to add user to existing group - ONLY ADMIN!
   Future addUser(MyUser userToAdd) async {
+    print("in add user funtion!!!!1");
     if (groupManagerId == currentUser.id) {
       await collectionRef.doc(groupId).get().then(
         (DocumentSnapshot docSnapshot) {
@@ -133,6 +134,7 @@ class Group {
         onError: (e) => print('Error in addUser! ' + e.toString()),
       );
     } else {
+      //ADD HERE POP UP TO USER AND NOT JUST PRINT!!!!!!
       print('You need to be Admin to kick some one from the group!');
     }
   }
@@ -152,9 +154,6 @@ class Group {
 
   //Function to leave group
   Future leaveGroup(MyUser user, String groupId) async {
-    print('IN LEAVE GROUP!!');
-    print(user.email);
-    print(groupId);
     Map<String, int> usersMap = {};
     //delete the user from the groupUsers List
     await collectionRef.doc(groupId).get().then((DocumentSnapshot docSnapshot) {
@@ -175,6 +174,7 @@ class Group {
     if (groupManagerId == currentUser.id) {
       await leaveGroup(userToKick, groupId);
     } else {
+      //ADD HERE POP UP TO USER AND NOT JUST PRINT!!!!
       print('You need to be Admin to kick some one from the group!');
     }
   }
