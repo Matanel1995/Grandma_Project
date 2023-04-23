@@ -1,12 +1,38 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:google_signin/main.dart';
 import 'package:google_signin/models/user.dart';
 import 'package:google_signin/models/variables.dart';
 import 'package:google_signin/widgets/UserWidget.dart';
 import 'package:google_signin/widgets/promoCard.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 
-class UsersList extends StatelessWidget {
-  const UsersList({super.key});
+class UsersList extends StatefulWidget {
+  @override
+  _MyWidgetState createState() => _MyWidgetState();
+}
+
+class _MyWidgetState extends State<UsersList> {
+  late IO.Socket socket;
+
+  @override
+  void initState() {
+    super.initState();
+    print("gettiing data from server!");
+    socket = IO.io('ws://localhost:8080');
+    print("printing socket: ${socket.toString()}");
+    socket.on('data', (data) {
+      print('Received data from server: $data');
+      // Do something with the data here
+    });
+  }
+
+  @override
+  void dispose() {
+    socket.disconnect();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,20 +44,8 @@ class UsersList extends StatelessWidget {
         } else if (snapshot.connectionState == ConnectionState.active ||
             snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasError) {
-            return const Text('Error occurred');
+            return buildText(context, 'Error occurred');
           } else if (snapshot.hasData) {
-            // return ListView.builder(
-            //   scrollDirection: Axis.vertical,
-            //   itemCount: snapshot.data!.docs.length,
-            //   itemBuilder: (context, index) {
-            //     //creating a map to store user details
-            //     Map<String, dynamic> userDetails =
-            //         snapshot.data!.docs[index].data();
-            //     //creating user object with firestoreBuilder
-            //     MyUser tempUser = MyUser.fromFirestore(userDetails);
-            //     return UserWidget.fromMyUser(tempUser);
-            //   },
-            // );
             return GridView.builder(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
@@ -57,10 +71,10 @@ class UsersList extends StatelessWidget {
               },
             );
           } else {
-            return const Text('Empty data');
+            return buildText(context, 'Empty data');
           }
         } else {
-          return Text('state: ${snapshot.connectionState}');
+          return buildText(context, 'state: ${snapshot.connectionState}');
         }
       },
     );

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_signin/models/Group.dart';
 import 'package:google_signin/models/variables.dart';
 import 'package:google_signin/screens/welcome_screen.dart';
+import 'package:google_signin/main.dart';
 
 class LeaveGroupScreen extends StatefulWidget {
   final Group currGroup;
@@ -23,11 +24,10 @@ class _LeaveGroupScreen extends State<LeaveGroupScreen> {
   Widget show() {
     if (left) {
       return Center(
-          child: Text(
-        'You left the ${widget.currGroup.getGroupName} group'
-        '\nYou can go back now.',
-        style: TextStyle(color: Colors.black, fontSize: 20),
-      ));
+          child: buildText(
+              context,
+              'You left the ${widget.currGroup.getGroupName} group'
+              '\nYou can go back now.'));
     }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
@@ -67,8 +67,8 @@ class _LeaveGroupScreen extends State<LeaveGroupScreen> {
                   context: context,
                   builder: (BuildContext context) {
                     return AlertDialog(
-                      title: const Text('Wrong input'),
-                      content: const Text('You didn\'t type "yes"'),
+                      title: buildText(context, 'Wrong Input'),
+                      content: buildText(context, 'You didn\'t type "yes"'),
                       actions: [
                         TextButton(
                             onPressed: () {
@@ -82,17 +82,14 @@ class _LeaveGroupScreen extends State<LeaveGroupScreen> {
                                 ),
                               );
                             },
-                            child: Text('OK'))
+                            child: buildText(context, 'OK'))
                       ],
                     );
                   });
             }
           },
-          color: Colors.blue,
-          child: const Text(
-            'Confirm',
-            style: TextStyle(color: Colors.white),
-          ),
+          color: Theme.of(context).cardColor,
+          child: buildText(context, 'Confirm'),
         ),
       ],
     );
@@ -104,10 +101,7 @@ class _LeaveGroupScreen extends State<LeaveGroupScreen> {
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        title: Text(
-          'Leave Group',
-          style: Theme.of(context).textTheme.titleMedium,
-        ),
+        title: buildTitle(context, 'Leave Group'),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {

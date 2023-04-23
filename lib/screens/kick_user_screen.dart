@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_signin/models/Group.dart';
 import 'package:google_signin/models/variables.dart';
 import 'package:google_signin/screens/welcome_screen.dart';
+import 'package:google_signin/main.dart';
 
 import '../models/user.dart';
 
@@ -25,10 +26,8 @@ class _kickUserScreen extends State<kickUserScreen> {
   Widget show() {
     if (isKicked) {
       return Center(
-          child: Text(
-        'The user has been kicked. \nYou can go back now.',
-        style: TextStyle(color: Colors.black, fontSize: 20),
-      ));
+          child: buildText(
+              context, 'The user has been kicked. \nYou can go back now.'));
     }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
@@ -71,11 +70,8 @@ class _kickUserScreen extends State<kickUserScreen> {
               isKicked = true;
             }
           },
-          color: Colors.blue,
-          child: const Text(
-            'Confirm',
-            style: TextStyle(color: Colors.white),
-          ),
+          color: Theme.of(context).cardColor,
+          child: buildText(context, 'Confirm'),
         ),
       ],
     );

@@ -4,7 +4,7 @@ import 'package:google_signin/screens/add_user_screen.dart';
 import 'package:google_signin/screens/kick_user_screen.dart';
 import 'package:google_signin/screens/leave_group_screen.dart';
 import 'package:google_signin/screens/switch_group_screen.dart';
-
+import 'package:google_signin/main.dart';
 import '../models/Group.dart';
 
 class GroupProfileScreen extends StatelessWidget {
@@ -16,8 +16,8 @@ class GroupProfileScreen extends StatelessWidget {
     required this.currGroup,
   });
 
-  Widget buildListTile(
-      String title, IconData iconData, VoidCallback tapHandler) {
+  Widget buildListTile(BuildContext context, String title, IconData iconData,
+      VoidCallback tapHandler) {
     return ListTile(
       leading: Icon(
         iconData,
@@ -25,11 +25,7 @@ class GroupProfileScreen extends StatelessWidget {
       ),
       title: Text(
         title,
-        style: const TextStyle(
-          fontFamily: 'RobotoCondensed',
-          fontSize: 24,
-          fontWeight: FontWeight.bold,
-        ),
+        style: Theme.of(context).textTheme.bodyText2,
       ),
       onTap: tapHandler,
     );
@@ -39,7 +35,7 @@ class GroupProfileScreen extends StatelessWidget {
     if (currentUser.id == currGroup.groupManagerId) {
       return Column(
         children: [
-          buildListTile('Add User', Icons.add_road, () {
+          buildListTile(context, 'Add User', Icons.add_road, () {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (_) {
@@ -50,7 +46,7 @@ class GroupProfileScreen extends StatelessWidget {
               ),
             );
           }),
-          buildListTile('Kick User', Icons.no_accounts, () {
+          buildListTile(context, 'Kick User', Icons.no_accounts, () {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (_) {
@@ -73,27 +69,12 @@ class GroupProfileScreen extends StatelessWidget {
         backgroundColor: Theme.of(context).backgroundColor,
         appBar: AppBar(
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          title: Text(
-            'Group Profile',
-            style: Theme.of(context).textTheme.titleMedium,
-          ),
+          title: buildTitle(context, 'Group Profile'),
         ),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            // Row(
-            //   children: [
-            //     Text(
-            //       'Group Name : ${currGroup.groupName}',
-            //       style: const TextStyle(
-            //         fontFamily: 'RobotoCondensed',
-            //         fontSize: 24,
-            //         fontWeight: FontWeight.bold,
-            //       ),
-            //     ),
-            //   ],
-            // ),
             Container(
               height: 200,
               width: double.infinity,
@@ -138,16 +119,21 @@ class GroupProfileScreen extends StatelessWidget {
                 ),
               ),
             ),
+            buildListTile(context, 'Group ID : ${currGroup.getGroupId}',
+                Icons.group, () {}),
             buildListTile(
-                'Group ID : ${currGroup.getGroupId}', Icons.group, () {}),
-            buildListTile('Group Admin ID : ${currGroup.getGroupManagerId}',
-                Icons.man, () {}),
+                context,
+                'Group Admin ID : ${currGroup.getGroupManagerId}',
+                Icons.man,
+                () {}),
             buildListTile(
+                context,
                 'Number Of Users : ${(currGroup.getGroupUsers).length}',
                 Icons.numbers,
                 () {}),
             adminCanAddKick(context),
-            buildListTile('Switch To This Group', Icons.switch_access_shortcut,
+            buildListTile(
+                context, 'Switch To This Group', Icons.switch_access_shortcut,
                 () {
               Navigator.of(context).push(
                 MaterialPageRoute(
@@ -159,7 +145,7 @@ class GroupProfileScreen extends StatelessWidget {
                 ),
               );
             }),
-            buildListTile('Leave Group', Icons.exit_to_app, () {
+            buildListTile(context, 'Leave Group', Icons.exit_to_app, () {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (_) {

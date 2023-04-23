@@ -5,24 +5,20 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:google_signin/models/google_sign_in.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
+import 'package:google_signin/main.dart';
 
 class LoginPage extends StatelessWidget {
   final elizabethImage = 'assets/pictures/queen-elizabeth-removebg.png';
   final fireWorksImage = 'assets/pictures/fireWorks.png';
 
   const LoginPage({super.key});
-
-  // }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        title: Text(
-          'Grandma Project',
-          style: Theme.of(context).textTheme.subtitle1,
-        ),
+        title: buildTitle(context, 'Grandma Project'),
         centerTitle: true,
       ),
       body: Center(
@@ -40,22 +36,10 @@ class LoginPage extends StatelessWidget {
                 Container(
                   width: 300,
                   height: 300,
-                  child: Text(
-                    "Hi Family!\nAs you know grandma loves to see your"
-                    " activities. Share with her your day to day and make her"
-                    " happy!!",
-                    style: GoogleFonts.gabriela(
-                      fontSize: 20,
-                    ),
-                  ),
+                  child: buildText(context,
+                      'Hi Family!\nAs you know grandma loves to see your activities. Share with her your day to day and make her happy!!'),
                 ),
-                Text(
-                  'Please sign in to use the app!',
-                  style: GoogleFonts.roboto(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
+                buildText(context, 'Please sign in to use the app!'),
                 SignInButton(
                   Buttons.Google,
                   elevation: 4,

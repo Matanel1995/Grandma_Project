@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:google_signin/main.dart';
 import 'package:google_signin/screens/home_screen.dart';
 import 'package:google_signin/screens/welcome_screen.dart';
 import 'package:google_signin/storage_service.dart';
@@ -41,7 +42,7 @@ class _GalleryScreenState extends State<GalleryScreen> {
         backgroundColor: Theme.of(context).backgroundColor,
         appBar: AppBar(
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          title: const Text('The Gallery'),
+          title: buildTitle(context, 'The Gallery'),
           leading: IconButton(
               icon: const Icon(Icons.arrow_back),
               onPressed: () {
@@ -56,8 +57,8 @@ class _GalleryScreenState extends State<GalleryScreen> {
         ),
         // drawer: const MainDrawer(),
         body: imageTest1.isEmpty
-            ? const Center(
-                child: Text("There are no images yet"),
+            ? Center(
+                child: buildText(context, 'There are no images yet'),
               )
             : Center(
                 child: FutureBuilder(

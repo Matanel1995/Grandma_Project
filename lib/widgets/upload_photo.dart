@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:google_signin/main.dart';
 import 'package:google_signin/models/variables.dart';
 import 'package:google_signin/screens/home_screen.dart';
 import 'package:google_signin/screens/welcome_screen.dart';
@@ -24,25 +25,13 @@ class _HomeScreenState extends State<UploadPhoto> {
   String selectedImagePath = '';
   XFile? _singleImage;
   UploadTask? uploadTask;
-  // bool isUpload = false;
-  // Widget work() {
-  //   if (isUpload) {
-  //     print("testing work work WPRDLDSDAKFH");
-  //     return Text("uploaded");
-  //   }
-  //   return Container();
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        title: Text(
-          'Upload Photos',
-          style: Theme.of(context).textTheme.titleMedium,
-        ),
+        title: buildTitle(context, 'Upload Photos'),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
@@ -73,10 +62,7 @@ class _HomeScreenState extends State<UploadPhoto> {
                     // width: 200,
                     fit: BoxFit.cover,
                   ),
-            const Text(
-              'Select Image',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
-            ),
+            buildText(context, 'Select Image'),
             const SizedBox(
               height: 40.0,
             ),
@@ -86,12 +72,12 @@ class _HomeScreenState extends State<UploadPhoto> {
               children: [
                 TextButton.icon(
                     style: ButtonStyle(
-                        // backgroundColor:
-                        //     MaterialStateProperty.all(Colors.green),
                         padding:
                             MaterialStateProperty.all(const EdgeInsets.all(20)),
-                        textStyle: MaterialStateProperty.all(const TextStyle(
-                            fontSize: 14, color: Colors.white))),
+                        textStyle: MaterialStateProperty.all(TextStyle(
+                          fontSize: 14,
+                          color: Theme.of(context).cardColor,
+                        ))),
                     onPressed: () async {
                       selectImage();
                       setState(() {});
@@ -100,10 +86,7 @@ class _HomeScreenState extends State<UploadPhoto> {
                       Icons.image,
                       color: Colors.white,
                     ),
-                    label: const Text(
-                      'Add Image',
-                      style: TextStyle(color: Colors.white),
-                    )),
+                    label: buildText(context, 'Add Image')),
                 const SizedBox(
                   width: 40,
                 ),
@@ -113,13 +96,13 @@ class _HomeScreenState extends State<UploadPhoto> {
                         //     MaterialStateProperty.all(Colors.green),
                         padding:
                             MaterialStateProperty.all(const EdgeInsets.all(20)),
-                        textStyle: MaterialStateProperty.all(const TextStyle(
-                            fontSize: 14, color: Colors.white))),
+                        textStyle: MaterialStateProperty.all(TextStyle(
+                            fontSize: 14, color: Theme.of(context).cardColor))),
                     onPressed: () async {
                       selectedImagePath == ''
-                          ? ScaffoldMessenger.of(context)
-                              .showSnackBar(const SnackBar(
-                              content: Text("No Image Selected !"),
+                          ? ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content:
+                                  buildText(context, 'No Image Selected !'),
                             ))
                           : uploadFile();
                     },
@@ -127,10 +110,7 @@ class _HomeScreenState extends State<UploadPhoto> {
                       Icons.send,
                       color: Colors.white,
                     ),
-                    label: const Text(
-                      'Upload',
-                      style: TextStyle(color: Colors.white),
-                    )),
+                    label: buildText(context, 'Upload')),
               ],
             ),
             const SizedBox(height: 10),
@@ -154,11 +134,7 @@ class _HomeScreenState extends State<UploadPhoto> {
                 padding: const EdgeInsets.all(12.0),
                 child: Column(
                   children: [
-                    const Text(
-                      'Select Image From !',
-                      style: TextStyle(
-                          fontSize: 18.0, fontWeight: FontWeight.bold),
-                    ),
+                    buildText(context, 'Select Image From !'),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
@@ -170,8 +146,9 @@ class _HomeScreenState extends State<UploadPhoto> {
                               setState(() {});
                             } else {
                               ScaffoldMessenger.of(context)
-                                  .showSnackBar(const SnackBar(
-                                content: Text("No Image Selected !"),
+                                  .showSnackBar(SnackBar(
+                                content:
+                                    buildText(context, 'No Image Selected !'),
                               ));
                             }
                           },
@@ -186,7 +163,7 @@ class _HomeScreenState extends State<UploadPhoto> {
                                       height: 60,
                                       width: 60,
                                     ),
-                                    const Text('Gallery'),
+                                    buildText(context, 'Gallery'),
                                   ],
                                 ),
                               )),
@@ -200,8 +177,9 @@ class _HomeScreenState extends State<UploadPhoto> {
                               setState(() {});
                             } else {
                               ScaffoldMessenger.of(context)
-                                  .showSnackBar(const SnackBar(
-                                content: Text("No Image Captured !"),
+                                  .showSnackBar(SnackBar(
+                                content:
+                                    buildText(context, 'No Image Captured !'),
                               ));
                             }
                           },
@@ -216,7 +194,7 @@ class _HomeScreenState extends State<UploadPhoto> {
                                       height: 60,
                                       width: 60,
                                     ),
-                                    const Text('Camera'),
+                                    buildText(context, 'Camera'),
                                   ],
                                 ),
                               )),
@@ -248,8 +226,8 @@ class _HomeScreenState extends State<UploadPhoto> {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: const Text("Done"),
-              content: const Text("The photo uploaded successfully"),
+              title: buildTitle(context, 'Done'),
+              content: buildText(context, 'The photo uploaded successfully'),
               actions: [
                 TextButton(
                     onPressed: (() {
@@ -261,7 +239,7 @@ class _HomeScreenState extends State<UploadPhoto> {
                         ),
                       );
                     }),
-                    child: const Text("Ok"))
+                    child: buildText(context, 'OK'))
               ],
             );
           });
@@ -271,14 +249,14 @@ class _HomeScreenState extends State<UploadPhoto> {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: const Text("Error"),
-              content: const Text("The photo didn\'t uploaded"),
+              title: buildTitle(context, 'Error'),
+              content: buildText(context, 'The photo didn\'t uploaded'),
               actions: [
                 TextButton(
                     onPressed: (() {
                       Navigator.of(context).pop();
                     }),
-                    child: const Text("Ok"))
+                    child: buildText(context, 'OK'))
               ],
             );
           });

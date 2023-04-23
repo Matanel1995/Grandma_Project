@@ -3,6 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_signin/main.dart';
 import 'package:google_signin/models/variables.dart';
 import 'package:google_signin/screens/home_screen.dart';
 
@@ -31,7 +32,7 @@ class WelcomeScreen extends StatelessWidget {
             return HomeScreen();
           } else if (snapshot.hasError) {
             return Center(
-              child: Text('Somthing went wrong'),
+              child: buildText(context, 'Somthing went wrong'),
             );
           } else {
             return LoginPage();
