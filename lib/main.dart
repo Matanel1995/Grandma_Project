@@ -68,18 +68,18 @@ class _MyAppState extends State<MyApp> {
             // focusColor: Colors.white,
 
             // Option 2
-            scaffoldBackgroundColor: Color(0xff006d77),
-            cardColor: Color(0xffffddd2),
-            backgroundColor: Color(0xff83c5be),
-            canvasColor: Color(0xffe29578),
-            focusColor: Color(0xffedf6f9),
+            // scaffoldBackgroundColor: Color(0xff006d77),
+            // cardColor: Color(0xffffddd2),
+            // backgroundColor: Color(0xff83c5be),
+            // canvasColor: Color(0xffe29578),
+            // focusColor: Color(0xffedf6f9),
 
             // Option 3
-            // scaffoldBackgroundColor: Color(0xff1d3557),
-            // cardColor: Color(0xffe63946),
-            // backgroundColor: Color(0xffa8dadc),
-            // canvasColor: Color(0xff457b9d),
-            // focusColor: Color(0xfff1faee),
+            scaffoldBackgroundColor: Color(0xff1d3557),
+            cardColor: Color(0xffe63946),
+            backgroundColor: Color(0xffa8dadc),
+            canvasColor: Color(0xff457b9d),
+            focusColor: Color(0xfff1faee),
             fontFamily: 'Raleway',
             textTheme: ThemeData.light().textTheme.copyWith(
                   bodyText1: const TextStyle(

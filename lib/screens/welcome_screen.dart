@@ -10,8 +10,16 @@ import 'package:google_signin/screens/home_screen.dart';
 import '../models/user.dart';
 import 'Login_screen.dart';
 
-class WelcomeScreen extends StatelessWidget {
+class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});
+
+  @override
+  State<WelcomeScreen> createState() => _WelcomeScreenState();
+}
+
+class _WelcomeScreenState extends State<WelcomeScreen> {
+  Widget _toReturn = CircularProgressIndicator();
+  bool _isInitialized = false;
 
   @override
   Widget build(BuildContext context) {
@@ -22,14 +30,14 @@ class WelcomeScreen extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
-              child: CircularProgressIndicator(),
+              child: _toReturn,
             );
           } else if (snapshot.hasData) {
             var userId = paresProvider(snapshot.data!.providerData.toString());
-            () async {
-              await initCurrentUser(userId);
-            }.call();
-            return HomeScreen();
+            if (!_isInitialized) {
+              initCurrentUser(userId);
+            }
+            return _toReturn;
           } else if (snapshot.hasError) {
             return Center(
               child: buildText(context, 'Somthing went wrong'),
@@ -42,9 +50,14 @@ class WelcomeScreen extends StatelessWidget {
     );
   }
 
-  Future initCurrentUser(String userId) async {
-    usersList = await currentUser.getUsersUsingServer([userId]) as List<MyUser>;
+  Future<void> initCurrentUser(String userId) async {
+    usersList = await currentUser.getUsers([userId]) as List<MyUser>;
     currentUser = usersList[0];
+    print("done with init user!!!!");
+    setState(() {
+      _toReturn = HomeScreen();
+      _isInitialized = true;
+    });
   }
 
   String paresProvider(String info) {

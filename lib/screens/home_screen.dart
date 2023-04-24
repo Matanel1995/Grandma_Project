@@ -66,6 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget whatToShow() {
     // if there are members and there is a group return list of members and messages box
     // else write a message and send the user to build a group or join
+    print("in HOMESCREEN!!!!");
     if (currentUser.groupsList.isNotEmpty) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
