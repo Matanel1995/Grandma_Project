@@ -86,7 +86,6 @@ class _AddUserScreenState extends State<AddUserScreen> {
                 }
               });
               usersList = [];
-              // isAdded = true;
             }
           },
           color: Theme.of(context).cardColor,
