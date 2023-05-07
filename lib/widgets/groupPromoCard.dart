@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_signin/main.dart';
 import 'package:google_signin/models/Group.dart';
+import 'package:google_signin/models/variables.dart';
 import 'package:google_signin/screens/group_profile_screen.dart';
 
 class groupPromoCard extends StatelessWidget {
@@ -9,13 +10,16 @@ class groupPromoCard extends StatelessWidget {
   groupPromoCard(this.currGroup);
 
   Widget buildListTile(BuildContext context, VoidCallback tapHandler) {
+    Color groupPromoCardColor = Theme.of(context).cardColor;
+    if (currGroup.groupId == currentUser.currentGroupId) {
+      groupPromoCardColor = Theme.of(context).scaffoldBackgroundColor;
+    }
     return Container(
-      // height: 40,
       margin: EdgeInsets.all(4),
       padding: EdgeInsets.symmetric(horizontal: 8),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
-        color: Theme.of(context).cardColor,
+        color: groupPromoCardColor,
         boxShadow: [
           BoxShadow(
             color: Theme.of(context).canvasColor,

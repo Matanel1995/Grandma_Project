@@ -43,8 +43,6 @@ class MyGroupsScreen extends StatelessWidget {
     }
   }
 
-  void nada() {}
-
   Widget viewType(BuildContext context) {
     if (!currentUser.isViewer) {
       return FloatingActionButton(
