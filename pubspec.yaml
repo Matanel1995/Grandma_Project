@@ -48,7 +48,7 @@ dependencies:
   cloud_firestore: ^4.1.0
   web_socket_channel: ^2.3.0
   socket_io_client: ^2.0.1
-
+  carousel_slider: ^4.0.0
 
 dev_dependencies:
   flutter_test:
