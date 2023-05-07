@@ -189,34 +189,34 @@ class MyUser {
 
   //Input: list of users Id
   //Output: List of MyUser objects
-  Future getUsers(List<String> usersId) async {
+  Future<List<MyUser>> getUsers(List<String> usersId) async {
     for (String userId in usersId) {
       await userRef.doc(userId).get().then((user) {
         if (user.exists) {
           // create new User Object and add to a list
           MyUser tempUser =
               MyUser.fromFirestore(user.data() as Map<String, dynamic>);
-          usersList.add(tempUser);
+          usersListToAdd.add(tempUser);
         }
       });
     }
-    return usersList;
+    return usersListToAdd;
   }
 
   //Input: list of users Id
   //Output: List of MyUser objects
-  Future getUsersUsingServer(List<String> usersId) async {
-    usersList = [];
-    for (String userId in usersId) {
-      var tempUserJson = await fetchDataFromNode(userId);
-      MyUser userToAdd = MyUser.fromFirestore(tempUserJson);
-      usersList.add(userToAdd);
-    }
-    return usersList;
-  }
+  // Future getUsersUsingServer(List<String> usersId) async {
+  //   usersList = [];
+  //   for (String userId in usersId) {
+  //     var tempUserJson = await fetchDataFromNode(userId);
+  //     MyUser userToAdd = MyUser.fromFirestore(tempUserJson);
+  //     usersList.add(userToAdd);
+  //   }
+  //   return usersList;
+  // }
 
   Future getUserByEmail(List<String> userEmail) async {
-    usersList = [];
+    usersListToAdd = [];
     var queryRef = await userRef
         .where('email', isEqualTo: userEmail[0].toString().toLowerCase())
         .get()
@@ -224,10 +224,10 @@ class MyUser {
       for (var element in value.docs) {
         var tempUserJson = await fetchDataFromNode(element.id);
         MyUser userToAdd = MyUser.fromFirestore(tempUserJson);
-        usersList.add(userToAdd);
+        usersListToAdd.add(userToAdd);
       }
     });
-    return usersList;
+    return usersListToAdd;
   }
 
 //Input: list of users Id

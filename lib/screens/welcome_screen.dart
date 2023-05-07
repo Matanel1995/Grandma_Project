@@ -16,7 +16,7 @@ class WelcomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
-      body: StreamBuilder(
+      body: StreamBuilder<User?>(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -24,14 +24,22 @@ class WelcomeScreen extends StatelessWidget {
               child: CircularProgressIndicator(),
             );
           } else if (snapshot.hasData) {
-            var userId = paresProvider(snapshot.data!.providerData.toString());
-            () async {
-              await initCurrentUser(userId);
-            }.call();
-            return HomeScreen();
+            var userId = parseProvider(snapshot.data!.providerData.toString());
+            return FutureBuilder<void>(
+              future: _initializeCurrentUser(userId),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else {
+                  return HomeScreen();
+                }
+              },
+            );
           } else if (snapshot.hasError) {
             return Center(
-              child: Text('Somthing went wrong'),
+              child: Text('Something went wrong'),
             );
           } else {
             return LoginPage();
@@ -41,12 +49,12 @@ class WelcomeScreen extends StatelessWidget {
     );
   }
 
-  Future initCurrentUser(String userId) async {
-    usersList = await currentUser.getUsersUsingServer([userId]) as List<MyUser>;
+  Future<void> _initializeCurrentUser(String userId) async {
+    usersList = await currentUser.getUsers([userId]) as List<MyUser>;
     currentUser = usersList[0];
   }
 
-  String paresProvider(String info) {
+  String parseProvider(String info) {
     List<String> data = info.split(",");
     String userId = data[data.length - 1];
     userId = userId.split(':')[1];

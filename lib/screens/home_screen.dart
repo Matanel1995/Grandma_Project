@@ -65,48 +65,49 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       );
+    } else {
+      return Container(
+          margin: const EdgeInsets.all(30),
+          padding: const EdgeInsets.all(15),
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+              border: Border.all(color: Theme.of(context).cardColor, width: 6),
+              borderRadius: BorderRadius.all(Radius.circular(35))),
+          child: RichText(
+            text: const TextSpan(
+              style: TextStyle(fontSize: 26, color: Colors.black),
+              children: [
+                TextSpan(
+                  text: 'You dont have any groups yet. \n\nPress the ',
+                ),
+                WidgetSpan(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 2.0),
+                    child: Icon(
+                      Icons.menu,
+                      size: 30,
+                    ),
+                  ),
+                ),
+                TextSpan(
+                  text: ' icon. \n\nNavigate to: \n\n',
+                ),
+                WidgetSpan(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 2.0),
+                    child: Icon(
+                      Icons.group,
+                      size: 30,
+                    ),
+                  ),
+                ),
+                TextSpan(
+                  text: ' My Groups. \n\nFollow the instructions.',
+                ),
+              ],
+            ),
+          ));
     }
-    return Container(
-        margin: const EdgeInsets.all(30),
-        padding: const EdgeInsets.all(15),
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-            border: Border.all(color: Theme.of(context).cardColor, width: 6),
-            borderRadius: BorderRadius.all(Radius.circular(35))),
-        child: RichText(
-          text: const TextSpan(
-            style: TextStyle(fontSize: 26, color: Colors.black),
-            children: [
-              TextSpan(
-                text: 'You dont have any groups yet. \n\nPress the ',
-              ),
-              WidgetSpan(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 2.0),
-                  child: Icon(
-                    Icons.menu,
-                    size: 30,
-                  ),
-                ),
-              ),
-              TextSpan(
-                text: ' icon. \n\nNavigate to: \n\n',
-              ),
-              WidgetSpan(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 2.0),
-                  child: Icon(
-                    Icons.group,
-                    size: 30,
-                  ),
-                ),
-              ),
-              TextSpan(
-                text: ' My Groups. \n\nFollow the instructions.',
-              ),
-            ],
-          ),
-        ));
   }
 
   @override

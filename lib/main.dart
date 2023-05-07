@@ -107,7 +107,7 @@ class _MyAppState extends State<MyApp> {
                   // ),
                 )),
         // home: HomePage(),
-        initialRoute: '/', // default is home - '/'
+        initialRoute: '/',
         routes: {
           '/': (ctx) => WelcomeScreen(),
           CategoryActivitiessScreen.routeName: (ctx) =>

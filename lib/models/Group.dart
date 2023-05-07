@@ -115,7 +115,6 @@ class Group {
 
   //Function to add user to existing group - ONLY ADMIN!
   Future addUser(MyUser userToAdd) async {
-    print("############### in add user funtion ###############");
     if (groupManagerId == currentUser.id) {
       await collectionRef.doc(groupId).get().then(
         (DocumentSnapshot docSnapshot) {
@@ -129,7 +128,7 @@ class Group {
             currentUser.addUserToGroup(groupId, userToAdd);
           }
           //UPDATE HERE THE USER GROUPS LIST WITH THE USER METHOD!!!!!!!!!
-          userToAdd.addUserToGroup(groupId, userToAdd);
+          currentUser.addUserToGroup(groupId, userToAdd);
         },
         onError: (e) => print('Error in addUser! ' + e.toString()),
       );

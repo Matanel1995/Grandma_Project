@@ -13,4 +13,6 @@ MyUser currentUser = MyUser(
 
 List<MyUser> usersList = [];
 
+List<MyUser> usersListToAdd = [];
+
 List<Group> groupsListToReturn = [];
