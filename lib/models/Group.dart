@@ -75,6 +75,11 @@ class Group {
     return groupUsers;
   }
 
+  // adiel trying to add
+  getGroupFromId(String groupId) {
+    return this.getGroupName;
+  }
+
   ///***********************Getter & Setters - End*************************** */
 
   ///***********************Other functions - Start**************************** */
