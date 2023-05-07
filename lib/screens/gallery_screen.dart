@@ -6,7 +6,8 @@ import 'package:google_signin/storage_service.dart';
 
 class GalleryScreen extends StatefulWidget {
   static const routeName = './gallery-screen';
-  List<String> imageTest = <String>[];
+  List<String> imageTest;
+
   GalleryScreen(this.imageTest, {Key? key}) : super(key: key);
 
   @override
@@ -15,23 +16,12 @@ class GalleryScreen extends StatefulWidget {
 
 class _GalleryScreenState extends State<GalleryScreen> {
   final Storage storage = Storage();
-  List<String> imageTest1 = <String>[];
-  _GalleryScreenState(this.imageTest1);
+  List<String> imageTest;
+
+  _GalleryScreenState(this.imageTest);
 
   int index = 0;
   bool showGrid = false; // Track whether to show the grid or carousel
-
-  @override
-  void initState() {
-    super.initState();
-    if (imageTest1.isNotEmpty) {
-      Timer.periodic(const Duration(seconds: 6), (timer) {
-        setState(() {
-          index = (index + 1) % imageTest1.length;
-        });
-      });
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +51,7 @@ class _GalleryScreenState extends State<GalleryScreen> {
           ),
         ],
       ),
-      body: imageTest1.isEmpty
+      body: imageTest.isEmpty
           ? Center(
               child: buildText(context, 'There are no images yet'),
             )
@@ -69,7 +59,7 @@ class _GalleryScreenState extends State<GalleryScreen> {
               child: showGrid
                   ? buildImageGrid()
                   : FutureBuilder(
-                      future: storage.downloadURL(imageTest1[index]),
+                      future: storage.downloadURL(imageTest[index]),
                       builder: (BuildContext context,
                           AsyncSnapshot<String> snapshot) {
                         if (snapshot.connectionState == ConnectionState.done &&
@@ -103,22 +93,35 @@ class _GalleryScreenState extends State<GalleryScreen> {
         crossAxisSpacing: 10,
         mainAxisSpacing: 10,
       ),
-      itemCount: imageTest1.length,
+      itemCount: imageTest.length,
       itemBuilder: (context, index) {
-        return GestureDetector(
-          onTap: () {
-            // Handle grid image tap to navigate to individual image screen
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (_) => IndividualImageScreen(imageTest1[index]),
-              ),
-            );
+        return FutureBuilder(
+          future: storage.downloadURL(imageTest[index]),
+          builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+            if (snapshot.connectionState == ConnectionState.done &&
+                snapshot.hasData) {
+              return GestureDetector(
+                onTap: () {
+                  // Handle grid image tap to navigate to individual image screen
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => IndividualImageScreen(snapshot.data!),
+                    ),
+                  );
+                },
+                child: Image.network(
+                  snapshot.data!,
+                  fit: BoxFit.cover,
+                ),
+              );
+            }
+            if (snapshot.connectionState == ConnectionState.waiting ||
+                !snapshot.hasData) {
+              return Center(child: CircularProgressIndicator());
+            }
+            return Container();
           },
-          child: Image.network(
-            imageTest1[index],
-            fit: BoxFit.cover,
-          ),
         );
       },
     );
