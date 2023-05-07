@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_signin/main.dart';
@@ -6,7 +7,6 @@ import 'package:google_signin/models/variables.dart';
 import 'package:google_signin/screens/home_screen.dart';
 import 'package:google_signin/screens/welcome_screen.dart';
 import 'package:image_picker/image_picker.dart';
-import 'dart:async';
 import 'package:firebase_core/firebase_core.dart' as firebase_core;
 
 import '../storage_service.dart';
@@ -22,11 +22,13 @@ class UploadPhoto extends StatefulWidget {
 class _HomeScreenState extends State<UploadPhoto> {
   final Storage storage = Storage();
   final testStorage = FirebaseStorage.instance;
-  String selectedImagePath = '';
-  XFile? _singleImage;
-  UploadTask? uploadTask;
+  List<String> selectedImagePaths = [];
+  List<XFile>? _selectedImages;
+  List<UploadTask?> uploadTasks = [];
+
   @override
   Widget build(BuildContext context) {
+    bool hasSelectedImages = selectedImagePaths.isEmpty;
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
@@ -49,20 +51,33 @@ class _HomeScreenState extends State<UploadPhoto> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            selectedImagePath == ''
+            selectedImagePaths.isEmpty
                 ? Image.asset(
                     './assets/pictures/image_placeholder.png',
                     height: 200,
                     width: 200,
                     fit: BoxFit.fill,
                   )
-                : Image.file(
-                    File(selectedImagePath),
-                    // height: 200,
-                    // width: 200,
-                    fit: BoxFit.cover,
+                : CarouselSlider(
+                    options: CarouselOptions(
+                      height: 200,
+                      initialPage: 0,
+                      enableInfiniteScroll: true,
+                      enlargeCenterPage: true,
+                      scrollDirection: Axis.horizontal,
+                    ),
+                    items: selectedImagePaths.map((path) {
+                      return Builder(
+                        builder: (BuildContext context) {
+                          return Image.file(
+                            File(path),
+                            fit: BoxFit.cover,
+                          );
+                        },
+                      );
+                    }).toList(),
                   ),
-            buildText(context, 'Select Image'),
+            if (hasSelectedImages) buildText(context, 'Select Image'),
             const SizedBox(
               height: 40.0,
             ),
@@ -71,158 +86,94 @@ class _HomeScreenState extends State<UploadPhoto> {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 TextButton.icon(
-                    style: ButtonStyle(
-                        padding:
-                            MaterialStateProperty.all(const EdgeInsets.all(20)),
-                        textStyle: MaterialStateProperty.all(TextStyle(
-                          fontSize: 14,
-                          color: Theme.of(context).cardColor,
-                        ))),
-                    onPressed: () async {
-                      selectImage();
-                      setState(() {});
-                    },
-                    icon: const Icon(
-                      Icons.image,
-                      color: Colors.white,
-                    ),
-                    label: buildText(context, 'Add Image')),
+                  style: ButtonStyle(
+                    padding:
+                        MaterialStateProperty.all(const EdgeInsets.all(20)),
+                    textStyle: MaterialStateProperty.all(TextStyle(
+                      fontSize: 14,
+                      color: Theme.of(context).cardColor,
+                    )),
+                  ),
+                  onPressed: () async {
+                    selectImages();
+                    setState(() {});
+                  },
+                  icon: const Icon(
+                    Icons.image,
+                    color: Colors.white,
+                  ),
+                  label: buildText(context, 'Add Image'),
+                ),
                 const SizedBox(
                   width: 40,
                 ),
                 TextButton.icon(
-                    style: ButtonStyle(
-                        // backgroundColor:
-                        //     MaterialStateProperty.all(Colors.green),
-                        padding:
-                            MaterialStateProperty.all(const EdgeInsets.all(20)),
-                        textStyle: MaterialStateProperty.all(TextStyle(
-                            fontSize: 14, color: Theme.of(context).cardColor))),
-                    onPressed: () async {
-                      selectedImagePath == ''
-                          ? ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              content:
-                                  buildText(context, 'No Image Selected !'),
-                            ))
-                          : uploadFile();
-                    },
-                    icon: const Icon(
-                      Icons.send,
-                      color: Colors.white,
-                    ),
-                    label: buildText(context, 'Upload')),
+                  style: ButtonStyle(
+                    padding:
+                        MaterialStateProperty.all(const EdgeInsets.all(20)),
+                    textStyle: MaterialStateProperty.all(TextStyle(
+                        fontSize: 14, color: Theme.of(context).cardColor)),
+                  ),
+                  onPressed: () async {
+                    if (selectedImagePaths.isEmpty) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: buildText(context, 'No Image Selected!'),
+                        ),
+                      );
+                    } else {
+                      uploadFiles();
+                    }
+                  },
+                  icon: const Icon(
+                    Icons.send,
+                    color: Colors.white,
+                  ),
+                  label: buildText(context, 'Upload'),
+                ),
               ],
             ),
             const SizedBox(height: 10),
-            buildProgress()
+            buildProgress(),
           ],
         ),
       ),
     );
   }
 
-  Future selectImage() {
-    return showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return Dialog(
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0)), //this right here
-            child: Container(
-              height: 150,
-              child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Column(
-                  children: [
-                    buildText(context, 'Select Image From !'),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        GestureDetector(
-                          onTap: () async {
-                            selectedImagePath = await selectImageFromGallery();
-                            if (selectedImagePath != '') {
-                              Navigator.pop(context);
-                              setState(() {});
-                            } else {
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(SnackBar(
-                                content:
-                                    buildText(context, 'No Image Selected !'),
-                              ));
-                            }
-                          },
-                          child: Card(
-                              elevation: 5,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Column(
-                                  children: [
-                                    Image.asset(
-                                      './assets/pictures/gallery.png',
-                                      height: 60,
-                                      width: 60,
-                                    ),
-                                    buildText(context, 'Gallery'),
-                                  ],
-                                ),
-                              )),
-                        ),
-                        GestureDetector(
-                          onTap: () async {
-                            selectedImagePath = await selectImageFromCamera();
+  Future selectImages() async {
+    List<XFile>? images = await ImagePicker().pickMultiImage(
+      imageQuality: 10,
+    );
 
-                            if (selectedImagePath != '') {
-                              Navigator.pop(context);
-                              setState(() {});
-                            } else {
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(SnackBar(
-                                content:
-                                    buildText(context, 'No Image Captured !'),
-                              ));
-                            }
-                          },
-                          child: Card(
-                              elevation: 5,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Column(
-                                  children: [
-                                    Image.asset(
-                                      './assets/pictures/camera.png',
-                                      height: 60,
-                                      width: 60,
-                                    ),
-                                    buildText(context, 'Camera'),
-                                  ],
-                                ),
-                              )),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-              ),
-            ),
-          );
-        });
+    if (images != null && images.isNotEmpty) {
+      _selectedImages = images;
+      selectedImagePaths = images.map((image) => image.path).toList();
+      setState(() {});
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: buildText(context, 'No Images Selected!'),
+        ),
+      );
+    }
   }
 
-  Future uploadFile() async {
-    final ref = FirebaseStorage.instance
-        .ref()
-        .child('${currentUser.currentGroupId}/${_singleImage!.name}');
+  Future uploadFiles() async {
+    for (int i = 0; i < _selectedImages!.length; i++) {
+      final ref = FirebaseStorage.instance
+          .ref()
+          .child('${currentUser.currentGroupId}/${_selectedImages![i].name}');
 
-    setState(() {
-      uploadTask = ref.putFile(File(_singleImage!.path));
-    });
+      setState(() {
+        uploadTasks.add(ref.putFile(File(_selectedImages![i].path)));
+      });
 
-    final snapshot = await uploadTask!.whenComplete(() {});
+      final snapshot = await uploadTasks[i]!.whenComplete(() {});
 
-    final urlDownload = await snapshot.ref.getDownloadURL();
-    if (urlDownload.isNotEmpty) {
-      showDialog(
+      final urlDownload = await snapshot.ref.getDownloadURL();
+      if (urlDownload.isNotEmpty) {
+        showDialog(
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
@@ -230,98 +181,84 @@ class _HomeScreenState extends State<UploadPhoto> {
               content: buildText(context, 'The photo uploaded successfully'),
               actions: [
                 TextButton(
-                    onPressed: (() {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (_) {
-                            return const UploadPhoto();
-                          },
-                        ),
-                      );
-                    }),
-                    child: buildText(context, 'OK'))
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => const UploadPhoto(),
+                      ),
+                    );
+                  },
+                  child: buildText(context, 'OK'),
+                ),
               ],
             );
-          });
-    }
-    if (urlDownload.isEmpty) {
-      showDialog(
+          },
+        );
+      }
+      if (urlDownload.isEmpty) {
+        showDialog(
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
               title: buildTitle(context, 'Error'),
-              content: buildText(context, 'The photo didn\'t uploaded'),
+              content: buildText(context, 'The photo didn\'t upload'),
               actions: [
                 TextButton(
-                    onPressed: (() {
-                      Navigator.of(context).pop();
-                    }),
-                    child: buildText(context, 'OK'))
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: buildText(context, 'OK'),
+                ),
               ],
             );
-          });
-    }
+          },
+        );
+      }
 
-    setState(() {
-      uploadTask = null;
-    });
+      setState(() {
+        uploadTasks[i] = null;
+      });
+    }
   }
 
-  Widget buildProgress() => StreamBuilder<TaskSnapshot>(
-        stream: uploadTask?.snapshotEvents,
-        builder: ((context, snapshot) {
-          if (snapshot.hasData) {
-            final data = snapshot.data!;
-            double progress = data.bytesTransferred / data.totalBytes;
+  Widget buildProgress() => Column(
+        children: List.generate(
+          uploadTasks.length,
+          (index) => StreamBuilder<TaskSnapshot>(
+            stream: uploadTasks[index]?.snapshotEvents,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                final data = snapshot.data!;
+                double progress = data.bytesTransferred / data.totalBytes;
 
-            return SizedBox(
-              height: 50,
-              child: Stack(
-                fit: StackFit.expand,
-                children: [
-                  LinearProgressIndicator(
-                    value: progress,
-                    backgroundColor: Colors.grey,
-                    color: Colors.green,
+                return SizedBox(
+                  height: 50,
+                  child: Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      LinearProgressIndicator(
+                        value: progress,
+                        backgroundColor: Colors.grey,
+                        color: Colors.green,
+                      ),
+                      Center(
+                        child: Text(
+                          '${(100 * progress).roundToDouble()}%',
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ],
                   ),
-                  Center(
-                    child: Text(
-                      '${(100 * progress).roundToDouble()}%',
-                      style: const TextStyle(color: Colors.white),
-                    ),
-                  )
-                ],
-              ),
-            );
-          } else {
-            return const SizedBox(
-              height: 50,
-            );
-          }
-        }),
+                );
+              } else {
+                return const SizedBox(
+                  height: 50,
+                );
+              }
+            },
+          ),
+        ),
       );
 
-  selectImageFromGallery() async {
-    XFile? file = await ImagePicker()
-        .pickImage(source: ImageSource.gallery, imageQuality: 10);
-    if (file != null) {
-      _singleImage = file;
-      return file.path;
-    } else {
-      return '';
-    }
-  }
-
-  selectImageFromCamera() async {
-    XFile? file = await ImagePicker()
-        .pickImage(source: ImageSource.camera, imageQuality: 10);
-    if (file != null) {
-      _singleImage = file;
-      return file.path;
-    } else {
-      return '';
-    }
-  }
-
-  // need to make function to select more than one image at a time and videos.
+  // Rest of the code...
 }
