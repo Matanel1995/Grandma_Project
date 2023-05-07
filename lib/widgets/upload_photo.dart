@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:dots_indicator/dots_indicator.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_signin/main.dart';
@@ -7,7 +8,6 @@ import 'package:google_signin/models/variables.dart';
 import 'package:google_signin/screens/home_screen.dart';
 import 'package:google_signin/screens/welcome_screen.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:firebase_core/firebase_core.dart' as firebase_core;
 
 import '../storage_service.dart';
 
@@ -16,24 +16,25 @@ class UploadPhoto extends StatefulWidget {
   const UploadPhoto({Key? key}) : super(key: key);
 
   @override
-  State<UploadPhoto> createState() => _HomeScreenState();
+  State<UploadPhoto> createState() => _UploadPhotoState();
 }
 
-class _HomeScreenState extends State<UploadPhoto> {
+class _UploadPhotoState extends State<UploadPhoto> {
   final Storage storage = Storage();
   final testStorage = FirebaseStorage.instance;
   List<String> selectedImagePaths = [];
   List<XFile>? _selectedImages;
   List<UploadTask?> uploadTasks = [];
+  int _currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
-    bool hasSelectedImages = selectedImagePaths.isEmpty;
+    bool hasSelectedImages = selectedImagePaths.isNotEmpty;
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        title: buildTitle(context, 'Upload Photos'),
+        title: const Text('Upload Photos'),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
@@ -51,33 +52,55 @@ class _HomeScreenState extends State<UploadPhoto> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            selectedImagePaths.isEmpty
-                ? Image.asset(
+            hasSelectedImages
+                ? Column(
+                    children: [
+                      CarouselSlider(
+                        options: CarouselOptions(
+                          aspectRatio: 1.0,
+                          initialPage: _currentIndex,
+                          enableInfiniteScroll: false,
+                          enlargeCenterPage: true,
+                          scrollDirection: Axis.horizontal,
+                          onPageChanged: (index, reason) {
+                            setState(() {
+                              _currentIndex = index;
+                            });
+                          },
+                        ),
+                        items: selectedImagePaths.map((path) {
+                          return Builder(
+                            builder: (BuildContext context) {
+                              return Image.file(
+                                File(path),
+                                fit: BoxFit.cover,
+                              );
+                            },
+                          );
+                        }).toList(),
+                      ),
+                      const SizedBox(height: 10),
+                      DotsIndicator(
+                        dotsCount: selectedImagePaths.length,
+                        position: _currentIndex.toDouble(),
+                        decorator: DotsDecorator(
+                          activeColor: Colors.blue,
+                          activeSize: const Size(12, 12),
+                          activeShape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          spacing: const EdgeInsets.all(3),
+                        ),
+                      ),
+                    ],
+                  )
+                : Image.asset(
                     './assets/pictures/image_placeholder.png',
                     height: 200,
                     width: 200,
                     fit: BoxFit.fill,
-                  )
-                : CarouselSlider(
-                    options: CarouselOptions(
-                      aspectRatio: 1.0,
-                      initialPage: 0,
-                      enableInfiniteScroll: false,
-                      enlargeCenterPage: true,
-                      scrollDirection: Axis.horizontal,
-                    ),
-                    items: selectedImagePaths.map((path) {
-                      return Builder(
-                        builder: (BuildContext context) {
-                          return Image.file(
-                            File(path),
-                            fit: BoxFit.cover,
-                          );
-                        },
-                      );
-                    }).toList(),
                   ),
-            if (hasSelectedImages) buildText(context, 'Select Image'),
+            if (!hasSelectedImages) buildText(context, 'Select Image'),
             const SizedBox(
               height: 40.0,
             ),
@@ -87,21 +110,21 @@ class _HomeScreenState extends State<UploadPhoto> {
               children: [
                 TextButton.icon(
                   style: ButtonStyle(
-                    padding:
-                        MaterialStateProperty.all(const EdgeInsets.all(20)),
-                    textStyle: MaterialStateProperty.all(TextStyle(
-                      fontSize: 14,
-                      color: Theme.of(context).cardColor,
-                    )),
+                    padding: MaterialStateProperty.all(
+                      const EdgeInsets.all(20),
+                    ),
+                    textStyle: MaterialStateProperty.all(
+                      const TextStyle(
+                        fontSize: 14,
+                        color: Colors.white,
+                      ),
+                    ),
                   ),
                   onPressed: () async {
                     selectImages();
                     setState(() {});
                   },
-                  icon: const Icon(
-                    Icons.image,
-                    color: Colors.white,
-                  ),
+                  icon: const Icon(Icons.image),
                   label: buildText(context, 'Add Image'),
                 ),
                 const SizedBox(
@@ -109,10 +132,15 @@ class _HomeScreenState extends State<UploadPhoto> {
                 ),
                 TextButton.icon(
                   style: ButtonStyle(
-                    padding:
-                        MaterialStateProperty.all(const EdgeInsets.all(20)),
-                    textStyle: MaterialStateProperty.all(TextStyle(
-                        fontSize: 14, color: Theme.of(context).cardColor)),
+                    padding: MaterialStateProperty.all(
+                      const EdgeInsets.all(20),
+                    ),
+                    textStyle: MaterialStateProperty.all(
+                      const TextStyle(
+                        fontSize: 14,
+                        color: Colors.white,
+                      ),
+                    ),
                   ),
                   onPressed: () async {
                     if (selectedImagePaths.isEmpty) {
@@ -125,10 +153,7 @@ class _HomeScreenState extends State<UploadPhoto> {
                       uploadFiles();
                     }
                   },
-                  icon: const Icon(
-                    Icons.send,
-                    color: Colors.white,
-                  ),
+                  icon: const Icon(Icons.send),
                   label: buildText(context, 'Upload'),
                 ),
               ],
@@ -260,5 +285,24 @@ class _HomeScreenState extends State<UploadPhoto> {
         ),
       );
 
-  // Rest of the code...
+  Widget buildText(BuildContext context, String text) {
+    return Text(
+      text,
+      style: TextStyle(
+        fontSize: 14,
+        color: Theme.of(context).cardColor,
+      ),
+    );
+  }
+
+  Widget buildTitle(BuildContext context, String text) {
+    return Text(
+      text,
+      style: TextStyle(
+        fontSize: 18,
+        fontWeight: FontWeight.bold,
+        color: Theme.of(context).cardColor,
+      ),
+    );
+  }
 }
