@@ -50,8 +50,16 @@ class WelcomeScreen extends StatelessWidget {
   }
 
   Future<void> _initializeCurrentUser(String userId) async {
+    usersList = [];
     usersList = await currentUser.getUsers([userId]) as List<MyUser>;
+
+    print("############### Before changing currentUser ################");
+    print(currentUser.email);
+
     currentUser = usersList[0];
+
+    print("############### After changing currentUser ################");
+    print(currentUser.email);
   }
 
   String parseProvider(String info) {

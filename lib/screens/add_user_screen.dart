@@ -59,10 +59,10 @@ class _AddUserScreenState extends State<AddUserScreen> {
             });
             if (addUser != '') {
               () async {
-                usersList =
+                usersListToAdd =
                     await currentUser.getUserByEmail([addUser]) as List<MyUser>;
               }.call().then((value) {
-                if (usersList.isEmpty) {
+                if (usersListToAdd.isEmpty) {
                   showDialog(
                       context: context,
                       builder: (BuildContext context) {
@@ -80,11 +80,11 @@ class _AddUserScreenState extends State<AddUserScreen> {
                         );
                       });
                 } else {
-                  widget.currGroup.addUser(usersList.elementAt(0));
+                  widget.currGroup.addUser(usersListToAdd.elementAt(0));
                   isAdded = true;
                 }
               });
-              usersList = [];
+              usersListToAdd = [];
             }
           },
           color: Theme.of(context).cardColor,
