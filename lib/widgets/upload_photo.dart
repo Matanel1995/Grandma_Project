@@ -165,22 +165,114 @@ class _UploadPhotoState extends State<UploadPhoto> {
     );
   }
 
-  Future selectImages() async {
-    List<XFile>? images = await ImagePicker().pickMultiImage(
-      imageQuality: 10,
-    );
+  // Future selectImages() async {
+  //   List<XFile>? images = await ImagePicker().pickMultiImage(
+  //     imageQuality: 10,
+  //   );
 
-    if (images != null && images.isNotEmpty) {
-      _selectedImages = images;
-      selectedImagePaths = images.map((image) => image.path).toList();
-      setState(() {});
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: buildText(context, 'No Images Selected!'),
-        ),
-      );
-    }
+  //   if (images != null && images.isNotEmpty) {
+  //     _selectedImages = images;
+  //     selectedImagePaths = images.map((image) => image.path).toList();
+  //     setState(() {});
+  //   } else {
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       SnackBar(
+  //         content: buildText(context, 'No Images Selected!'),
+  //       ),
+  //     );
+  //   }
+  // }
+
+  Future selectImages() async {
+    final ImagePicker _picker = ImagePicker();
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Choose Image Source'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    GestureDetector(
+                      child: Card(
+                        color: Colors.grey,
+                        elevation: 5,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(children: [
+                            Image.asset(
+                              './assets/pictures/camera.png',
+                              height: 60,
+                              width: 60,
+                            )
+                          ]),
+                        ),
+                      ),
+                      onTap: () {
+                        Navigator.of(context).pop('camera');
+                      },
+                    ),
+                    GestureDetector(
+                      child: Card(
+                        color: Colors.grey,
+                        elevation: 5,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(children: [
+                            Image.asset(
+                              './assets/pictures/gallery.png',
+                              height: 60,
+                              width: 60,
+                            )
+                          ]),
+                        ),
+                      ),
+                      onTap: () {
+                        Navigator.of(context).pop('gallery');
+                      },
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    ).then((value) async {
+      if (value == 'camera') {
+        final XFile? image =
+            await _picker.pickImage(source: ImageSource.camera);
+        if (image != null) {
+          _selectedImages = [image];
+          selectedImagePaths = [image.path];
+          setState(() {});
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: buildText(context, 'No Image Selected!'),
+            ),
+          );
+        }
+      } else if (value == 'gallery') {
+        List<XFile>? images = await _picker.pickMultiImage(
+          imageQuality: 10,
+        );
+        if (images != null && images.isNotEmpty) {
+          _selectedImages = images;
+          selectedImagePaths = images.map((image) => image.path).toList();
+          setState(() {});
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: buildText(context, 'No Images Selected!'),
+            ),
+          );
+        }
+      }
+    });
   }
 
   // Future uploadFiles() async {
