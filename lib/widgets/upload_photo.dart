@@ -60,9 +60,9 @@ class _HomeScreenState extends State<UploadPhoto> {
                   )
                 : CarouselSlider(
                     options: CarouselOptions(
-                      height: 200,
+                      aspectRatio: 1.0,
                       initialPage: 0,
-                      enableInfiniteScroll: true,
+                      enableInfiniteScroll: false,
                       enlargeCenterPage: true,
                       scrollDirection: Axis.horizontal,
                     ),
