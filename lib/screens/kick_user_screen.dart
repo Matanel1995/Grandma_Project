@@ -33,10 +33,14 @@ class _kickUserScreen extends State<kickUserScreen> {
       crossAxisAlignment: CrossAxisAlignment.end,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
+        Center(child: buildText(context, 'Enter the user Email')),
+        SizedBox(
+          height: 10,
+        ),
         TextField(
           controller: conteollerKickUser,
           decoration: InputDecoration(
-              hintText: 'Please provide a user to kick',
+              hintText: 'Example@mail.com',
               border: const OutlineInputBorder(),
               suffixIcon: IconButton(
                 onPressed: () {
@@ -54,18 +58,33 @@ class _kickUserScreen extends State<kickUserScreen> {
             });
             if (kickUser != '') {
               () async {
-                await currentUser.getUsersUsingServer([kickUser])
+                usersList = await currentUser.getUserByEmail([kickUser])
                     as List<MyUser>;
               }.call().then((value) {
                 if (usersList.isEmpty) {
-                  print('NOT FOUND!');
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: buildText(context, 'Error.'),
+                          content: buildText(context,
+                              'Email is not valid.\nTry again with a valid email.'),
+                          actions: [
+                            TextButton(
+                                onPressed: (() {
+                                  Navigator.of(context).pop();
+                                }),
+                                child: const Text("Ok"))
+                          ],
+                        );
+                      });
                 } else {
                   widget.currGroup.kickFromGroup(
-                      usersList.elementAt(0), widget.currGroup.groupId);
+                      usersList.elementAt(0), currentUser.currentGroupId);
+                  isKicked = true;
                 }
               });
               usersList = [];
-              isKicked = true;
             }
           },
           color: Theme.of(context).cardColor,
