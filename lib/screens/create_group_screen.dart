@@ -246,9 +246,9 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
             context: context,
             builder: (BuildContext context) {
               return AlertDialog(
-                title: const Text("Error"),
+                title: const Text("Congratulations!"),
                 content: Text(
-                    "You created a group without an image group name: $groupName"),
+                    "The group $groupName has been created. \n Notice you did not add a photo to the group."),
                 actions: [
                   TextButton(
                       onPressed: (() {

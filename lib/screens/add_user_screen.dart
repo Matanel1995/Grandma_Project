@@ -21,7 +21,7 @@ class _AddUserScreenState extends State<AddUserScreen> {
   final controllerAddUser = TextEditingController();
   String addUser = '';
   bool isAdded = false;
-
+  bool isLoading = false;
   Widget show() {
     if (isAdded) {
       return Center(
@@ -51,45 +51,83 @@ class _AddUserScreenState extends State<AddUserScreen> {
                 icon: const Icon(Icons.clear),
               )),
         ),
-        MaterialButton(
-          // update the group name
-          onPressed: () {
-            setState(() {
-              addUser = controllerAddUser.text;
-            });
-            if (addUser != '') {
-              () async {
-                usersList =
-                    await currentUser.getUserByEmail([addUser]) as List<MyUser>;
-              }.call().then((value) {
-                if (usersList.isEmpty) {
-                  showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: buildText(context, 'Error.'),
-                          content: buildText(context,
-                              'Email is not valid.\nTry again with a valid email.'),
-                          actions: [
-                            TextButton(
-                                onPressed: (() {
-                                  Navigator.of(context).pop();
-                                }),
-                                child: const Text("Ok"))
-                          ],
-                        );
-                      });
-                } else {
-                  widget.currGroup.addUser(usersList.elementAt(0));
-                  isAdded = true;
+        Stack(
+          alignment: Alignment.center,
+          children: [
+            MaterialButton(
+              // update the group name
+              onPressed: () async {
+                setState(() {
+                  addUser = controllerAddUser.text;
+                });
+                if (addUser != '') {
+                  setState(() {
+                    isLoading =
+                        true; // set isLoading to true when the button is pressed
+                  });
+                  usersList = await currentUser.getUserByEmail([addUser])
+                      as List<MyUser>;
+                  if (usersList.isEmpty) {
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: buildText(context, 'Error.'),
+                            content: buildText(context,
+                                'Email is not valid.\nTry again with a valid email.'),
+                            actions: [
+                              TextButton(
+                                  onPressed: (() {
+                                    Navigator.of(context).pop();
+                                  }),
+                                  child: const Text("Ok"))
+                            ],
+                          );
+                        });
+                  } else {
+                    widget.currGroup.addUser(usersList.elementAt(0));
+                    setState(() {
+                      isAdded = true;
+                    });
+                  }
+                  setState(() {
+                    isLoading =
+                        false; // set isLoading to false when the function completes
+                  });
+                  usersList = [];
                 }
-              });
-              usersList = [];
-            }
-          },
-          color: Theme.of(context).cardColor,
-          child: buildText(context, 'Confirm'),
-        ),
+              },
+              color: Theme.of(context).cardColor,
+              child: buildText(context, 'Confirm'),
+            ),
+            Visibility(
+                visible:
+                    isLoading, // show CircularProgressIndicator when isLoading is true
+                child: Center(
+                  child: Container(
+                    width: 100,
+                    height: 100,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).canvasColor,
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.2),
+                          blurRadius: 5,
+                          offset: Offset(0, 3),
+                        ),
+                      ],
+                    ),
+                    child: Center(
+                      child: CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                            Theme.of(context).cardColor),
+                      ),
+                    ),
+                  ),
+                )),
+          ],
+        )
       ],
     );
   }
