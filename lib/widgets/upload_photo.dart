@@ -159,7 +159,7 @@ class _UploadPhotoState extends State<UploadPhoto> {
               ],
             ),
             const SizedBox(height: 10),
-            buildProgress(),
+            // buildProgress(),
           ],
         ),
       ),
@@ -184,65 +184,150 @@ class _UploadPhotoState extends State<UploadPhoto> {
     }
   }
 
+  // Future uploadFiles() async {
+  //   for (int i = 0; i < _selectedImages!.length; i++) {
+  //     final ref = FirebaseStorage.instance
+  //         .ref()
+  //         .child('${currentUser.currentGroupId}/${_selectedImages![i].name}');
+
+  //     setState(() {
+  //       uploadTasks.add(ref.putFile(File(_selectedImages![i].path)));
+  //     });
+
+  //     final snapshot = await uploadTasks[i]!.whenComplete(() {});
+
+  //     final urlDownload = await snapshot.ref.getDownloadURL();
+  //     if (urlDownload.isNotEmpty) {
+  //       showDialog(
+  //         context: context,
+  //         builder: (BuildContext context) {
+  //           return AlertDialog(
+  //             title: buildTitle(context, 'Done'),
+  //             content: buildText(context, 'The photo uploaded successfully'),
+  //             actions: [
+  //               TextButton(
+  //                 onPressed: () {
+  //                   Navigator.of(context).push(
+  //                     MaterialPageRoute(
+  //                       builder: (_) => const UploadPhoto(),
+  //                     ),
+  //                   );
+  //                 },
+  //                 child: buildText(context, 'OK'),
+  //               ),
+  //             ],
+  //           );
+  //         },
+  //       );
+  //     }
+  //     if (urlDownload.isEmpty) {
+  //       showDialog(
+  //         context: context,
+  //         builder: (BuildContext context) {
+  //           return AlertDialog(
+  //             title: buildTitle(context, 'Error'),
+  //             content: buildText(context, 'The photo didn\'t upload'),
+  //             actions: [
+  //               TextButton(
+  //                 onPressed: () {
+  //                   Navigator.of(context).pop();
+  //                 },
+  //                 child: buildText(context, 'OK'),
+  //               ),
+  //             ],
+  //           );
+  //         },
+  //       );
+  //     }
+
+  //     setState(() {
+  //       uploadTasks[i] = null;
+  //     });
+  //   }
+  // }
   Future uploadFiles() async {
+    bool hasError = false;
+    int uploadedCount = 0;
+
     for (int i = 0; i < _selectedImages!.length; i++) {
       final ref = FirebaseStorage.instance
           .ref()
           .child('${currentUser.currentGroupId}/${_selectedImages![i].name}');
 
-      setState(() {
-        uploadTasks.add(ref.putFile(File(_selectedImages![i].path)));
-      });
+      final uploadTask = ref.putFile(File(_selectedImages![i].path));
 
-      final snapshot = await uploadTasks[i]!.whenComplete(() {});
-
-      final urlDownload = await snapshot.ref.getDownloadURL();
-      if (urlDownload.isNotEmpty) {
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: buildTitle(context, 'Done'),
-              content: buildText(context, 'The photo uploaded successfully'),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (_) => const UploadPhoto(),
-                      ),
-                    );
-                  },
-                  child: buildText(context, 'OK'),
-                ),
+      showDialog(
+        context: context,
+        barrierDismissible: false, // Prevent dialog dismissal
+        builder: (BuildContext context) {
+          return AlertDialog(
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                CircularProgressIndicator(),
+                const SizedBox(height: 16),
+                buildText(
+                    context, 'Uploading ${i + 1}/${_selectedImages!.length}'),
               ],
-            );
-          },
-        );
-      }
-      if (urlDownload.isEmpty) {
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: buildTitle(context, 'Error'),
-              content: buildText(context, 'The photo didn\'t upload'),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: buildText(context, 'OK'),
-                ),
-              ],
-            );
-          },
-        );
-      }
+            ),
+          );
+        },
+      );
 
-      setState(() {
-        uploadTasks[i] = null;
-      });
+      // Wait for the upload to complete
+      await uploadTask.whenComplete(() {});
+
+      Navigator.pop(context); // Dismiss the progress dialog
+
+      if (uploadTask.snapshot.state == TaskState.success) {
+        uploadedCount++;
+      } else {
+        hasError = true;
+        break; // Exit the loop if an error occurred
+      }
+    }
+
+    if (uploadedCount == _selectedImages!.length && !hasError) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: buildTitle(context, 'Done'),
+            content: buildText(context,
+                'Uploaded $uploadedCount/${_selectedImages!.length} photos successfully'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) => const UploadPhoto(),
+                    ),
+                  );
+                },
+                child: buildText(context, 'OK'),
+              ),
+            ],
+          );
+        },
+      );
+    } else {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: buildTitle(context, 'Error'),
+            content: buildText(context, 'An error occurred during upload'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: buildText(context, 'OK'),
+              ),
+            ],
+          );
+        },
+      );
     }
   }
 
@@ -285,24 +370,24 @@ class _UploadPhotoState extends State<UploadPhoto> {
         ),
       );
 
-  Widget buildText(BuildContext context, String text) {
-    return Text(
-      text,
-      style: TextStyle(
-        fontSize: 14,
-        color: Theme.of(context).cardColor,
-      ),
-    );
-  }
+  // Widget buildText(BuildContext context, String text) {
+  //   return Text(
+  //     text,
+  //     style: TextStyle(
+  //       fontSize: 14,
+  //       color: Theme.of(context).cardColor,
+  //     ),
+  //   );
+  // }
 
-  Widget buildTitle(BuildContext context, String text) {
-    return Text(
-      text,
-      style: TextStyle(
-        fontSize: 18,
-        fontWeight: FontWeight.bold,
-        color: Theme.of(context).cardColor,
-      ),
-    );
-  }
+  // Widget buildTitle(BuildContext context, String text) {
+  //   return Text(
+  //     text,
+  //     style: TextStyle(
+  //       fontSize: 18,
+  //       fontWeight: FontWeight.bold,
+  //       color: Theme.of(context).cardColor,
+  //     ),
+  //   );
+  // }
 }
