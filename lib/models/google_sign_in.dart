@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:google_signin/models/Group.dart';
 import 'package:google_signin/models/user.dart';
 import 'package:google_signin/models/variables.dart';
 
@@ -80,7 +79,7 @@ class GoogleSingInPovider extends ChangeNotifier {
         ),
       );
     } catch (err) {
-      debugPrint(err.toString());
+      // debugPrint(err.toString());
     }
     notifyListeners();
   }

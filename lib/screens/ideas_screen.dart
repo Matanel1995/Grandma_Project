@@ -1,9 +1,6 @@
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import '../dummy_data.dart';
 import 'package:flutter/material.dart';
 import '../widgets/category_item.dart';
-import '../widgets/main_drawer.dart';
 
 class IdeasScreen extends StatelessWidget {
   static const routeName = './ideas-screen';
@@ -39,7 +36,6 @@ class IdeasScreen extends StatelessWidget {
           style: Theme.of(context).textTheme.titleMedium,
         ),
       ),
-      // drawer: const MainDrawer(),
       body: GridView(
         padding: const EdgeInsets.all(25),
         gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:google_signin/main.dart';
 
 class NotificationScreen extends StatefulWidget {
@@ -23,9 +21,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
         alignment: Alignment.center,
         margin: const EdgeInsets.all(20),
         padding: const EdgeInsets.all(10),
-        // child: Column(children: [
-
-        // ]),
       ),
     );
   }

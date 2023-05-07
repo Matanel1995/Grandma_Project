@@ -5,29 +5,8 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_signin/models/Group.dart';
 import 'package:google_signin/models/variables.dart';
-import 'package:google_signin/screens/home_screen.dart';
 import 'package:google_signin/screens/my_groups_screen.dart';
-import 'package:google_signin/screens/welcome_screen.dart';
-import 'dart:async';
-import 'dart:io';
 
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/material.dart';
-import 'package:google_signin/models/Group.dart';
-import 'package:google_signin/models/variables.dart';
-import 'package:google_signin/screens/home_screen.dart';
-import 'package:google_signin/screens/my_groups_screen.dart';
-import 'package:google_signin/screens/welcome_screen.dart';
-import 'dart:async';
-import 'dart:io';
-
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/material.dart';
-import 'package:google_signin/models/Group.dart';
-import 'package:google_signin/models/variables.dart';
-import 'package:google_signin/screens/home_screen.dart';
-import 'package:google_signin/screens/my_groups_screen.dart';
-import 'package:google_signin/screens/welcome_screen.dart';
 import 'package:image_picker/image_picker.dart';
 
 class CreateGroupScreen extends StatefulWidget {

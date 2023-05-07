@@ -3,23 +3,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_signin/main.dart';
 import 'package:google_signin/models/variables.dart';
 import 'package:google_signin/screens/home_screen.dart';
 
 import '../models/user.dart';
 import 'Login_screen.dart';
 
-class WelcomeScreen extends StatefulWidget {
+class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
-
-  @override
-  State<WelcomeScreen> createState() => _WelcomeScreenState();
-}
-
-class _WelcomeScreenState extends State<WelcomeScreen> {
-  Widget _toReturn = CircularProgressIndicator();
-  bool _isInitialized = false;
 
   @override
   Widget build(BuildContext context) {
@@ -30,17 +21,17 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
-              child: _toReturn,
+              child: CircularProgressIndicator(),
             );
           } else if (snapshot.hasData) {
             var userId = paresProvider(snapshot.data!.providerData.toString());
-            if (!_isInitialized) {
-              initCurrentUser(userId);
-            }
-            return _toReturn;
+            () async {
+              await initCurrentUser(userId);
+            }.call();
+            return HomeScreen();
           } else if (snapshot.hasError) {
             return Center(
-              child: buildText(context, 'Somthing went wrong'),
+              child: Text('Somthing went wrong'),
             );
           } else {
             return LoginPage();
@@ -50,14 +41,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     );
   }
 
-  Future<void> initCurrentUser(String userId) async {
-    usersList = await currentUser.getUsers([userId]) as List<MyUser>;
+  Future initCurrentUser(String userId) async {
+    usersList = await currentUser.getUsersUsingServer([userId]) as List<MyUser>;
     currentUser = usersList[0];
-    print("done with init user!!!!");
-    setState(() {
-      _toReturn = HomeScreen();
-      _isInitialized = true;
-    });
   }
 
   String paresProvider(String info) {

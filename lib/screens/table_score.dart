@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../widgets/main_drawer.dart';
-
 class TableScore extends StatefulWidget {
   static const routeName = './table-score';
   const TableScore({super.key});
@@ -34,7 +32,6 @@ class _FiltersScreenState extends State<TableScore> {
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           title: buildTitle(context, 'The Table Score'),
         ),
-        // drawer: const MainDrawer(),
         body: DataTable(
           columnSpacing: 35,
           sortColumnIndex: 4,
@@ -47,12 +44,6 @@ class _FiltersScreenState extends State<TableScore> {
             DataColumn(
               label: Text('Score'),
               numeric: true,
-              // onSort: (columnIndex, ascending) {
-              //   setState(() {
-              //     sort = !sort;
-              //   });
-              //   onSortColum(columnIndex, ascending);
-              // },
             )
           ],
           rows: const [
@@ -78,13 +69,6 @@ class _FiltersScreenState extends State<TableScore> {
               DataCell(Text('17')),
             ]),
           ],
-        )
-        // Center(
-        //   child: Text(
-        //     'The score table will be here.',
-        //     style: Theme.of(context).textTheme.titleMedium,
-        //   ),
-        // ),
-        );
+        ));
   }
 }

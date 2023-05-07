@@ -1,17 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_signin/main.dart';
-import 'package:google_signin/models/Group.dart';
 import 'package:google_signin/models/gruopList.dart';
 import 'package:google_signin/models/variables.dart';
-import 'package:google_signin/screens/add_user_screen.dart';
 import 'package:google_signin/screens/create_group_screen.dart';
-import 'package:google_signin/screens/home_screen.dart';
-import 'package:google_signin/screens/kick_user_screen.dart';
-import 'package:google_signin/screens/leave_group_screen.dart';
 import 'package:google_signin/screens/welcome_screen.dart';
-
-import '../models/user.dart';
-import '../widgets/groupPromoCard.dart';
 
 class MyGroupsScreen extends StatelessWidget {
   const MyGroupsScreen({super.key});
@@ -24,8 +16,6 @@ class MyGroupsScreen extends StatelessWidget {
       return Column(
         children: [
           Container(
-            // height: 300,
-            // width: double.infinity,
             child:
                 Image.asset('assets/pictures/You dont have any groups yet.png'),
           ),
@@ -44,7 +34,6 @@ class MyGroupsScreen extends StatelessWidget {
       );
     }
     // return GroupList
-    // I think it will be good if Matanel can do here the same he did with usersList , just with a GridView
     else {
       return Expanded(
         child: Container(
@@ -88,7 +77,6 @@ class MyGroupsScreen extends StatelessWidget {
 
   Widget buildListTileForAdmin(BuildContext context, String title,
       IconData iconData, VoidCallback tapHandler) {
-    //if(currentUser.isAdmin)
     if (true) {
       return ListTile(
         leading: Icon(

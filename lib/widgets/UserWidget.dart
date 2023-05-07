@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_signin/models/user.dart';
-import 'package:google_signin/models/variables.dart';
 import 'package:google_signin/widgets/promoCard.dart';
 
 class UserWidget extends StatelessWidget {

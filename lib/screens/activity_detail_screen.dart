@@ -3,10 +3,7 @@ import '../dummy_data.dart';
 
 class ActivityDetailScreen extends StatelessWidget {
   static const routeName = '/activity-detail';
-  // final Function toggleFavorite;
-  // final Function isFavorite;
 
-  // ActivityDetailScreen(this.toggleFavorite, this.isFavorite);
   const ActivityDetailScreen({super.key});
 
   Widget buildSectionTitle(BuildContext context, String text) {
@@ -95,12 +92,6 @@ class ActivityDetailScreen extends StatelessWidget {
           ],
         ),
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   child: Icon(
-      //     isFavorite(activityId) ? Icons.star : Icons.star_border,
-      //   ),
-      //   onPressed: () => toggleFavorite(activityId),
-      // ),
     );
   }
 }

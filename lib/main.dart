@@ -5,14 +5,9 @@ import 'package:provider/provider.dart';
 
 import 'dummy_data.dart';
 import 'models/activity.dart';
-import 'models/user.dart';
 import 'screens/activity_detail_screen.dart';
 import 'screens/category_activities_screen.dart';
-import 'screens/ideas_screen.dart';
-import 'screens/gallery_screen.dart';
-import 'screens/table_score.dart';
 import 'screens/welcome_screen.dart';
-import 'widgets/upload_photo.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -115,16 +110,9 @@ class _MyAppState extends State<MyApp> {
         initialRoute: '/', // default is home - '/'
         routes: {
           '/': (ctx) => WelcomeScreen(),
-          //  TabsScreen(_favoriteActivities),
-
           CategoryActivitiessScreen.routeName: (ctx) =>
               CategoryActivitiessScreen(_availableActivities),
           ActivityDetailScreen.routeName: (ctx) => ActivityDetailScreen(),
-
-          // TableScore.routeName: (ctx) => TableScore(),
-          // UploadPhoto.routeName: (ctx) => UploadPhoto(),
-          // IdeasScreen.routeName: (ctx) => IdeasScreen(),
-          // GalleryScreen.routeName: (ctx) => GalleryScreen(),
         },
       ),
     );

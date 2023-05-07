@@ -9,7 +9,6 @@ import '../models/Group.dart';
 
 class GroupProfileScreen extends StatelessWidget {
   final Group currGroup;
-  // const GroupProfileScreen({super.key, this.groupId});
 
   const GroupProfileScreen({
     super.key,
@@ -73,7 +72,6 @@ class GroupProfileScreen extends StatelessWidget {
         ),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
-          // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Container(
               height: 200,

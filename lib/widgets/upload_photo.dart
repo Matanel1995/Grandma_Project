@@ -3,11 +3,9 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_signin/main.dart';
 import 'package:google_signin/models/variables.dart';
-import 'package:google_signin/screens/home_screen.dart';
 import 'package:google_signin/screens/welcome_screen.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:async';
-import 'package:firebase_core/firebase_core.dart' as firebase_core;
 
 import '../storage_service.dart';
 
@@ -58,8 +56,6 @@ class _HomeScreenState extends State<UploadPhoto> {
                   )
                 : Image.file(
                     File(selectedImagePath),
-                    // height: 200,
-                    // width: 200,
                     fit: BoxFit.cover,
                   ),
             buildText(context, 'Select Image'),
@@ -92,8 +88,6 @@ class _HomeScreenState extends State<UploadPhoto> {
                 ),
                 TextButton.icon(
                     style: ButtonStyle(
-                        // backgroundColor:
-                        //     MaterialStateProperty.all(Colors.green),
                         padding:
                             MaterialStateProperty.all(const EdgeInsets.all(20)),
                         textStyle: MaterialStateProperty.all(TextStyle(

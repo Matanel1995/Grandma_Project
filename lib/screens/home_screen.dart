@@ -1,8 +1,5 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:google_signin/main.dart';
-import 'package:google_signin/models/user.dart';
 import 'package:google_signin/models/usersList.dart';
 import 'package:google_signin/models/variables.dart';
 import 'package:google_signin/screens/gallery_screen.dart';
@@ -19,18 +16,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final elizabethImage = 'assets/pictures/queen-elizabeth-removebg.png';
   final galleryImage = 'assets/pictures/gallery.png';
-  final bibiImage = 'assets/pictures/bibi.png';
-  final davidImage = 'assets/pictures/David.png';
-  final eltonImage = 'assets/pictures/elton.png';
-  final muskImage = 'assets/pictures/musk.png';
-  final trumpImage = 'assets/pictures/trump.png';
-  final wishes = [
-    'I love you grandma!',
-    'Grandma you are the best!',
-    'Waiting to spend some time with you!',
-    'Grandma thank you very much for the chicken. it was very tasty!',
-    'Tomorrow movie time!',
-  ];
 
   List<String> imageList = <String>[];
   Widget buildContainer(Widget child) {
@@ -59,19 +44,17 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  Future<String> testFunction() async {
-    return "";
-  }
-
   Widget whatToShow() {
     // if there are members and there is a group return list of members and messages box
     // else write a message and send the user to build a group or join
-    print("in HOMESCREEN!!!!");
     if (currentUser.groupsList.isNotEmpty) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
+          const SizedBox(
+            height: 10,
+          ),
           buildTitle(context, 'Group Members'),
           const SizedBox(
             height: 15,
@@ -123,13 +106,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ],
           ),
-        )
-
-        // const Text(
-        //   'You dont have any groups yet. \nPress the hamburger button on the top left corner and press the - My Groups tab and follow the instructions.',
-        //   style: TextStyle(fontSize: 30),
-        // ),
-        );
+        ));
   }
 
   @override

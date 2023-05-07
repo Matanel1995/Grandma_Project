@@ -53,15 +53,12 @@ class _SwitchGroupScreen extends State<SwitchGroupScreen> {
               switchGroup = controllerSwitchGroup.text;
             });
             if (switchGroup.toLowerCase() == 'switch') {
-              //ADD HRER CHANGE CURRENT GROUP FUNCTION
               () async {
                 await currentUser.SetCurrentGroup(widget.currGroup.groupId);
               }.call();
               setState(() {
                 switched = true;
               });
-              // createGroup(MyUser user, String groupName, String groupPhotoUrl)
-              // createGroup(currentUser, groupName, photoURL);
             } else {
               showDialog(
                   context: context,

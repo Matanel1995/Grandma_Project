@@ -298,27 +298,4 @@ class MyUser {
       print('The error is: ' + error.toString());
     }
   }
-
-  // Map<String, dynamic> parseUserData(String userData) {
-  //   //print(jsonDecode(userData));
-  //   Map<String, dynamic> tempMap = {};
-  //   String stringData;
-  //   userData = userData.replaceAll('[', "");
-  //   userData = userData.replaceAll(']', "");
-  //   userData = userData.replaceAll('{', "");
-  //   userData = userData.replaceAll('}', "");
-  //   List<String> temp = userData.split(",");
-  //   for (stringData in temp) {
-  //     int idx = stringData.indexOf(":");
-  //     List<String> tempString = [
-  //       stringData.substring(0, idx),
-  //       stringData.substring(idx + 1)
-  //     ];
-  //     tempMap[tempString[0].replaceAll('"', "")] = tempString[1];
-  //   }
-  //   if (tempMap['groupList'] == "") {
-  //     tempMap['groupList'] = [];
-  //   }
-  //   return tempMap;
-  // }
 }

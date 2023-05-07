@@ -56,8 +56,6 @@ class _LeaveGroupScreen extends State<LeaveGroupScreen> {
               setState(() {
                 left = true;
               });
-              // createGroup(MyUser user, String groupName, String groupPhotoUrl)
-              // createGroup(currentUser, groupName, photoURL);
               () async {
                 await widget.currGroup
                     .leaveGroup(currentUser, widget.currGroup.groupId);

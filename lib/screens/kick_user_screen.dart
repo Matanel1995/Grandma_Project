@@ -65,8 +65,6 @@ class _kickUserScreen extends State<kickUserScreen> {
                 }
               });
               usersList = [];
-              // createGroup(MyUser user, String groupName, String groupPhotoUrl)
-              // createGroup(currentUser, groupName, photoURL);
               isKicked = true;
             }
           },

@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_signin/models/variables.dart';
+import 'package:google_signin/screens/home_screen.dart';
 import 'package:google_signin/screens/my_groups_screen.dart';
 import 'package:google_signin/screens/notifications_screen.dart';
 import 'package:google_signin/screens/settings_screen.dart';
@@ -9,7 +10,7 @@ import 'package:google_signin/widgets/upload_photo.dart';
 import 'package:provider/provider.dart';
 
 import '../models/google_sign_in.dart';
-import '../screens/ideas_screen.dart';
+
 import '../screens/table_score.dart';
 
 class MainDrawer extends StatefulWidget {
@@ -43,7 +44,13 @@ class _MainDrawerState extends State<MainDrawer> {
       return Column(
         children: <Widget>[
           buildListTile('Home', Icons.house, () {
-            Navigator.of(context).pushReplacementNamed('/');
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (_) {
+                  return HomeScreen();
+                },
+              ),
+            );
           }),
           buildListTile('Score Table', Icons.score, () {
             Navigator.of(context).push(
@@ -102,7 +109,13 @@ class _MainDrawerState extends State<MainDrawer> {
       return Column(
         children: <Widget>[
           buildListTile('Home', Icons.house, () {
-            Navigator.of(context).pushReplacementNamed('/');
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (_) {
+                  return HomeScreen();
+                },
+              ),
+            );
           }),
           buildListTile('My Groups', Icons.group, () {
             Navigator.of(context).push(

@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_signin/main.dart';
 import 'package:google_signin/models/Group.dart';
@@ -86,7 +85,6 @@ class _AddUserScreenState extends State<AddUserScreen> {
                 }
               });
               usersList = [];
-              // isAdded = true;
             }
           },
           color: Theme.of(context).cardColor,
