@@ -191,16 +191,18 @@ class MyUser {
   //Output: List of MyUser objects
   Future<List<MyUser>> getUsers(List<String> usersId) async {
     for (String userId in usersId) {
+      print("IN GET USERS FUNCTION#####################");
+      print(usersId);
       await userRef.doc(userId).get().then((user) {
         if (user.exists) {
           // create new User Object and add to a list
           MyUser tempUser =
               MyUser.fromFirestore(user.data() as Map<String, dynamic>);
-          usersListToAdd.add(tempUser);
+          usersList.add(tempUser);
         }
       });
     }
-    return usersListToAdd;
+    return usersList;
   }
 
   //Input: list of users Id
