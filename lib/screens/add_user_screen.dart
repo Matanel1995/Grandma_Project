@@ -65,9 +65,9 @@ class _AddUserScreenState extends State<AddUserScreen> {
                     isLoading =
                         true; // set isLoading to true when the button is pressed
                   });
-                  usersList = await currentUser.getUserByEmail([addUser])
+                  usersListToAdd = await currentUser.getUserByEmail([addUser])
                       as List<MyUser>;
-                  if (usersList.isEmpty) {
+                  if (usersListToAdd.isEmpty) {
                     showDialog(
                         context: context,
                         builder: (BuildContext context) {
@@ -85,7 +85,7 @@ class _AddUserScreenState extends State<AddUserScreen> {
                           );
                         });
                   } else {
-                    widget.currGroup.addUser(usersList.elementAt(0));
+                    widget.currGroup.addUser(usersListToAdd.elementAt(0));
                     setState(() {
                       isAdded = true;
                     });
@@ -94,7 +94,7 @@ class _AddUserScreenState extends State<AddUserScreen> {
                     isLoading =
                         false; // set isLoading to false when the function completes
                   });
-                  usersList = [];
+                  usersListToAdd = [];
                 }
               },
               color: Theme.of(context).cardColor,
