@@ -42,7 +42,7 @@ class promoCard extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: buildTextSmall(context, user.userName),
+            child: buildTextSmallBright(context, user.userName),
           ),
         ],
       ),

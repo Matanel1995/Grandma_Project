@@ -19,6 +19,13 @@ void main() async {
 Widget buildText(BuildContext context, String text) {
   return Text(
     text,
+    style: Theme.of(context).textTheme.bodyText2,
+  );
+}
+
+Widget buildTextBright(BuildContext context, String text) {
+  return Text(
+    text,
     style: Theme.of(context).textTheme.bodyText2?.apply(
           color: Color(0xffF0F0F0),
         ),
@@ -26,6 +33,13 @@ Widget buildText(BuildContext context, String text) {
 }
 
 Widget buildTextSmall(BuildContext context, String text) {
+  return Text(
+    text,
+    style: Theme.of(context).textTheme.subtitle1,
+  );
+}
+
+Widget buildTextSmallBright(BuildContext context, String text) {
   return Text(
     text,
     style: Theme.of(context).textTheme.subtitle1?.apply(

@@ -47,8 +47,8 @@ class groupPromoCard extends StatelessWidget {
             color: Theme.of(context).canvasColor,
             borderRadius: BorderRadius.circular(20),
           ),
-          child:
-              buildTextSmall(context, '${currGroup.groupUsers.length} members'),
+          child: buildTextSmallBright(
+              context, '${currGroup.groupUsers.length} members'),
         ),
         onTap: tapHandler,
       ),
