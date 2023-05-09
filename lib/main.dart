@@ -70,20 +70,28 @@ class _MyAppState extends State<MyApp> {
             // focusColor: Color(0xffedf6f9),
 
             // Option 3
-            scaffoldBackgroundColor: Color(0xff1d3557),
-            cardColor: Color(0xffe63946),
-            backgroundColor: Color(0xffa8dadc),
+            scaffoldBackgroundColor: Color(0xff454545),
+            cardColor: Color(0xffee6c14),
+            backgroundColor: Color(0xffeeeeed),
             canvasColor: Color(0xff457b9d),
-            focusColor: Color(0xfff1faee),
+            focusColor: Color(0xff0e2b3b),
+
+            // Option 4
+            // scaffoldBackgroundColor: Color.fromARGB(0, 211, 233, 222),
+            // cardColor: Color.fromARGB(1, 32, 82, 118),
+            // backgroundColor: Color.fromARGB(1, 238, 108, 20),
+            // canvasColor: Color.fromARGB(1, 238, 238, 237),
+            // focusColor: Color.fromARGB(1, 14, 43, 59),
+
             fontFamily: 'Raleway',
             textTheme: ThemeData.light().textTheme.copyWith(
                   bodyText1: const TextStyle(
                     fontFamily: 'RobotoCondensed',
                     fontSize: 23,
                     fontWeight: FontWeight.w500,
-                    color:
-                        // Option 2
-                        Color(0xffedf6f9),
+                    color: Color(0xffF0F0F0),
+                    // Option 2
+                    // Color.fromARGB(255, 48, 51, 52),
                     // Option 3
                     // Color(0xfff1faee)
                   ),
@@ -97,7 +105,7 @@ class _MyAppState extends State<MyApp> {
                     fontFamily: 'RobotoCondensed',
                     fontSize: 15,
                     fontWeight: FontWeight.w500,
-                    color: Colors.black,
+                    color: Color(0xffF0F0F0),
                   ),
                   // subtitle2: const TextStyle(
                   //   fontFamily: 'RobotoCondensed',

@@ -33,7 +33,7 @@ class _MainDrawerState extends State<MainDrawer> {
       ),
       title: Text(
         title,
-        style: Theme.of(context).textTheme.bodyText1,
+        style: Theme.of(context).textTheme.bodyText2,
       ),
       onTap: tapHandler,
     );
