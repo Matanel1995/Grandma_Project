@@ -19,14 +19,18 @@ void main() async {
 Widget buildText(BuildContext context, String text) {
   return Text(
     text,
-    style: Theme.of(context).textTheme.bodyText2,
+    style: Theme.of(context).textTheme.bodyText2?.apply(
+          color: Color(0xffF0F0F0),
+        ),
   );
 }
 
 Widget buildTextSmall(BuildContext context, String text) {
   return Text(
     text,
-    style: Theme.of(context).textTheme.subtitle1,
+    style: Theme.of(context).textTheme.subtitle1?.apply(
+          color: Color(0xffF0F0F0),
+        ),
   );
 }
 
@@ -105,7 +109,7 @@ class _MyAppState extends State<MyApp> {
                     fontFamily: 'RobotoCondensed',
                     fontSize: 15,
                     fontWeight: FontWeight.w500,
-                    color: Color(0xffF0F0F0),
+                    color: Color.fromARGB(255, 0, 0, 0),
                   ),
                   // subtitle2: const TextStyle(
                   //   fontFamily: 'RobotoCondensed',

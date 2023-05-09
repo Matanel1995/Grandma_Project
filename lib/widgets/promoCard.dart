@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_signin/main.dart';
 import 'package:google_signin/models/user.dart';
+import 'package:google_signin/models/variables.dart';
 
 class promoCard extends StatelessWidget {
   final MyUser user;
@@ -10,16 +11,20 @@ class promoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Color userPromoCardColor = Theme.of(context).cardColor;
+    if (currentUser.email == user.email) {
+      userPromoCardColor = Theme.of(context).scaffoldBackgroundColor;
+    }
     return Container(
       height: 40,
       margin: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       padding: EdgeInsets.symmetric(horizontal: 8),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
-        color: Theme.of(context).cardColor,
+        color: userPromoCardColor,
         boxShadow: [
           BoxShadow(
-            color: Theme.of(context).cardColor,
+            color: userPromoCardColor,
             spreadRadius: 1,
             blurRadius: 2,
             offset: Offset(0, 2),
