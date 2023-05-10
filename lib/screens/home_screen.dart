@@ -55,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
           const SizedBox(
             height: 10,
           ),
-          buildTitle(context, 'Group Members'),
+          buildTitleDark(context, 'Group Members'),
           const SizedBox(
             height: 15,
           ),

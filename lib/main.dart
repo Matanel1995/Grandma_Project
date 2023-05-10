@@ -55,6 +55,13 @@ Widget buildTitle(BuildContext context, String text) {
   );
 }
 
+Widget buildTitleDark(BuildContext context, String text) {
+  return Text(
+    text,
+    style: Theme.of(context).textTheme.bodyText1?.apply(color: Colors.black),
+  );
+}
+
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
