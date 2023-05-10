@@ -19,6 +19,43 @@ class UsersList extends StatelessWidget {
           if (snapshot.hasError) {
             return const Text('Error occurred');
           } else if (snapshot.hasData) {
+            // return GridView.builder(
+            //   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            //     crossAxisCount: 3,
+            //     mainAxisSpacing: 10.0,
+            //     crossAxisSpacing: 10.0,
+            //     childAspectRatio: 2,
+            //   ),
+            //   itemCount: snapshot.data!.docs.length,
+            //   itemBuilder: (context, index) {
+            //     //creating a map to store user details
+            //     Map<String, dynamic> userDetails =
+            //         snapshot.data!.docs[index].data();
+            //     if (userDetails['groupList']
+            //             .toString()
+            //             .contains(currentUser.currentGroupId) &&
+            //         currentUser.currentGroupId != '0') {
+            //       MyUser tempUser = MyUser.fromFirestore(userDetails);
+            //       return UserWidget.fromMyUser(tempUser);
+            //     } else {
+            //       return Container(
+            //         child: Text("check"),
+            //       );
+            //     }
+
+            //     //creating user object with firestoreBuilder
+            //   },
+            // );
+            // Filter the list of items to include only those belonging to the current group
+            List<Map<String, dynamic>> filteredItems = snapshot.data!.docs
+                .map((doc) => doc.data())
+                .where((userDetails) =>
+                    userDetails['groupList']
+                        .toString()
+                        .contains(currentUser.currentGroupId) &&
+                    currentUser.currentGroupId != '0')
+                .toList();
+
             return GridView.builder(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
@@ -26,21 +63,11 @@ class UsersList extends StatelessWidget {
                 crossAxisSpacing: 10.0,
                 childAspectRatio: 2,
               ),
-              itemCount: snapshot.data!.docs.length,
+              itemCount: filteredItems.length,
               itemBuilder: (context, index) {
-                //creating a map to store user details
-                Map<String, dynamic> userDetails =
-                    snapshot.data!.docs[index].data();
-                if (userDetails['groupList']
-                        .toString()
-                        .contains(currentUser.currentGroupId) &&
-                    currentUser.currentGroupId != '0') {
-                  MyUser tempUser = MyUser.fromFirestore(userDetails);
-                  return UserWidget.fromMyUser(tempUser);
-                } else {
-                  return Container();
-                }
-                //creating user object with firestoreBuilder
+                Map<String, dynamic> userDetails = filteredItems[index];
+                MyUser tempUser = MyUser.fromFirestore(userDetails);
+                return UserWidget.fromMyUser(tempUser);
               },
             );
           } else {

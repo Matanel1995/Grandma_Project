@@ -20,6 +20,7 @@ class _LeaveGroupScreen extends State<LeaveGroupScreen> {
   final controllerLeaveGroup = TextEditingController();
   String leaveGroup = '';
   bool left = false;
+  bool isLoading = false;
 
   Widget show() {
     if (left) {
@@ -54,12 +55,18 @@ class _LeaveGroupScreen extends State<LeaveGroupScreen> {
             });
             if (leaveGroup.toLowerCase() == 'yes') {
               setState(() {
+                isLoading =
+                    true; // set isLoading to true when the button is pressed
                 left = true;
               });
               () async {
                 await widget.currGroup
                     .leaveGroup(currentUser, widget.currGroup.groupId);
               }.call();
+              setState(() {
+                isLoading =
+                    false; // set isLoading to false when the function completes
+              });
             } else {
               showDialog(
                   context: context,

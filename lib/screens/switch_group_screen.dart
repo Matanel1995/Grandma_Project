@@ -20,6 +20,7 @@ class _SwitchGroupScreen extends State<SwitchGroupScreen> {
   final controllerSwitchGroup = TextEditingController();
   String switchGroup = '';
   bool switched = false;
+  bool isLoading = false;
 
   Widget show() {
     if (switched) {
@@ -33,61 +34,54 @@ class _SwitchGroupScreen extends State<SwitchGroupScreen> {
       crossAxisAlignment: CrossAxisAlignment.end,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        TextField(
-          controller: controllerSwitchGroup,
-          decoration: InputDecoration(
-              hintText: '"switch" to confirm',
-              border: const OutlineInputBorder(),
-              suffixIcon: IconButton(
-                onPressed: () {
-                  // clear what's currently in the textfield
-                  controllerSwitchGroup.clear();
-                },
-                icon: const Icon(Icons.clear),
-              )),
+        Container(
+          padding: const EdgeInsets.all(20),
+          child: buildText(
+              context, 'Are you sure you want to switch to this group?'),
         ),
         MaterialButton(
           // update the group name
           onPressed: () {
+            () async {
+              await currentUser.SetCurrentGroup(widget.currGroup.groupId);
+            }.call();
             setState(() {
-              switchGroup = controllerSwitchGroup.text;
+              switched = true;
             });
-            if (switchGroup.toLowerCase() == 'switch') {
-              () async {
-                await currentUser.SetCurrentGroup(widget.currGroup.groupId);
-              }.call();
-              setState(() {
-                switched = true;
-              });
-            } else {
-              showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return AlertDialog(
-                      title: buildTitle(context, 'Wrong input'),
-                      content: buildText(context, 'You didn\'t type "switch"'),
-                      actions: [
-                        TextButton(
-                            onPressed: () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (_) {
-                                    return SwitchGroupScreen(
-                                      currGroup: widget.currGroup,
-                                    );
-                                  },
-                                ),
-                              );
-                            },
-                            child: buildText(context, 'OK'))
-                      ],
-                    );
-                  });
-            }
+            setState(() {
+              isLoading =
+                  true; // set isLoading to true when the button is pressed
+            });
           },
           color: Theme.of(context).cardColor,
-          child: buildText(context, 'Confirm'),
+          child: buildText(context, 'Yes'),
         ),
+        Visibility(
+            visible:
+                isLoading, // show CircularProgressIndicator when isLoading is true
+            child: Center(
+              child: Container(
+                width: 100,
+                height: 100,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).canvasColor,
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.2),
+                      blurRadius: 5,
+                      offset: Offset(0, 3),
+                    ),
+                  ],
+                ),
+                child: Center(
+                  child: CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                        Theme.of(context).cardColor),
+                  ),
+                ),
+              ),
+            )),
       ],
     );
   }
