@@ -1,10 +1,16 @@
+import 'dart:async';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_signin/main.dart';
 import 'package:google_signin/models/usersList.dart';
 import 'package:google_signin/models/variables.dart';
 import 'package:google_signin/screens/gallery_screen.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import '../models/Group.dart';
 import '../widgets/main_drawer.dart';
+
+final userRef = FirebaseFirestore.instance.collection('User');
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -16,6 +22,9 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final elizabethImage = 'assets/pictures/queen-elizabeth-removebg.png';
   final galleryImage = 'assets/pictures/gallery.png';
+  String groupName = "";
+  Group? currentGroup;
+  StreamSubscription<DocumentSnapshot>? groupSubscription;
 
   List<String> imageList = <String>[];
   Widget buildContainer(Widget child) {
@@ -115,7 +124,34 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     setState(() {
       getImages();
+      print("in init state");
+      listenToGroupChanges();
     });
+  }
+
+  void listenToGroupChanges() {
+    groupSubscription =
+        userRef.doc(currentUser.id).snapshots().listen((snapshot) {
+      final groupId = snapshot.data()?['currentGroupId'] as String;
+      if (groupId != null) {
+        currentUser.getGroups([groupId]).then((List<Group> groups) {
+          if (groups.isNotEmpty) {
+            Group group = groups.first;
+            setState(() {
+              currentGroup = group;
+            });
+          } else {
+            print('No groups found');
+          }
+        });
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    groupSubscription?.cancel();
+    super.dispose();
   }
 
   Widget build(BuildContext context) {
@@ -134,6 +170,13 @@ class _HomeScreenState extends State<HomeScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               const SizedBox(
+                height: 10,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: buildTitleDark(context, currentGroup?.groupName ?? ""),
+              ),
+              SizedBox(
                 height: 10,
               ),
               Container(

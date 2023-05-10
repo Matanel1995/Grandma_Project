@@ -7,8 +7,7 @@ import 'package:http/http.dart' as http;
 
 final userRef = FirebaseFirestore.instance.collection('User');
 //Get doc referance
-CollectionReference collectionRef =
-    FirebaseFirestore.instance.collection('Group');
+CollectionReference groupRef = FirebaseFirestore.instance.collection('Group');
 
 class MyUser {
   final String id;
@@ -191,8 +190,6 @@ class MyUser {
   //Output: List of MyUser objects
   Future<List<MyUser>> getUsers(List<String> usersId) async {
     for (String userId in usersId) {
-      print("IN GET USERS FUNCTION#####################");
-      print(usersId);
       await userRef.doc(userId).get().then((user) {
         if (user.exists) {
           // create new User Object and add to a list
@@ -232,11 +229,12 @@ class MyUser {
     return usersListToAdd;
   }
 
-//Input: list of users Id
-//Output: List of MyUser objects
-  Future getGroups(List<String> groupId) async {
+//Input: list of groups Id
+//Output: List of Group objects
+  Future<List<Group>> getGroups(List<String> groupId) async {
+    List<Group> groupsListToReturn = [];
     for (String groupId in groupId) {
-      await collectionRef.doc(groupId).get().then((group) {
+      await groupRef.doc(groupId).get().then((group) {
         if (group.exists) {
           // create new User Object and add to a list
           Group tempGroup =

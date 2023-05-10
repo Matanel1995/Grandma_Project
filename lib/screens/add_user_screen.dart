@@ -65,36 +65,67 @@ class _AddUserScreenState extends State<AddUserScreen> {
                     isLoading =
                         true; // set isLoading to true when the button is pressed
                   });
-                  usersListToAdd = await currentUser.getUserByEmail([addUser])
-                      as List<MyUser>;
-                  if (usersListToAdd.isEmpty) {
+                  Map<String, dynamic> groupUsers =
+                      widget.currGroup.getGroupUsers;
+                  List<String> userKeys = groupUsers.keys.toList();
+                  List<MyUser> users = await currentUser.getUsers(userKeys);
+                  bool userExists = users.any((MyUser user) =>
+                      user.email.trim().toLowerCase() ==
+                      addUser.trim().toLowerCase());
+                  if (userExists) {
                     showDialog(
                         context: context,
-                        builder: (BuildContext context) {
+                        builder: ((BuildContext context) {
                           return AlertDialog(
-                            title: buildText(context, 'Error.'),
-                            content: buildText(context,
-                                'Email is not valid.\nTry again with a valid email.'),
+                            title: buildText(context, "Oops"),
+                            content:
+                                buildText(context, "User allready in group."),
                             actions: [
                               TextButton(
-                                  onPressed: (() {
-                                    Navigator.of(context).pop();
-                                  }),
-                                  child: const Text("Ok"))
+                                onPressed: (() {
+                                  setState(() {
+                                    isLoading =
+                                        false; // Reset isLoading to false
+                                  });
+                                  Navigator.of(context).pop();
+                                }),
+                                child: const Text("Ok"),
+                              ),
                             ],
                           );
-                        });
+                        }));
                   } else {
-                    widget.currGroup.addUser(usersListToAdd.elementAt(0));
+                    usersListToAdd = await currentUser.getUserByEmail([addUser])
+                        as List<MyUser>;
+                    if (usersListToAdd.isEmpty) {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: buildText(context, 'Error.'),
+                              content: buildText(context,
+                                  'Email is not valid.\nTry again with a valid email.'),
+                              actions: [
+                                TextButton(
+                                    onPressed: (() {
+                                      Navigator.of(context).pop();
+                                    }),
+                                    child: const Text("Ok"))
+                              ],
+                            );
+                          });
+                    } else {
+                      widget.currGroup.addUser(usersListToAdd.elementAt(0));
+                      setState(() {
+                        isAdded = true;
+                      });
+                    }
                     setState(() {
-                      isAdded = true;
+                      isLoading =
+                          false; // set isLoading to false when the function completes
                     });
+                    usersListToAdd = [];
                   }
-                  setState(() {
-                    isLoading =
-                        false; // set isLoading to false when the function completes
-                  });
-                  usersListToAdd = [];
                 }
               },
               color: Theme.of(context).cardColor,
