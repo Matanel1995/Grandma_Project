@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:google_signin/main.dart';
 import 'package:google_signin/screens/welcome_screen.dart';
 import 'package:google_signin/storage_service.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+import 'dart:ui' as ui;
 
 class GalleryScreen extends StatefulWidget {
   static const routeName = './gallery-screen';
@@ -23,23 +25,23 @@ class _GalleryScreenState extends State<GalleryScreen> {
 
   _GalleryScreenState(this.imageTest);
 
-  @override
-  void initState() {
-    super.initState();
-    if (!showGrid && imageTest.isNotEmpty) {
-      timer = Timer.periodic(const Duration(seconds: 5), (timer) {
-        setState(() {
-          index = (index + 1) % imageTest.length;
-        });
-      });
-    }
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   if (!showGrid && imageTest.isNotEmpty) {
+  //     timer = Timer.periodic(const Duration(seconds: 5), (timer) {
+  //       setState(() {
+  //         index = (index + 1) % imageTest.length;
+  //       });
+  //     });
+  //   }
+  // }
 
-  @override
-  void dispose() {
-    timer.cancel();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   timer.cancel();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -79,36 +81,55 @@ class _GalleryScreenState extends State<GalleryScreen> {
           : Center(
               child: showGrid
                   ? buildImageGrid()
-                  : FutureBuilder(
-                      future: storage.downloadURL(imageTest[index]),
-                      builder: (BuildContext context,
-                          AsyncSnapshot<String> snapshot) {
-                        if (snapshot.connectionState == ConnectionState.done &&
-                            snapshot.hasData) {
-                          return GestureDetector(
-                            onTap: () {
-                              // Handle image tap to navigate to individual image screen
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (_) => IndividualImageScreen(
-                                    imageTest[index],
-                                  ),
-                                ),
-                              );
-                            },
-                            child: Image.network(
-                              snapshot.data!,
-                              fit: BoxFit.fill,
-                            ),
-                          );
-                        }
-                        if (snapshot.connectionState ==
-                                ConnectionState.waiting ||
-                            !snapshot.hasData) {
-                          return const CircularProgressIndicator();
-                        }
-                        return Container();
+                  : LayoutBuilder(
+                      builder: (context, constraints) {
+                        return CarouselSlider(
+                          options: CarouselOptions(
+                            autoPlay: true,
+                            autoPlayInterval: Duration(seconds: 5),
+                            autoPlayAnimationDuration:
+                                Duration(milliseconds: 600),
+                            aspectRatio:
+                                constraints.maxWidth / constraints.maxHeight,
+                            viewportFraction: 1.0,
+                            enlargeCenterPage: false,
+                          ),
+                          items: List.generate(imageTest.length, (index) {
+                            return FutureBuilder(
+                              future: storage.downloadURL(imageTest[index]),
+                              builder: (BuildContext context,
+                                  AsyncSnapshot<String> snapshot) {
+                                if (snapshot.connectionState ==
+                                        ConnectionState.done &&
+                                    snapshot.hasData) {
+                                  return GestureDetector(
+                                    onTap: () {
+                                      // Handle image tap to navigate to individual image screen
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (_) => IndividualImageScreen(
+                                            imageTest[index],
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    child: Image.network(
+                                      snapshot.data!,
+                                      fit: BoxFit.contain,
+                                    ),
+                                  );
+                                }
+                                if (snapshot.connectionState ==
+                                        ConnectionState.waiting ||
+                                    !snapshot.hasData) {
+                                  return const CircularProgressIndicator();
+                                }
+                                return Container();
+                              },
+                            );
+                          }),
+                        );
                       },
                     ),
             ),
