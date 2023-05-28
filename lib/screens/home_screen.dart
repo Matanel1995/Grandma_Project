@@ -216,7 +216,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (_) {
-                          getImages();
+                          // getImages();
                           return GalleryScreen(imageList);
                         },
                       ),
