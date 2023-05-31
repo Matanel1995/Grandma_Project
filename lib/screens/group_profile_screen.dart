@@ -102,6 +102,8 @@ class GroupProfileScreen extends StatelessWidget {
                               Colors.black.withOpacity(.8),
                               Colors.black.withOpacity(.1)
                             ])),
+                    /*
+                            removing name from view
                     child: Align(
                       alignment: const Alignment(-0.8, 0.77),
                       child: Text(
@@ -113,20 +115,23 @@ class GroupProfileScreen extends StatelessWidget {
                         ),
                       ),
                     ),
+*/
                   ),
                 ),
               ),
             ),
-            buildListTile(context, 'Group ID : ${currGroup.getGroupId}',
+            buildListTile(context, 'Group Name : ${currGroup.getGroupName}',
                 Icons.group, () {}),
+            /*
             buildListTile(
                 context,
                 'Group Admin ID : ${currGroup.getGroupManagerId}',
                 Icons.man,
                 () {}),
+                */
             buildListTile(
                 context,
-                'Number Of Users : ${(currGroup.getGroupUsers).length}',
+                'Members : ${(currGroup.getGroupUsers).length}',
                 Icons.numbers,
                 () {}),
             adminCanAddKick(context),

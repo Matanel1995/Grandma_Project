@@ -52,6 +52,8 @@ class _MainDrawerState extends State<MainDrawer> {
               ),
             );
           }),
+          /*
+          removing score table for now from main drawer
           buildListTile('Score Table', Icons.score, () {
             Navigator.of(context).push(
               MaterialPageRoute(
@@ -61,6 +63,7 @@ class _MainDrawerState extends State<MainDrawer> {
               ),
             );
           }),
+          */
           buildListTile('Upload Photo', Icons.add_a_photo, () {
             Navigator.of(context).push(
               MaterialPageRoute(
