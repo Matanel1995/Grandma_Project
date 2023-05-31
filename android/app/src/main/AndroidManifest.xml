@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.google_signin">
    <application
-        android:label="google_signin"
+        android:label="GrannyProject"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
