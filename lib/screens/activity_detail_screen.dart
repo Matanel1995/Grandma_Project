@@ -59,7 +59,7 @@ class ActivityDetailScreen extends StatelessWidget {
             buildContainer(
               ListView.builder(
                 itemBuilder: (ctx, index) => Card(
-                  color: Theme.of(context).accentColor,
+                  color: Colors.black,
                   child: Padding(
                       padding: const EdgeInsets.symmetric(
                           vertical: 5, horizontal: 10),
