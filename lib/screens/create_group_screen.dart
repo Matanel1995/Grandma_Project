@@ -122,7 +122,10 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(20),
-        child: Center(child: show()),
+        child: SingleChildScrollView(
+          // Wrap the column with SingleChildScrollView
+          child: Center(child: show()),
+        ),
       ),
     );
   }
