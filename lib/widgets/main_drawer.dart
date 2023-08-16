@@ -82,15 +82,6 @@ class _MainDrawerState extends State<MainDrawer> {
               ),
             );
           }),
-          buildListTile('Notifications', Icons.notifications, () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (_) {
-                  return NotificationScreen();
-                },
-              ),
-            );
-          }),
           buildListTile('Settings', Icons.settings, () {
             Navigator.of(context).push(
               MaterialPageRoute(

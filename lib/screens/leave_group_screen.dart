@@ -3,6 +3,7 @@ import 'package:google_signin/models/Group.dart';
 import 'package:google_signin/models/variables.dart';
 import 'package:google_signin/screens/welcome_screen.dart';
 import 'package:google_signin/main.dart';
+import 'package:http/http.dart' as http;
 
 class LeaveGroupScreen extends StatefulWidget {
   final Group currGroup;
@@ -60,8 +61,20 @@ class _LeaveGroupScreen extends State<LeaveGroupScreen> {
                 left = true;
               });
               () async {
-                await widget.currGroup
-                    .leaveGroup(currentUser, widget.currGroup.groupId);
+                final userId = currentUser.id;
+                final groupId = widget.currGroup.groupId;
+                final url = Uri.parse(
+                    'https://gproject1995.onrender.com/user/leaveGroup?userId=${userId}&groupId=${groupId}');
+                try {
+                  final response = await http.get(url);
+                  if (response.statusCode == 200) {
+                    print('Successfully left the group');
+                  } else {
+                    print('Failed to leave the group');
+                  }
+                } catch (error) {
+                  print('Error in leave group: $error');
+                }
               }.call();
               setState(() {
                 isLoading =

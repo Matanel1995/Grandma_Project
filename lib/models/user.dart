@@ -202,18 +202,6 @@ class MyUser {
     return usersList;
   }
 
-  //Input: list of users Id
-  //Output: List of MyUser objects
-  // Future getUsersUsingServer(List<String> usersId) async {
-  //   usersList = [];
-  //   for (String userId in usersId) {
-  //     var tempUserJson = await fetchDataFromNode(userId);
-  //     MyUser userToAdd = MyUser.fromFirestore(tempUserJson);
-  //     usersList.add(userToAdd);
-  //   }
-  //   return usersList;
-  // }
-
   Future getUserByEmail(List<String> userEmail) async {
     usersListToAdd = [];
     var queryRef = await userRef
@@ -221,7 +209,7 @@ class MyUser {
         .get()
         .then((value) async {
       for (var element in value.docs) {
-        var tempUserJson = await fetchDataFromNode(element.id);
+        var tempUserJson = await fetchUserFromNode(element.id);
         MyUser userToAdd = MyUser.fromFirestore(tempUserJson);
         usersListToAdd.add(userToAdd);
       }
@@ -277,14 +265,84 @@ class MyUser {
     return dataToReturn;
   }
 
-  Future fetchDataFromNode(String userId) async {
+  Future fetchUserFromNode(String userId) async {
     try {
       var url = Uri(
         scheme: 'https',
         host: 'gproject1995.onrender.com',
         // port: 8080,
-        path: '/user/${userId}',
-        // queryParameters: {'userId': userId},
+        path: '/user/userId',
+        queryParameters: {'userId': userId},
+      );
+      print(url);
+      final response = await http.get(url);
+      if (response.statusCode == 200) {
+        var tempString = response.body.substring(1, response.body.length - 1);
+        final jsonObject = jsonDecode(tempString);
+        return jsonObject;
+      } else {
+        print('Unable to fetch the data from the server!');
+      }
+    } catch (error) {
+      print('The error is: ' + error.toString());
+    }
+  }
+
+  //remove from group
+  Future removeFromGroupNode(String groupId, String userId) async {
+    try {
+      var url = Uri(
+        scheme: 'https',
+        host: 'gproject1995.onrender.com',
+        // port: 8080,
+        path: '/user/removeFromGroup',
+        queryParameters: {'userId': userId, 'groupId': groupId},
+      );
+      final response = await http.get(url);
+      if (response.statusCode == 200) {
+        var tempString = response.body.substring(1, response.body.length - 1);
+        final jsonObject = jsonDecode(tempString);
+        return jsonObject;
+      } else {
+        print('Unable to fetch the data from the server!');
+      }
+    } catch (error) {
+      print('The error is: ' + error.toString());
+    }
+  }
+
+  //get GroupList from Node
+  Future getUserGroupFromNode(String userId) async {
+    try {
+      var url = Uri(
+        scheme: 'https',
+        host: 'gproject1995.onrender.com',
+        // port: 8080,
+        path: '/user/getGroups',
+        queryParameters: {'userId': userId},
+      );
+      final response = await http.get(url);
+      if (response.statusCode == 200) {
+        var tempString = response.body.substring(1, response.body.length - 1);
+        final jsonObject = jsonDecode(tempString);
+        return jsonObject;
+      } else {
+        print('Unable to fetch the data from the server!');
+      }
+    } catch (error) {
+      print('The error is: ' + error.toString());
+    }
+  }
+
+  //Leave group
+  Future leavrGroupFromNode(String groupId, String userId) async {
+    try {
+      var url = Uri(
+        scheme: 'https',
+        host: 'gproject1995.onrender.com',
+        // port: 8080,
+        path: '/user/leaveGroup',
+        queryParameters: {'userId': userId, 'groupId': groupId},
       );
       final response = await http.get(url);
       if (response.statusCode == 200) {
